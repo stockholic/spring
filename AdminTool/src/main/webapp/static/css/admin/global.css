@@ -1,0 +1,102 @@
+
+ select{
+	height: 28px;
+}
+
+label{
+	color:#4e4e4e;
+	font-size:13px;
+}
+
+a:hover{
+	text-decoration:underline;
+}
+
+.user-panel{
+    height:50px;
+}
+
+.user-panel>.info {
+	padding:10px 0px 0px 0px;
+	left:25px;	
+}
+
+.form-control {
+	font-size:13px;
+    padding: 2px 4px;
+    height: 28px;
+}
+
+.sidebar-menu>li{	
+    border-bottom: 1px solid #484d56;
+	  font-size: 13px;
+}
+
+ .treeview-menu>li>a{
+  font-size: 13px;
+}
+
+.content-header>h1 {
+	font-size: 16px; 
+	font-weight: bold;
+}
+
+.content-header>h1>small {
+	font-size: 12px; 
+}
+
+.box{
+}
+
+.box-body{
+	font-size: 13px;
+}
+.table {
+	font-size:13px;
+}
+.table> thead> tr> th {
+	color:#4e4e4e;
+}
+.table> tbody> tr> th {
+	text-align:right;
+	padding-right:15px;
+	vertical-align: middle;
+}
+
+.table-top {
+	margin-top:40px;
+}
+
+.btn-xm{
+	padding: 4px 9px;
+	font-size: 13px;
+}
+.pagination>li>a, .pagination>li>span {
+	padding: 2px 8px;
+}
+
+.pull-margin{
+	margin-left: 5px;
+}
+
+.pull-center{
+	text-align:center;
+}
+
+.box-600{
+	width:100%;
+	max-width: 600px;
+}
+.box-700{
+	width:100%;
+	max-width: 700px;
+}
+.box-800{
+	width:100%;
+	max-width: 800px;
+}
+
+
+
+
+

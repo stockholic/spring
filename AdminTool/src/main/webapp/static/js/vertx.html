@@ -1,0 +1,78 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="sockjs.min.js"></script>
+  <script src="vertx-eventbus.js"></script>
+  <script type="text/javascript" src="smoothie.js"></script>
+</head>
+
+<style>
+  .news {
+    font-size: 20pt;
+  }
+  
+  div.smoothie-chart-tooltip {
+	  background: #FFFBAC;
+	  padding: 5px;
+	  margin-top: 20px;
+	  color: #000;
+	  font-size: 12px;
+	  pointer-events: none;
+	  border-radius: 5px;
+}
+</style>
+
+<body>
+
+<div class="news">Latest news:</div>
+<br>
+
+<div id="status" class="news"></div>
+
+<script>
+  var eb = new EventBus("http://localhost:5892/sytem");
+
+  eb.onopen = function () {
+    eb.registerHandler("systemInfo", function (err, msg) {
+      var str = "<code>" + msg.body + "</code><br>";
+      $('#status').html(str);
+    })
+  }
+
+</script>
+
+<canvas id="smoothie-chart" width="600" height="100">
+
+
+<script>
+var chart = new SmoothieChart({
+	maxValue:100,
+	minValue:0,
+	millisPerPixel:50,
+	grid:{
+		fillStyle:'#ffffff',
+		strokeStyle:'rgba(224,224,224,0.61)',
+		sharpLines:true,
+		borderVisible:false
+	},
+	//timestampFormatter:SmoothieChart.timeFormatter,
+	labels:{fillStyle:'#454545',fontSize:14},tooltip:true}),
+	
+canvas = document.getElementById('smoothie-chart'),
+series = new TimeSeries();
+
+chart.addTimeSeries(series, {lineWidth:1,strokeStyle:'#3590C6',fillStyle:'rgba(225,240,255,0.30)'});
+chart.streamTo(canvas, 1000);
+
+
+//Add a random value to each line every second
+setInterval(function() {
+	series.append(new Date().getTime(), Math.random()*100);
+	console.log(Math.random()*100)
+}, 1000);
+
+</script>
+
+</body>
+</html>

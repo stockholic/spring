@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.zchat.webapp.admin.site.dao.FileDao">
+
+
+	<insert id="insertBoardFile">
+	INSERT INTO com_board_file(
+		board_srl
+		,file_path
+		,file_sys_nm
+		,file_real_nm
+		,file_size
+		,reg_date
+	)VALUES(
+		#{boardSrl}
+		,#{filePath}
+		,#{fileSysNm}
+		,#{fileRealNm}
+		,#{fileSize}
+		/*SYSDATE()*/
+		,datetime('now','localtime')
+	)
+	</insert> 
+	
+	<select id="selectBoardFileList" resultType="kr.zchat.core.module.model.FileInfo">
+	SELECT
+		board_file_srl
+		,board_srl
+		,file_path
+		,file_sys_nm
+		,file_real_nm
+		,file_size
+	FROM com_board_file
+	WHERE board_srl = #{boardSrl}
+	ORDER BY board_file_srl DESC
+	</select>
+	
+	<select id="selectBoardFile" resultType="kr.zchat.core.module.model.FileInfo">
+	SELECT
+		file_path
+		,file_sys_nm
+		,file_real_nm
+	FROM com_board_file
+	WHERE board_file_srl = #{boardFileSrl}
+	</select>
+	
+	<delete id="deleteBoardFile">
+	DELETE FROM com_board_file WHERE board_file_srl = #{boardFileSrl}
+	</delete>
+	
+</mapper>  
