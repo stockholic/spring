@@ -1,0 +1,58 @@
+
+.user-panel{
+    height:50px;
+}
+
+.user-panel>.info {
+	padding:10px 0px 0px 0px;
+	left:25px;	
+}
+
+.form-control {
+    padding: 2px 4px;
+}
+
+.sidebar-menu>li{	
+    border-bottom: 1px solid #484d56;
+}
+
+ .treeview-menu>li>a{
+}
+
+.content-wrapper {
+    background-color: #fff;
+}
+
+.content-header {
+    position: relative;
+    padding: 15px 15px 0px 15px;
+}
+
+.content-header>h1 {
+    border-bottom: 2px solid #d2d6de;
+    padding-bottom: 10px;
+}
+
+.table-list {
+	 border-bottom:1px solid #d2d6de;
+}
+
+.table-list thead tr{
+	 border-top:2px solid #d2d6de;
+	 background-color: #efefef;
+}
+
+.table-list> tbody> tr> th {
+	 text-align:right;
+	 padding-right:15px;
+	 vertical-align: middle;
+}
+
+.table-list> thead> tr> th{
+	 text-align:center;
+	  border-bottom: 1px solid #d2d6de
+}
+
+
+
+
