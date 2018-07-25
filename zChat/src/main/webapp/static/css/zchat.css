@@ -1,0 +1,192 @@
+@import url('zchat.mobile.css');
+
+html, body {height:100%; }
+
+body{
+	display:table;
+	width:100%;
+	min-width:250px; 
+	padding : 5px;
+}
+
+#chatHeader,#chatFooter{
+	display:table-row;
+	width:100%;
+	height:30px;
+} 
+#chatHeader #channelInfo{float:left}
+#chatFooter input{margin-top:-8px}
+
+#chatHeader .ponter{cursor: pointer;}
+#showMsg .join{color:#337AB7;	font-weight: bold;}
+#showMsg .out{color:#990000;	font-weight: bold;}
+#showMsg .disconnect{color:#FF7F27;font-weight: bold;}
+
+#chatBody {
+	display:table-row;
+	width:100%;
+	height:100%;
+} 
+
+#chatBody #showMsg{
+	height:100%;
+	overflow: auto;
+}
+
+#chatHeader .userDropDown{
+	float:left;
+	margin-right:10px;
+	margin-top:6px
+}
+
+#chatHeader .userDropDown ul {
+	height:150px;
+	overflow: auto;
+}
+
+#chatHeader .userDropDown ul li{
+	padding : 0px 0px 0px 5px;
+	height:20px;
+}
+
+#changeNickField{
+	position : absolute;
+	width:230px;
+	margin-left:-240px;
+	margin-top:6px; 
+}
+#changeNickField input{height:22px}
+
+
+#nickIcon{
+	float:left;
+	margin:9px 10px 0px 0px;
+}
+#chatTitle{float:left}
+#chatMenu{float:right;margin-top:9px}
+#chatMenu #chatLine{width:35px;text-align: center}
+/* #chatMenu #trash{width:35px;text-align: center} */
+
+#showMsg .msg_left{
+	width:80%;
+	float: left;
+}
+#showMsg .msg_right {
+	width:80%;
+	float:right;
+	text-align:right;
+}
+
+#showMsg .msg_left .user {
+	margin-top:8px;
+	color:#333333;
+	font-weight: bold;
+}
+
+#showMsg .you_bubble{
+    border-radius: 5px;
+    display: inline-block;
+    padding: 10px 10px;
+    position: relative;
+    vertical-align: top;
+    word-break:break-all;
+}
+
+#showMsg .you_bubble::before {
+    background-color: #E7EFF9;
+    content: "\00a0";
+    display: block;
+    height: 7px;
+    position: absolute;
+    top: 10px;
+    transform:             rotate( 29deg ) skew( -35deg );
+        -moz-transform:    rotate( 29deg ) skew( -35deg );
+        -ms-transform:     rotate( 29deg ) skew( -35deg );
+        -o-transform:      rotate( 29deg ) skew( -35deg );
+        -webkit-transform: rotate( 29deg ) skew( -35deg );
+    width:  14px; 
+}
+#showMsg .you {
+    float: left;   
+    margin: 5px;
+	background-color: #E7EFF9;
+}
+#showMsg .you::before {
+    left: -5px;
+}
+
+
+#showMsg .msg_right .user {
+	margin-top:8px;
+	color:#333333;
+	font-weight: bold;
+}	
+
+#showMsg .me_bubble{
+    border-radius: 5px;
+    display: inline-block;
+    padding: 10px 10px;
+    position: relative;
+    vertical-align: top;
+    word-break:break-all;
+}
+
+#showMsg .me_bubble::before {
+    background-color: #ECE9F6;
+    content: "\00a0";
+    display: block;
+    height: 7px;
+    position: absolute;
+    top: 10px;
+    transform:             rotate( 29deg ) skew( -35deg );
+        -moz-transform:    rotate( 29deg ) skew( -35deg );
+        -ms-transform:     rotate( 29deg ) skew( -35deg );
+        -o-transform:      rotate( 29deg ) skew( -35deg );
+        -webkit-transform: rotate( 29deg ) skew( -35deg );
+    width:  14px; 
+}
+
+#showMsg .me {
+    float: right; 
+    margin: 5px;         
+    text-align:left;
+    background-color: #ECE9F6;
+}
+
+#showMsg .me::before {
+    right: -5px;
+}
+
+#showMsg .time{
+	display: inline-block;
+	font-size:8px;
+	margin-top:5px;
+	font-weight: normal;
+}
+
+/* modal popup */
+.modal-header {
+    padding: 5px;
+}
+
+.modal-header  .h4, h4 {
+    font-size: 14px;
+    padding-left:5px;
+}
+.modal-body {
+    padding: 5px;
+}
+.modal-body .popMsg {
+    padding-top: 10px;
+    text-align:center;
+    color: #337AB7;
+    font-weight: bold;
+}
+
+.modal-footer {
+    padding: 5px;
+}
+
+
+
+

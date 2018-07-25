@@ -1,0 +1,17 @@
+@media screen and (min-width:480px) {
+
+	#info #showMsg{width:600px;}
+	
+	#demo{width:600px;}
+}
+
+
+@media screen and (max-width:480px) {
+	
+	#nickIcon{font-size:18px}
+	
+	#chatTitle{display:none;}
+	
+	#chatMenu{font-size:18px}
+	
+}
