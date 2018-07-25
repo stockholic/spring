@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stockholic.webapp.front.stock.dao.TradeDao">
+	
+	<select id="selectStockCodeList" resultType="com.stockholic.webapp.front.stock.model.StockCode">
+	SELECT 
+	  stock_cd
+	  ,stock_nm
+	FROM stock_code
+	</select>
+	
+	<select id="selectTradeCount" resultType="int">
+	SELECT count(1) FROM stock_trade
+	WHERE  user_id = #{userId}
+	<if test="searchTradeTp != null and searchTradeTp != ''">
+	 AND trade_tp = #{searchTradeTp}
+	</if>
+	
+	<if test="searchPoint != null and searchPoint != ''">
+	 AND point = #{searchPoint}
+	</if>
+	<if test="searchStartDt != null and searchStartDt != ''">
+		AND trade_dt &gt;=  STR_TO_DATE(#{searchStartDt}, '%Y-%m-%d')
+	</if>
+	<if test="searchEndDt != null and searchEndDt != ''">
+		AND trade_dt &lt;=   STR_TO_DATE(#{searchEndDt}, '%Y-%m-%d')
+	</if>
+	<if test="stockCd != null and stockCd != ''">
+	 AND stock_cd = #{stockCd}
+	</if>
+	<if test="stockCd != null and stockCd != ''">
+	 AND stock_cd = #{stockCd}
+	</if>
+	</select>
+	
+	<select id="selectTradeList" resultType="com.stockholic.webapp.front.stock.model.Trade">
+	SELECT
+		trade_srl
+		,stock_cd
+		,(select stock_nm from stock_code where stock_cd = t1.stock_cd) AS stock_nm
+		,trade_buy_prc
+		,trade_sell_prc
+		,trade_ea
+		,trade_tp
+		,tax
+		,fee
+		,memo
+		,user_id
+		,DATE_FORMAT(trade_dt,'%Y.%m.%d') trade_dt
+		,point
+		,reg_dt
+		,upt_dt
+	FROM stock_trade t1
+	WHERE user_id = #{userId}
+	<if test="searchTradeTp != null and searchTradeTp != ''">
+	 AND trade_tp = #{searchTradeTp}
+	</if>
+	<if test="searchPoint != null and searchPoint != ''">
+	 AND point = #{searchPoint}
+	</if>
+	<if test="searchStartDt != null and searchStartDt != ''">
+		AND trade_dt &gt;=  STR_TO_DATE(#{searchStartDt}, '%Y-%m-%d')
+	</if>
+	<if test="searchEndDt != null and searchEndDt != ''">
+		AND trade_dt &lt;=   STR_TO_DATE(#{searchEndDt}, '%Y-%m-%d')
+	</if>
+	<if test="stockCd != null and stockCd != ''">
+	 AND stock_cd = #{stockCd}
+	</if>
+	ORDER BY trade_srl DESC
+	LIMIT #{rowStart},#{rowSize}
+	</select>
+	
+		
+	<select id="selectTrade" resultType="com.stockholic.webapp.front.stock.model.Trade">
+	SELECT
+		stock_cd
+		,trade_srl
+		,(select stock_nm from stock_code where stock_cd = t1.stock_cd) AS stock_nm
+		,trade_buy_prc
+		,trade_sell_prc
+		,trade_ea
+		,trade_tp
+		,tax
+		,fee
+		,memo
+		,ip
+		,user_id
+		,DATE_FORMAT(trade_dt,'%Y-%m-%d') trade_dt
+		,point
+		,reg_dt
+		,upt_dt
+	FROM stock_trade t1
+	WHERE trade_srl = #{tradeSrl} AND user_id = #{userId}
+	</select>
+	
+	<insert id="insertTrade" useGeneratedKeys="true" keyProperty="tradeSrl">
+	INSERT INTO stock_trade(
+		stock_cd
+		,trade_buy_prc
+		,trade_sell_prc
+		,trade_ea
+		,trade_tp
+		,tax
+		,fee
+		,memo
+		,ip
+		,user_id
+		,trade_dt
+		,reg_dt
+		,upt_dt
+	)VALUES(
+		#{stockCd}
+		,#{tradeBuyPrc}
+		,#{tradeSellPrc}
+		,#{tradeEa}
+		,#{tradeTp}
+		,#{tax}
+		,#{fee}
+		,#{memo}
+		,#{ip}
+		,#{userId}
+		,STR_TO_DATE(#{tradeDt}, '%Y-%m-%d')
+		,SYSDATE()
+		,SYSDATE()
+	)
+	</insert> 
+
+	<update id="updateTrade">
+	UPDATE stock_trade SET 
+		stock_cd = #{stockCd}
+		,trade_buy_prc = #{tradeBuyPrc}
+		,trade_sell_prc = #{tradeSellPrc}
+		,trade_ea = #{tradeEa}
+		,trade_tp = #{tradeTp}
+		,tax = #{tax}
+		,fee = #{fee}
+		,memo = #{memo}
+		,ip = #{ip}
+		,trade_dt = STR_TO_DATE(#{tradeDt}, '%Y-%m-%d')
+		,upt_dt = SYSDATE()
+	WHERE trade_srl = #{tradeSrl} AND user_id = #{userId}
+	</update> 
+	
+	
+	<delete id="deleteTrade">
+	DELETE FROM stock_trade WHERE trade_srl = #{tradeSrl} AND user_id = #{userId}
+	</delete>
+	
+	<update id="updatePoint">
+	UPDATE stock_trade SET 
+		point = #{point}
+	WHERE trade_srl = #{tradeSrl} AND user_id = #{userId}
+	</update> 
+	
+	
+	<select id="selectProfitByTotal" resultType="com.stockholic.webapp.front.stock.model.Profit">
+	SELECT 
+	  sum((trade_sell_prc - trade_buy_prc) * trade_ea) profit
+	  ,sum(fee) fee
+	  ,sum(tax) tax
+	  FROM stock_trade
+	WHERE user_id = #{userId} 
+	AND trade_tp = 'S'
+	</select>
+	
+	<select id="selectProfitByStock" resultType="com.stockholic.webapp.front.stock.model.Profit">
+	 SELECT 
+	    stock_cd
+	    ,(select stock_nm from stock_code where stock_cd =t1.stock_cd) stock_nm
+	    ,sum((trade_sell_prc - trade_buy_prc) * trade_ea) profit
+	    ,sum(fee) fee
+	    ,sum(tax) tax
+	  FROM stock_trade t1
+	  WHERE user_id = #{userId} 
+	  AND trade_tp = 'S'
+	  GROUP BY stock_cd
+	  ORDER BY stock_nm
+	</select>
+	
+	<select id="selectProfitByYear" resultType="com.stockholic.webapp.front.stock.model.Profit">
+	 SELECT 
+	    trade_year
+	    ,stock_cd
+	    ,(select stock_nm from stock_code where stock_cd =t1.stock_cd) stock_nm
+	    ,sum((trade_sell_prc - trade_buy_prc) * trade_ea) profit
+	    ,sum(fee) fee
+	    ,sum(tax) tax
+	  FROM (
+	    SELECT 
+	      stock_cd
+	      ,trade_buy_prc
+	      ,trade_sell_prc
+	      ,trade_ea
+	      ,fee
+	      ,tax
+	      ,DATE_FORMAT(trade_dt,'%Y') trade_year
+	    FROM stock_trade
+	    WHERE user_id = #{userId}
+	    AND trade_tp = 'S'
+	   )t1
+	   GROUP BY trade_year,stock_cd
+	   ORDER BY trade_year DESC ,stock_nm
+	</select>
+	
+	<select id="selectProfitByMonth" resultType="com.stockholic.webapp.front.stock.model.Profit">
+	 SELECT 
+	    trade_year
+	    ,trade_month
+	    ,stock_cd
+	    ,(select stock_nm from stock_code where stock_cd =t1.stock_cd) stock_nm
+	    ,sum((trade_sell_prc - trade_buy_prc) * trade_ea) profit
+	    ,sum(fee) fee
+	    ,sum(tax) tax
+	  FROM (
+	    SELECT 
+	      stock_cd
+	      ,trade_buy_prc
+	      ,trade_sell_prc
+	      ,trade_ea
+	      ,fee
+	      ,tax
+	      ,DATE_FORMAT(trade_dt,'%Y') trade_year
+	      ,DATE_FORMAT(trade_dt,'%m') trade_month
+	    FROM stock_trade
+	    WHERE user_id = #{userId}
+	    AND trade_tp = 'S'
+	   )t1
+	   GROUP BY trade_year,trade_month,stock_cd
+	   ORDER BY trade_year DESC ,trade_month DESC ,stock_nm
+	</select>
+	
+	
+	
+	
+</mapper>  
