@@ -1,0 +1,167 @@
+디렉토리 정보(entry)는 계층적 트리(hierarchical tree-like) 구조로 아래와 같이 구성된다.
+
+dc:         com  
+             |
+           domain         	## (Organisation)
+          /      
+ou:   People   servers    	## (Organisational Units)  
+      /         ..
+uid: tom	           	## (OU-specific data)  
+
+
+
+보통 각 사용자나 개체를 고유하게 나타내는 것을 DN(Distinguish Name)이라고 부름
+DN을 표시할 때에는 노드의 가장 밑 부분부터 거꾸로 올라가면 됩니다. tom 이라는 사용자는 
+다음과 같은 DN을 갖게 되는 겁니다. 
+  ex ) uid=bmarshal의 DN 
+        dn="uid=tom,ou=People,dc=domain,dc=com" 
+
+위와 같이 거꾸로 올라간다고 가정할 때 각각의 마지막 노드들은  항상 고유한 DN을 갖고 있게 됨 (노드들을 엔트리라고 부릅니다. )
+
+*** 엔트리 종류
+CN (Common Name) : KilDong Hong, SaRang Lee 와 같은 일반적인 이름들 
+SN (SirName) : 우리나라 성에 해당한다. Lee, Hong ..
+OU (Organiztion Unit) : 조직구분
+DC (Domain Component) : 도메인에 대한 요소 ex ) tech.example.com dc 는 example.com 혹은 tech.example.com 모두 해당 
+DN (Distinguished Name) : 위의 엔트리 및 기타 여러가지 엔트리들이 모여 특정한 한 사용자(혹은 물체)를 구분할 수 있는 고유의 이름.  
+
+
+http://pseg.or.kr/pseg/infoinstall/7929
+
+
+1. openldap을 yum 으로 설치
+ # yum install -y  openldap*
+
+
+2. slapd를 서비스를 시작
+# systemctl start slapd.service
+# systemctl enable slapd.service
+
+
+3. slapd 패스워드 등록
+# slappasswd
+-----------------------------------------
+New password:
+Re-enter new password:
+{SSHA}e0kBcmmdjn6eyyQO+unjE1rWwxXZCGdW
+-----------------------------------------
+
+
+
+4. db.ldif 파일 생성 후 아래 코드 입력 후 Ldap에 import
+# vi db.ldif
+-----------------------------------------
+dn: olcDatabase={0}config,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: {SSHA}e0kBcmmdjn6eyyQO+unjE1rWwxXZCGdW
+-----------------------------------------
+
+# ldapmodify -Y EXTERNAL  -H ldapi:/// -f db.ldif
+
+5. Ldap 스키마를 추가 한다.
+# ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+# ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
+# ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif 
+
+6. domain.ldif 파일 생성 후 아래 코드 입력 후 Ldap에 Import
+# vi domain.ldif
+-----------------------------------------
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcSuffix
+olcSuffix: dc=zchat,dc=kr
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: cn=admin,dc=zchat,dc=kr
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+add: olcRootPW
+olcRootPW: {SSHA}e0kBcmmdjn6eyyQO+unjE1rWwxXZCGdW
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: {0}to attrs=userPassword,shadowLastChange by dn="cn=admin,dc=zchat,dc=kr" write by anonymous auth by self write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by dn="cn=admin,dc=zchat,dc=kr" write by * read
+-----------------------------------------
+
+# ldapmodify -Y EXTERNAL -H ldapi:/// -f domain.ldif
+
+6. basedomain 파일 생성 후 아래 코드 입력 후 Ldap에 import 한다. Import시 패스워드를 묻는다 초기 slappasswd 를 입력 한다.
+# vi basedomain.ldif
+-----------------------------------------
+dn: dc=zchat,dc=kr
+objectClass: top
+objectClass: dcObject
+objectclass: organization
+o: Server World
+dc: zchat
+
+dn: cn=admin,dc=zchat,dc=kr
+objectClass: organizationalRole
+cn: admin
+description: Directory Manager
+
+dn: ou=Group,dc=zchat,dc=kr
+objectClass: organizationalUnit
+ou: Group
+-----------------------------------------
+
+# ldapadd -x -D cn=admin,dc=zchat,dc=kr -W -f basedomain.ldif
+-----------------------------------------
+Enter LDAP Password:
+adding new entry "dc=zchat,dc=kr"
+
+adding new entry "cn=admin,dc=zchat,dc=kr"
+
+adding new entry "ou=Group,dc=zchat,dc=kr"
+-----------------------------------------
+
+7. LDAP Admin Tool를 이용해서 접속해 본다.(http://www.ldapadmin.org/download/ldapadmin.html)
+
+------------ Connection
+Host : xxx.xxx.xxx.xx
+Base : dc=zchat,dc=kr
+
+------------ Account
+Username : cn=admin,dc=zchat,dc=kr
+Password : xxxx
+
+
+OU -> Group -> User 순으로 생성한다.  User 는 Group 으로 갈수 있다.
+또는  OU -> User 를 생성한다.
+
+8. 기타
+
+-- Admin passwod 변경
+
+# slappasswd
+-----------------------------------------
+New password:
+Re-enter new password:
+{SSHA}e0kBcmmdjn6eyyQO+unjE1rWwxXZCGdW
+-----------------------------------------
+
+# vi db_change_password.ldif
+-----------------------------------------
+dn: olcDatabase={0}config,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: {SSHA}e0kBcmmdjn6eyyQO+unjE1rWwxXZCGdW
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: {SSHA}e0kBcmmdjn6eyyQO+unjE1rWwxXZCGdW
+-----------------------------------------
+# ldapmodify -Y EXTERNAL -H ldapi:/// -f db_change_password.ldif
+
+
+
+-- 사용자 검색
+ldapsearch -x -W -D "uid=jspark,ou=nemu,dc=zchat,dc=kr" -H ldapi:/// -b dc=zchat,dc=kr

@@ -1,0 +1,230 @@
+HTTP		CRUD	SQL					관계 DB			엘라스틱서치
+-------------------------------------------		--------------------------------------------------------
+GET		Read		Select			데이터베이스 (Database)	인덱스 (index)
+PUT		Update	Update			테이블(Table)			타입(Type)
+POST		Create	Insert				열(Row)				도큐먼트 (Document)
+DELETE	Delete	Delete			행(Column)				필드(Field)
+								스키마(Schema)			매핑(Mapping)
+
+
+------------------------------------------------------------------------------------------------- elasticsearch
+1. elasticsearch 설치
+
+    1-1 다운로드
+	https://www.elastic.co/downloads/elasticsearch
+
+    1-2 실행
+	~/bin/elasticsearch --cluster.name my_cluster_name --node.name my_node_name
+
+    1-3 크롬플로그인 설치
+	ElasticSearch Toolbox
+
+    1-3 설명서 링크
+	https://github.com/wikibook/elasticsearch
+
+2. 플러그인 설치
+
+   2-1 한글 형태소 분석기(은전한입)
+	https://bitbucket.org/eunjeon/seunjeon/src/6e8a067fb9a12bcdcdd7f858fd84714c94835f04/elasticsearch/
+	plugin install org.bitbucket.eunjeon/elasticsearch-analysis-seunjeon/2.3.2.0
+
+  2-2  elasticsearch-HQ
+	plugin install royrusso/elasticsearch-HQ
+	http://domain:port/_plugin/hq/
+
+3. index / type / mapping 만들기
+	
+--------------------------------------------------------
+POST stock
+{  
+    "mappings" : {    
+        "auth" : {      
+            "properties" : {        
+                "role_cd" : { "type" : "string", "index": "not_analyzed"}, 
+                "role_nm" : { "type" : "string"},
+                "role_stp" : { "type" : "integer" }
+            }    
+        },
+	"auth2" : {      
+            "properties" : {        
+                "role_cd" : { "type" : "string", "index": "not_analyzed"}, 
+                "role_nm" : { "type" : "string"},
+                "role_stp" : { "type" : "integer" }
+            }    
+        }
+
+    }
+}
+--------------------------------------------------------
+POST stock
+{  
+
+      "settings" : {    
+        "analysis" : {                                                
+            "analyzer" : {        
+                "korean_analyzer" : {            
+                    "type":"custom",            
+                    "tokenizer":"seunjeon_default_tokenizer"        
+                }      
+            },      
+            "tokenizer": {          
+                "seunjeon_default_tokenizer": {            
+                    "type": "seunjeon_tokenizer"          
+                }        
+            }    
+        }  
+    },  
+
+    "mappings" : {    
+        "auth" : {      
+            "properties" : {        
+                "role_cd" : { "type" : "string", "index": "not_analyzed"}, 
+                "role_nm" : { "type" : "string", "analyzer" : "korean_analyzer"},
+                "role_stp" : { "type" : "integer" }
+            }    
+        }
+    }
+}
+--------------------------------------------------------
+
+4.  Document 생성 - 크롬플로그인 (ElasticSearch Toolbox)
+
+POST stock/auth/AAA
+{ "role_cd":"AAA" ,"role_nm":"아버지가 가방에 들어가신다","role_stp":1}
+
+POST stock/auth/BBB
+{ "role_cd":"BBB" ,"role_nm":"엄마가 가방에 들어가신다","role_stp":1}
+
+5.  결과확인 
+	http://127.0.0.1:9200/stock/auth/AAA?pretty
+	http://127.0.0.1:9200/stock/auth/_search?q=role_nm:%EA%B0%80%EB%B0%A9&fields=role_nm,role_cd&sort=role_cd:asc&size=20&pretty
+
+6. 기타 명령어
+   - 데이터삭제
+	curl -XDELETE http://localhost:9200/stock/auth/AAA
+
+------------------------------------------------------------------------------------------------- logstash
+1. logstash 설치
+
+    1-1 다운로드
+	https://www.elastic.co/downloads/elasticsearch
+    1-2 실행
+
+	~/bin/logstash -f logstash.conf --configtest
+	~/bin/logstash -f logstash.conf
+
+    1-3 logstash jdbc 설정
+	
+	-  jdbc 커넥트 복사 ~lib/mysql-connector-java-5.1.38.jar
+	- vi  logstash.conf
+
+-------------------------------------------------------- logstash.conf
+input {
+        jdbc {
+		type => "auth_import"
+                jdbc_driver_library => "lib/mysql-connector-java-5.1.38.jar"
+                jdbc_driver_class => "com.mysql.jdbc.Driver"
+                jdbc_connection_string => "jdbc:mysql://192.168.0.200:3306/stock"
+                jdbc_user => "merong"
+                jdbc_password => "Wkwkdaus"
+                statement => "SELECT * FROM auth_master"
+		#schedule => "* * * * *"
+        }
+}
+ 
+output {
+
+	if [type] == "auth_import" {
+		 elasticsearch { 
+			#action => "delete"
+			#action => "update"
+			action => "create"
+			hosts => "localhost:9200"
+			index => "stock"
+			document_type => "auth"
+			document_id => "%{role_cd}"
+		}
+	}
+
+	stdout { codec => json_lines }
+}
+
+-------------------------------------------------------
+
+
+POST stock/auth/_search
+{
+   "query": {
+      "query_string": {
+         "fields": [
+            "role_nm"
+         ],
+         "query": "엄마 가방"
+      }
+     },
+   "_source": {
+        "include": [ "role_nm","role_cd"]
+    },
+   
+   "highlight" : {
+      "pre_tags" : ["<span class='sht'>"],
+       "post_tags" : ["</span>"],
+       "fields": [
+          {"role_nm":{}},
+          {"role_cd":{}}
+        ]
+    },
+   
+   "sort": [
+      {"_score" : "asc"},
+      {"role_cd" : "desc"}
+   ],
+   "from": 0,
+   "size": 10
+}
+
+
+POST stock
+{  
+
+      "settings" : {    
+        "analysis" : {                                                
+            "analyzer" : {        
+                "korean_analyzer" : {            
+                    "type":"custom",            
+                    "tokenizer":"seunjeon_default_tokenizer"        
+                }      
+            },      
+            "tokenizer": {          
+                "seunjeon_default_tokenizer": {            
+                    "type": "seunjeon_tokenizer"          
+                }        
+            }    
+        }  
+    },  
+
+    "mappings" : {    
+        "auth" : {      
+            "properties" : {        
+                "role_cd" : { "type" : "string", "index": "not_analyzed"}, 
+                "role_nm" : { "type" : "string", "analyzer" : "korean_analyzer"},
+                "role_stp" : { "type" : "integer" }
+            }    
+        }
+    }
+}
+
+POST stock/auth/AAA
+{ "role_cd":"AAA" ,"role_nm":"아버지가 가방에 들어가신다","role_stp":1}
+
+POST stock/auth/BBB
+{ "role_cd":"BBB" ,"role_nm":"엄마가 가방에 들어가신다","role_stp":1}
+
+POST stock/auth/CCC
+{ "role_cd":"CCC" ,"role_nm":"김수안무 거북이와 두루미","role_stp":1}
+
+POST stock/auth/DDD
+{ "role_cd":"DDD" ,"role_nm":"사과배추","role_stp":1}
+
+
+DELETE stock

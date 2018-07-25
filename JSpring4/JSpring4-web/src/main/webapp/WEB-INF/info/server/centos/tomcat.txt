@@ -1,0 +1,60 @@
+------------------------------------------------------------------- 8.0 server.xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<Server port="8005" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <GlobalNamingResources>
+  </GlobalNamingResources>
+
+  <Service name="Catalina">
+
+    <Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000"  redirectPort="8443" URIEncoding="UTF-8" />
+
+    <Engine name="Catalina" defaultHost="localhost">
+
+
+      <Host name="www.zchat.kr" appBase="webapps">
+                <Alias>zchat.kr</Alias>
+                <Context path="/" docBase="/usr/local/www/zchat" reloadable="false"/>
+      </Host>
+
+
+    </Engine>
+  </Service>
+</Server>
+
+------------------------------------------------------------------- 8.0 server.xml  - virtual host
+
+<?xml version='1.0' encoding='utf-8'?>
+<Server port="8006" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <GlobalNamingResources>
+  </GlobalNamingResources>
+
+  <Service name="Catalina">
+
+    <Connector port="8090" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" URIEncoding="UTF-8" />
+
+    <Engine name="Catalina" defaultHost="localhost">
+
+      <Host name="tool.zchat.kr" appBase="webapps">
+         <Context path="/jenkins" docbase="jenkins" reloadable="false"/>
+         <Context path="/nexus" docbase="nexus" reloadable="false"/>
+      </Host>
+
+
+    </Engine>
+  </Service>
+</Server>
+
+

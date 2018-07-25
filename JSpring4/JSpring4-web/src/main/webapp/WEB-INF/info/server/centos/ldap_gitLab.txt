@@ -1,0 +1,79 @@
+=====================================  GitLab =================================== 
+# vi /etc/gitlab/gitlab.rb
+----------------------------------------------------------------------------------------------------------
+
+    	173 ###! **remember to close this block with 'EOS' below**
+    	174  gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
+    	175    main: # 'main' is the GitLab 'provider ID' of this LDAP server
+    	176      label: 'LDAP'
+>>	177      host: '127.0.0.1'
+     	178      port: 389
+>> 	179      uid: 'uid'
+>> 	180      bind_dn: 'ou=dev,dc=zchat,dc=kr'
+>> 	181      password: 'password'
+    	182      encryption: 'plain' # "start_tls" or "simple_tls" or "plain"
+    	183      verify_certificates: true
+    	184      ca_file: ''
+    	185      ssl_version: ''
+>> 	186      active_directory: false
+>> 	187      allow_username_or_email_login: true
+    	188      block_auto_created_users: false
+>> 	189      base: 'dc=zchat,dc=kr'
+    	190      user_filter: ''
+    	191      attributes:
+    	192        username: ['uid', 'userid', 'sAMAccountName']
+    	193        email:    ['mail', 'email', 'userPrincipalName']
+    	194        name:       'cn'
+    	195        first_name: 'givenName'
+    	196        last_name:  'sn'
+    	197      ## EE only
+    	198      group_base: ''
+    	199      admin_group: ''
+    	200      sync_ssh_keys: false
+ >>   	201 EOS
+----------------------------------------------------------------------------------------------------------
+
+# gitlab-ctl reconfigure
+
+
+
+
+=====================================  Jenkins =================================== 
+
+Jenkins 관리 > Configure Global Security
+	
+	Access Control > Security Realm > LDAP 선택
+	------------------------------------------------------
+	서버 : 127.0.0.1  OR 127.0.0.1:PORT
+	root DN : dc=zchat,dc=kr
+	User search base : ou=dev
+	User search filter : uid={0}
+
+	Manager DN : cn=admin,dc=zchat,dc=kr			<-- 확인용 하지마라 비워놓자
+	Manager Password : '실제관리자패스워드'			<-- 확인용 하지마라  비워놓자
+
+	Display Name LDAP attribute : displayName
+	Email Address LDAP attribute : mail
+	------------------------------------------------------
+
+
+Jenins 암호 초기화
+# vi ~user/.jenkins/config.xml
+<useSecurity>true</useSecurity> ->   <useSecurity>false</useSecurity> 로 변경
+
+
+
+=====================================  redmine =================================== 
+
+관리 > LDAP 인증 > 새 인증 공급자
+
+이름 : Local ldap
+호스트 : 127.0.0.1
+포트 : 389
+기본 DN : ou=dev,dc=zchat,dc=kr
+동적 사용자 생성 : 체크
+
+로그인 속성 : uid
+이름속성 : givenName
+성 속성 : sn
+메일 소속성 : mail

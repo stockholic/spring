@@ -1,0 +1,146 @@
+gitLab
+
+
+https://about.gitlab.com/installation/#centos-7
+
+1. Install and configure the necessary dependencie
+
+  sudo yum install -y curl policycoreutils openssh-server openssh-clients
+  sudo systemctl enable sshd
+  sudo systemctl start sshd
+  sudo firewall-cmd --permanent --add-service=http
+  sudo systemctl reload firewalld
+
+  sudo yum install postfix
+  sudo systemctl enable postfix
+  sudo systemctl start postfix
+
+
+2. Add the GitLab package repository and install the package
+
+  Add the GitLab package repository.
+  curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+
+
+  Next, install the GitLab package.
+  sudo yum install -y gitlab-ce
+
+
+
+1. 설치
+
+  # yum install -y curl policycoreutils openssh-server openssh-clients
+  # curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh |  bash
+  # yum install -y gitlab-ce
+  # gitlab-ctl reconfigure
+
+
+  ** 초기 설치 후 또는 gitlab.rb 변경 후에는  gitlab-ctl reconfigure 를 실행한다.
+
+2. 설정
+  기본적으로 내장 nginx 가 자동설치된다. conf 파일 적절히 수정하여 사용
+  #  vi /var/opt/gitlab/nginx/conf/nginx-status.conf
+
+  ----------------------------------------
+  server  {
+    listen *:8060;
+    server_name localhost;
+    location /nginx_status {
+      stub_status on;
+      server_tokens off;
+      access_log off;
+      allow 127.0.0.1;
+      deny all;
+    }
+  }
+ ----------------------------------------
+
+  # gitlab-ctl reconfigure
+
+  # gitlab-ctl status
+  # gitlab-ctl start
+  # gitlab-ctl stop
+  
+
+3.  외부 Nginx 이용하기
+
+  # vi /etc/gitlab/gitlab.rb
+  -----------------------------------------
+  nginx['enable'] = false
+  external_url "http://gitlab.example.com"
+  -----------------------------------------
+
+  # gitlab-ctl reconfigure
+
+
+  ex)  gitlab-omnibus-nginx.conf  
+ -----------------------------------------------------------------------------------------------------------------
+
+ upstream gitlab-workhorse {
+  server unix:/var/opt/gitlab/gitlab-workhorse/socket;
+}
+
+## Normal HTTP host
+server {
+  ## Either remove "default_server" from the listen line below,
+  ## or delete the /etc/nginx/sites-enabled/default file. This will cause gitlab
+  ## to be served if you visit any address that your server responds to, eg.
+  ## the ip address of the server (http://x.x.x.x/)n 0.0.0.0:80 default_server;
+  listen 0.0.0.0:80 default_server;
+  listen [::]:80 default_server;
+  server_name YOUR_SERVER_FQDN; ## Replace this with something like gitlab.example.com
+  server_tokens off; ## Don't show the nginx version number, a security best practice
+  root /opt/gitlab/embedded/service/gitlab-rails/public;
+
+  ## See app/controllers/application_controller.rb for headers set
+
+  ## Individual nginx logs for this GitLab vhost
+  access_log  /var/log/nginx/gitlab_access.log;
+  error_log   /var/log/nginx/gitlab_error.log;
+
+  location / {
+    client_max_body_size 0;
+    gzip off;
+
+    ## https://github.com/gitlabhq/gitlabhq/issues/694
+    ## Some requests take more than 30 seconds.
+    proxy_read_timeout      300;
+    proxy_connect_timeout   300;
+    proxy_redirect          off;
+
+    proxy_http_version 1.1;
+
+    proxy_set_header    Host                $http_host;
+    proxy_set_header    X-Real-IP           $remote_addr;
+    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Proto   $scheme;
+
+    proxy_pass http://gitlab-workhorse;
+  }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+ ** unix:/var/opt/gitlab/gitlab-workhorse/socket; 퍼비션 에러 해결
+    nginx 유저 변경
+   vi ~~nginx/conf/nginx.conf
+    -----------------------------------------
+   user git root;
+   -----------------------------------------
+
+ ** nginx user git root 변경시 퍼미션 에러 해결
+    # cd /usr/local/nginx
+    # chmod -R git:root  proxy_temp
+
+  ** 502 Whoops, GitLab is taking too much time to respond
+   union 포트변경 기본 8080 인데 사용되어 있으면 에러나다.
+
+   # vi /etc/gitlab/gitlab.rb
+  -----------------------------------------
+  unicorn['port'] = 8081
+  -----------------------------------------
+  # gitlab-ctl reconfigure
+
+
+   ** 최초 계정 root / 5iveL!fe

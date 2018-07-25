@@ -1,0 +1,86 @@
+1. ogrotate 는 데몸네 으해 작동하는 것이 아니고 cron 에 의해 정기적으로 작동한다.
+
+# cat /etc/cron.daily/logrotate 
+-------------------------------------------------
+#!/bin/sh
+
+/usr/sbin/logrotate /etc/logrotate.conf
+EXITVALUE=$?
+if [ $EXITVALUE != 0 ]; then
+    /usr/bin/logger -t logrotate "ALERT exited abnormally with [$EXITVALUE]"
+fi
+exit 0
+-------------------------------------------------
+
+2. /usr/sbin/logrotate /etc/logrotate.conf  여기 에서 매일 실행하는 것을 볼 수있있음
+
+3. /etc/logrotate.conf  열어보면  include /etc/logrotate.d  와 같이 /etc/logrotate.d  내의 모든 설정을 실행함
+
+4. 옵션
+-------------------------------------------------
+rotate 30(숫자)   	log파일 30개 이상 되면 삭제
+maxage 30(숫자) 	30일 이산된 로그 파일 삭제
+size  			지정한 용량이 되면 로그로테이트를 실행한다. 10k, 10M 이런식으로 지정한다.
+create  		[권한 유저 그룹] 으로 rotation된 로그파일 생성
+notifempty  		log 내용이 없으면 rotation 하지 않는다.
+ifempty  		로그파일이 비어있는 경우에도 로테이트한다.
+monthly  		월 단위로 로테이트 한다.
+daily  			일 단위로 로테이트 한다.
+weekly  		주 단위로 로테이트 한다.
+compress 		rotate 된 로그 gzip 압축
+nocompress  		압축을 원치 않는다.
+missingok		로그파일이 없더라도 오류를 발생시키지 않음
+mail admin@mail  	로테이트 설정에 의해 보관주기가 끝난 파일을 메일로 발송한다.
+mailfirst admin@mail 	로테이트시 신규파일 이전의 로그를 메일로 발송한다.
+nomail  		메일로 통보받지 않음.
+errors admin@mail  	로테이트 실행시 에러가 발생하면 이메일로 통보한다.
+prerotate-endscript  	사이의 명령어를 로그파일 처리전에 실행한다.
+postrotate-endscript  사이의 명령어를 로그파일 처리후에 실행한다.
+extension  		로테이트 후 생성되는 파일의 확정자를 지정한다.
+copytruncate 	 	이옵션을 넣지 않으면 현재 사용중인 로그를 다른이름으로 move하고 새로운 파일을 생성한다.
+-------------------------------------------------
+
+
+
+# vi /etc/logrotate.d/nginx
+------------------------------------------------------------------- nginx
+/usr/local/nginx/logs/*.log {
+    daily
+    missingok
+    rotate 5
+    compress
+    copytruncate
+    notifempty
+    create 640 root adm
+    sharedscripts
+    postrotate
+        [ -f /usr/local/nginx/logs/nginx.pid ] && kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+    endscript
+}
+
+Test : -f : 강제모드 -d : 디버그모드
+# /usr/sbin/logrotate -f /etc/logrotate.d/nginx
+# vi /var/lib/logrotate.status
+
+
+# vi /etc/logrotate.d/tomcat
+------------------------------------------------------------------- tomcat
+
+/usr/local/tomcat/logs/catalina.out {
+        daily
+        rotate 5
+        missingok
+        copytruncate
+        compress
+}
+/usr/local/jenkins/logs/catalina.out {
+        daily
+        rotate 5
+        missingok
+        copytruncate
+        compress
+}
+
+Test : -f : 강제모드 -d : 디버그모드
+# /usr/sbin/logrotate -f /etc/logrotate.d/tomcat
+# vi /var/lib/logrotate.status

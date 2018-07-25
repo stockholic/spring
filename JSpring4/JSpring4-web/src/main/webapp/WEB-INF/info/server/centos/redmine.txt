@@ -1,0 +1,149 @@
+# yum install openssl-devel readline-devel zlib-devel curl-devel libyaml-devel
+# yum install ImageMagick ImageMagick-devel
+
+
+-------------------------------------------------------------------------------- ruby 2.3.0 설치
+
+wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz
+
+tar zxvf ruby-2.3.1.tar.gz
+cd ruby-2.3.1
+./configure --disable-install-doc
+make;make install;make clean
+
+
+--------------------------------------------------------------------------------  bundler 설치
+# gem install bundler --no-rdoc --no-ri
+
+--------------------------------------------------------------------------------  Gem Package 설치
+# bundle install --without development test
+
+
+--------------------------------------------------------------------------------  redmine 설치 
+# wget http://www.redmine.org/releases/redmine-3.3.0.tar.gz
+
+# tar zxvf redmine-3.3.0.tar.gz
+# mv redmine-3.3.0 /usr/local/redmine 
+ 
+# cd /usr/local/redmine/config
+# cp database.yml.example database.yml
+
+# vi database.yml
+----------------------------------
+production:
+adapter: mysql2
+database: redmine
+host: localhost
+username: redmine
+password: redmine
+encoding: utf8
+----------------------------------
+
+# 나눔 폰트 설치
+# wget http://cdn.naver.com/naver/NanumFont/fontfiles/NanumFont_TTF_ALL.zip
+# mkdir /usr/share/fonts/nanumfont
+# unzip NanumFont_TTF_ALL.zip -d /usr/share/fonts/nanumfont
+# cd /usr/local/redmine/config
+# cp configuration.example.yml configuration.yml
+
+# vi /usr/local/redmine/config/configuration.yml
+----------------------------------
+magick_font_path: /usr/share/fonts/nanumfont/NanumGothic.ttf
+----------------------------------
+
+ 
+
+--------------------------------------------------------------------------------  테이블 생성 및 초기 데이터 입력
+# cd /usr/local/redmine 
+# rake generate_secret_token
+# RAILS_ENV=production rake db:migrate
+# RAILS_ENV=production rake redmine:load_default_data
+# 한국어는 ko로 입력한다.
+
+--------------------------------------------------------------------------------  데몬으로 실행/종료
+# 시작
+# bundle exec rails server webrick -e production -d
+OR
+# ruby /usr/local/redmine/bin/rails server webrick -e production -d
+
+# 종료
+# kill -9 `pidof ruby`
+
+--------------------------------------------------------------------------------  테마설치
+http://www.redmine.org/projects/redmine/wiki/Theme_List
+
+다운받은 테마를 설치된 /usr/local/redmine/public/themes 복사함
+관리자가 테마 선택함
+
+--------------------------------------------------------------------------------  플러그인 설치
+http://www.redmine.org/plugins
+
+다운받은 테마를 설치된 /usr/local/redmine/plugins 복사 후  설치 루트로 이동 후 아래 명령 실행
+
+# git clone git://github.com/alphanodes/redmine_tweaks.git plugins/redmine_tweaks
+
+# 설치
+rake redmine:plugins:migrate NAME=redmine_lightbox2 RAILS_ENV=production
+OR
+bundle exec rake redmine:plugins NAME=redmine_checklists RAILS_ENV=production
+bundle exec rake redmine:plugins NAME=redmine_tweaks RAILS_ENV=production
+bundle exec rake redmine:plugins NAME=advanced_roadmap_v2 RAILS_ENV=production
+
+# 삭제
+bundle exec rake redmine:plugins:migrate NAME=advanced_roadmap_v2 VERSION=0 RAILS_ENV=production
+
+재 시작 해야함
+
+
+--------------------------------------------------------------------------------  초기화면 변경
+
+# vi /usr/local/redmine/config/routes.rb
+---------------------------------------------------------------
+#root :to => 'welcome#index', :as => 'home'
+
+# 프로젝트 홈으로 변경
+root :to => 'projects#show', :id =>'zchat',:as => 'home'
+
+# 위키페이지로 변경
+root :to => 'wiki#show', :project_id =>'zchat' ,:as => 'home'
+---------------------------------------------------------------
+
+-------------------------------------------------------------------------------- HTML 사용 가능 macro.rb 수정
+# vi /usr/local/redmine/lib/redmine/wiki_formatting/macros.rb
+
+아래내용 추가
+---------------------------------------------------------------
+desc "Insert html" + "\n\n" +
+     "{{html\n<HTML CODE HERE>\n}}" 
+macro :html do |obj, args, text|
+  text.html_safe
+end
+---------------------------------------------------------------
+
+사용법 : 
+
+{{html
+    <font style="color:blue;font-size:20px">HTML</font>
+}}
+
+
+-------------------------------------------------------------------------------- nginx 설정 추가
+
+server {
+        listen 80;
+        server_name redmine.vmhost.com;
+
+        location / {
+                proxy_pass http://127.0.0.1:3000;
+        }
+}
+
+
+
+<pre><code class="text">
+# yum install openssl-devel readline-devel zlib-devel curl-devel libyaml-devel
+# yum install ImageMagick ImageMagick-devel
+</code></pre>
+
+
+

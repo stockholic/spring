@@ -1,0 +1,305 @@
+https://www.linode.com/docs/email/postfix/email-with-postfix-dovecot-and-mysql-on-centos-6
+
+
+From Centos 5.9 postfix includes native mysql support. !!!
+
+You can check dependencies:
+----------------------------------------------------------------------------------------
+# rpm -q --requires postfix | grep mysql
+libmysqlclient.so.16()(64bit) 
+libmysqlclient.so.16(libmysqlclient_16)(64bit) 
+mysql-libs  
+----------------------------------------------------------------------------------------
+
+
+--------------------------------------------------- 테이블 생성
+---------- 가상도메인 테이블 생성
+CREATE TABLE domains (
+  id INT NOT NULL AUTO_INCREMENT,
+  domain VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO vmail.domains (domain) VALUES  ('zchat.kr');
+
+---------- 가상유저 테이블 생성, 위의 가상도메인 테이블과 foreign key 로 연결
+CREATE TABLE users (
+  	id INT NOT NULL AUTO_INCREMENT,
+  	domains_id INT NOT NULL,
+  	password VARCHAR(200) NOT NULL,
+  	email VARCHAR(120) NOT NULL,
+  	PRIMARY KEY (id),
+	UNIQUE KEY email (email),
+	FOREIGN KEY (domains_id) REFERENCES domains(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO vmail.users (
+	 domains_id, password , email
+)VALUES(
+	 '1', ENCRYPT('0000', CONCAT('$6$', SUBSTRING(SHA(RAND()), -16))), 'postmaster@zchat.kr'
+);
+
+----------  가상알리아스 테이블 생성, 알리아스로 들어오는 메일은 destination 계정으로 모두 포워딩
+CREATE TABLE forwardings (
+   id INT NOT NULL AUTO_INCREMENT,
+   domains_id INT NOT NULL,
+   source varchar(100) NOT NULL,
+   destination varchar(100) NOT NULL,
+   PRIMARY KEY (id),
+   FOREIGN KEY (domains_id) REFERENCES domains(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 알리아스 추가, alias@zchat.kr 로 들어오는 메일을 test@zchat.kr 로 포워딩
+INSERT INTO vmail.forwardings(
+	domains_id, source, destination
+)VALUES(
+	'1', 'webmaster@zchat.kr', 'jspark@zchat.kr'
+);
+
+
+CREATE TABLE transport (
+	id INT NOT NULL AUTO_INCREMENT,
+	domain varchar(128) NOT NULL default '', 
+	transport varchar(128) NOT NULL default '',
+	PRIMARY KEY (id), 
+	UNIQUE KEY domain (domain) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;;
+
+
+
+
+
+1-2 main.cf  수정
+# vi /etc/postfix/main.cf 
+----------------------------------------------------------------------------------------
+# 메일서버의 호스트명 (다른 메일서버에서 전송 실패시 현재 메일서버 명을 알려준다 )
+myhostname = mail.zchat.kr
+
+# 도메인명
+mydomain = zchat.kr
+
+# 메일 주소에 사용할 도메인 (보낼때, user@zchat.kr 형식)
+myorigin = $mydomain
+
+# 모든 IP에서 25번 포트 접근 허용
+# 전체 수신을 원하면 all, 혹은 127.0.0.0/8 특정 대역만 수신하도록 지정할 수 있습니다.
+net_interfaces = all
+#inet_interfaces = $myhostname
+#inet_interfaces = $myhostname, localhost
+#inet_interfaces = localhost
+
+#메일을 수신 받을 도메인
+mydestination = $mydomain www.$mydomain taxholic.com stockholic.com
+
+# 릴레이 설정하는 부분. outlook 등으로 메일 발송하려면 IP를 등록해야 하는데,
+# 불특정 IP나 유동 IP로 인해 모든 IP를 허용한 상태 스팸발송 방지를 위해 메일 발송 인증 설정은 꼭 해두어야 함
+mynetworks = 127.0.0.0/8
+
+----------------------------------------------------------------------------------------
+postconf -e 'myhostname = mail.zchat.kr'
+postconf -e 'mydestination = $myhostname, localhost, localhost.localdomain'
+postconf -e 'mynetworks = 127.0.0.0/8'
+postconf -e 'inet_interfaces = all'
+postconf -e 'message_size_limit = 30720000'
+postconf -e 'virtual_alias_domains ='
+postconf -e 'virtual_mailbox_domains = proxy:mysql:/etc/postfix/mysql-virtual_domains.cf'
+postconf -e 'virtual_mailbox_maps = proxy:mysql:/etc/postfix/mysql-virtual_mailboxes.cf'
+postconf -e 'virtual_alias_maps = proxy:mysql:/etc/postfix/mysql-virtual_forwardings.cf, mysql:/etc/postfix/mysql-virtual_email2email.cf'
+postconf -e 'virtual_mailbox_base = /home/vmail'
+postconf -e 'virtual_uid_maps = static:5000'
+postconf -e 'virtual_gid_maps = static:5000'
+postconf -e 'smtpd_sasl_type = dovecot'
+postconf -e 'smtpd_sasl_path = private/auth'
+postconf -e 'smtpd_sasl_auth_enable = yes'
+postconf -e 'broken_sasl_auth_clients = yes'
+postconf -e 'smtpd_sasl_authenticated_header = yes'
+postconf -e 'smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination'
+postconf -e 'smtpd_use_tls = yes'
+postconf -e 'smtpd_tls_cert_file = /etc/pki/dovecot/certs/dovecot.pem'
+postconf -e 'smtpd_tls_key_file = /etc/pki/dovecot/private/dovecot.pem'
+postconf -e 'virtual_create_maildirsize = yes'
+postconf -e 'virtual_maildir_extended = yes'
+postconf -e 'proxy_read_maps = $local_recipient_maps $mydestination $virtual_alias_maps $virtual_alias_domains $virtual_mailbox_maps $virtual_mailbox_domains $relay_recipient_maps $relay_domains $canonical_maps $sender_canonical_maps $recipient_canonical_maps $relocated_maps $transport_maps $mynetworks $virtual_mailbox_limit_maps'
+postconf -e 'virtual_transport = dovecot'
+postconf -e 'dovecot_destination_recipient_limit = 1'
+----------------------------------------------------------------------------------------
+
+
+postfix 와 mysql 의 도메인 테이블을 연결하는 설정파일을 생성하고 필요한 설정을 추가.
+# vi /etc/postfix/mysql-virtual_domains.cf
+----------------------------------------------------------------------
+user = merong
+password = qkrtjqkddhkTsi
+hosts = localhost
+dbname = vmail
+query = SELECT 1 FROM domains WHERE domain='%s'
+----------------------------------------------------------------------
+
+postfix 와 mysql 연동설정을 확인. 1을 리턴하면 성공
+# postmap -q zchat.kr mysql:/etc/postfix/mysql-virtual_domains.cf
+
+# ln -s /tmp/mysql.sock /var/lib/mysql/mysql.sock 	(sock 에러나면)
+
+postfix 와 mysql 의 유저 테이블을 연결하는 설정파일을 생성하고 필요한 설정을 추가.
+# vi /etc/postfix/mysql-virtual_mailboxes.cf
+----------------------------------------------------------------------
+user = merong
+password = qkrtjqkddhkTsi
+hosts = localhost
+dbname = vmail
+query = SELECT 1 FROM users WHERE email='%s'
+----------------------------------------------------------------------
+
+postfix 와 mysql 의 유저 테이블간의 설정 확인. 1을 리턴하면 성공
+# postmap -q test@zchat.kr mysql:/etc/postfix/mysql-virtual_mailboxes.cf
+
+postfix 와 mysql 의 알리아스 테이블을 연결하는 설정파일을 생성하고 필요한 설정을 추가
+# vi /etc/postfix/mysql-virtual_forwardings.cf
+----------------------------------------------------------------------
+user = merong
+password = qkrtjqkddhkTsi
+hosts = localhost
+dbname = vmail
+query = SELECT destination FROM forwardings WHERE source='%s'
+----------------------------------------------------------------------
+# postfix 와 mysql 의 알리아스 테이블간의 설정 확인. 매핑된 메일계정이 리턴되면 성공
+# postmap -q alias@zchat.kr mysql:/etc/postfix/mysql-virtual_forwardings.cf
+
+Create a virtual email mapping file for Postfix called /etc/postfix/mysql-virtual_email2email.cf:
+# vi /etc/postfix/mysql-virtual_email2email.cf
+----------------------------------------------------------------------
+user = merong
+password = qkrtjqkddhkTsi
+hosts = localhost
+dbname = vmail
+query = SELECT email FROM users WHERE email='%s'
+----------------------------------------------------------------------
+# postmap -q test@zchat.kr mysql:/etc/postfix/mysql-virtual_email2email.cf
+
+권한설정
+# chmod o= /etc/postfix/mysql-virtual_*.cf
+# chgrp postfix /etc/postfix/mysql-virtual_*.cf
+
+vmail 유저추가
+# groupadd -g 5000 vmail
+# useradd -g vmail -u 5000 vmail -d /home/vmail -m
+
+
+1-3 master.cf  추가
+vi /etc/postfix/master.cf
+----------------------------------------------------------------------------------------
+dovecot   unix  -       n       n       -       -       pipe
+    flags=DRhu user=vmail:vmail argv=/usr/libexec/dovecot/deliver -f ${sender} -d ${recipient}
+----------------------------------------------------------------------------------------
+
+
+# systemctl restart postfix
+# netstat -tlnp
+
+
+
+---------------------------------------------------------------------------------------- dovecot
+# yum -y install dovecot
+# yum -y install dovecot-mysql
+
+
+2-1 dovecot .conf 설정
+
+vi /etc/dovecot/dovecot.conf
+----------------------------------------------------------------------------------------
+protocols = imap pop3
+log_timestamp = "%Y-%m-%d %H:%M:%S "
+mail_location = maildir:/home/vmail/%d/%n/Maildir
+
+ssl_cert = </etc/pki/dovecot/certs/dovecot.pem
+ssl_key = </etc/pki/dovecot/private/dovecot.pem
+
+namespace {
+    type = private
+    separator = .
+    prefix = INBOX.
+    inbox = yes
+}
+
+service auth {
+    unix_listener auth-master {
+        mode = 0600
+        user = vmail
+    }
+
+    unix_listener /var/spool/postfix/private/auth {
+        mode = 0666
+        user = postfix
+        group = postfix
+    }
+
+user = root
+}
+
+service auth-worker {
+    user = root
+}
+
+protocol lda {
+    log_path = /home/vmail/dovecot-deliver.log
+    auth_socket_path = /var/run/dovecot/auth-master
+    postmaster_address = postmaster@zchat.kr
+}
+
+protocol pop3 {
+    pop3_uidl_format = %08Xu%08Xv
+}
+
+passdb {
+    driver = sql
+    args = /etc/dovecot/dovecot-sql.conf.ext
+}
+
+userdb {
+    driver = static
+    args = uid=5000 gid=5000 home=/home/vmail/%d/%n allow_all_users=yes
+}
+----------------------------------------------------------------------------------------
+
+vi /etc/dovecot/dovecot-sql.conf.ext
+----------------------------------------------------------------------------------------
+driver = mysql
+connect = host=127.0.0.1 dbname=vmail user=merong password=qkrtjqkddhkTsi
+#default_pass_scheme = PLAIN
+default_pass_scheme = SHA512-CRYPT
+password_query = SELECT email as user, password FROM users WHERE email='%u';
+----------------------------------------------------------------------------------------
+
+# chgrp dovecot /etc/dovecot/dovecot-sql.conf.ext
+# chmod o= /etc/dovecot/dovecot-sql.conf.ext
+
+# systemctl restart dovecot
+
+
+
+Configure Mail Aliases
+vi /etc/aliases
+----------------------------------------------------------------------------------------
+webmaster:      merong@zchat.kr
+postmaster:     merong@zchat.kr
+root :          merong@zchat.kr
+----------------------------------------------------------------------------------------
+
+
+
+
+2-2 테스트
+# telnet localhost 465
+
+
+
+993 : SSL을 통한 IMAP 연결
+465 : SSL을 통한 SMTP 연결
+
+
+
+
+
+ 
+
