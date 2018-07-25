@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- layout -->
+	<definition name=".front">
+        <put-attribute name="title" value="zChat" />
+    </definition>
+    <definition name=".manager">
+        <put-attribute name="title" value="zChat" />
+    </definition>
+	
+	<!-- none -->
+    <definition name="none:**"  template="/WEB-INF/layouts/none/layout.jsp" >
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
+    </definition>
+    
+	<!-- front -->
+    <definition name="front:**" extends=".front"  template="/WEB-INF/layouts/front/layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/layouts/front/header.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/layouts/front/footer.jsp" />
+    </definition>
+    
+	<!-- manager -->
+    <definition name="manager:**" extends=".manager"  template="/WEB-INF/layouts/admin/layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/layouts/admin/header.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/layouts/admin/footer.jsp" />
+    </definition>
+    
+      <!-- script -->
+    <definition name="zChatScript" template="/WEB-INF/layouts/zChatScript.jsp"> </definition>
+    <definition name="frontScript" template="/WEB-INF/layouts/frontScript.jsp"> </definition>
+      <!-- css -->
+    <definition name="zChatCss" template="/WEB-INF/layouts/zChatCss.jsp"> </definition>
+    <definition name="frontCss" template="/WEB-INF/layouts/frontCss.jsp"> </definition>
+    
+	
+</tiles-definitions>
