@@ -1,0 +1,147 @@
+#inboxSubject{
+   float: left;
+   width:35%;
+}
+
+#inboxContent{
+   float: right;
+}
+
+#inboxDragbar{
+   background-color:#D4D4D4;
+   border-left: 2px solid #fff;
+   border-right: 2px solid #fff;
+   height: calc(100vh - 100px);
+   float: right;
+   width: 5px;
+   margin-right :-35px;
+   cursor: col-resize;
+}
+
+#inbox_list_wrap {
+   float:left;
+   width: 100%;
+}
+
+.inbox_header, .inbox_content_header{
+    height: 50px;
+    padding: 5px 0px 5px 0px
+}
+
+.message-menu1, .message-menu2{
+	padding-left:12px;
+	float:left;
+}
+
+
+.list-group-item {
+    border-left: #fff;
+    border-right: #fff;
+}
+
+.inbox_list_name {
+    color: #777777;
+    font-size: 13px;
+    height:24px;
+    font-weight: bold;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:60%;
+    float:left;
+}
+
+
+#inbox_list_subject, #inboxContent{
+	overflow: auto;
+}
+
+.inbox_list_name i{
+  width: 20px;
+  font-size: 11px;
+}
+
+.inbox_list_date {
+    font-size: 12px;
+    color: #aaaaa9;
+     width:40%;
+    float:right;
+    text-align: right;
+}
+
+.inbox_list_title {
+    height:25px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    clear: both;
+}
+.inbox_list_title i{
+  width: 20px;
+  font-size: 16px;
+}
+
+.inbox_content_sender{
+	color: #777777;
+    font-size: 14px;
+    height:30px;
+    font-weight: bold;
+    float:left;
+}
+.inbox_content_date{
+	color: #777777;
+    font-size: 12px;
+    height:30px;
+    float:right;
+}
+.inbox_content_title{
+	clear:both;
+	color: #777777;
+    font-size: 14px;
+    height:50px;
+    font-weight: bold;
+}
+
+.inbox_attachment{
+	color: #777777;
+	font-weight: bold;
+	font-size: 13px;
+	margin:40px 0px 10px 0px;
+}
+
+.inbox_attachment_list{
+	font-size: 13px;
+	padding-left:20px;
+	line-height: 25px;
+}
+
+.unread{
+  font-weight: bold;
+}
+
+.stared{
+  color: #FFC90E;
+}
+.unchecked{
+  color: #E5E5E5
+}
+
+.checked{
+  color: #777777;
+}
+
+@media (max-width: 768px) {
+	#inboxContent , #inboxDragbar, .inbox_content_header{
+    	display: none;
+  	}
+  	
+  	#inbox_list_subject{
+		overflow: inherit;
+	}
+  	
+	#inboxSubject{
+    	width:100%;
+  	}
+}
