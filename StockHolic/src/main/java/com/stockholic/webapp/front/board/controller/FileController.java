@@ -28,6 +28,9 @@ public class FileController{
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	@Value("${stock.file.path}") 
+	private String stockFilePath;
+	
 	@Autowired
 	private FileService fileService; 
 	
@@ -81,6 +84,7 @@ public class FileController{
 	@RequestMapping(value="/fileDownLoad")
 	public void  fileDownLoad (HttpServletResponse response, @RequestParam("srl") Integer  srl) throws UnsupportedEncodingException  {
 		FileInfo fileInfo = fileService.selectFile(srl);
+		fileInfo.setFilePath(stockFilePath + fileInfo.getFilePath());
 		if(fileInfo == null) return;
 		FileManager.fileDownload(response, fileInfo);
 	} 

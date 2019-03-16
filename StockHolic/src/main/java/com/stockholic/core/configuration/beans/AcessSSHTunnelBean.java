@@ -14,6 +14,7 @@ import com.stockholic.core.utils.JSchUtil;
 
 @Component
 public class AcessSSHTunnelBean {
+	/*
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -53,5 +54,6 @@ public class AcessSSHTunnelBean {
 			logger.info("deploy : {}, SSH forwarding disconnect", deploy);
 		}
 	}
+	*/
 
 }

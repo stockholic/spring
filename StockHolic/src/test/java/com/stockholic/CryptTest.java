@@ -13,7 +13,7 @@ public class CryptTest extends BaseTestCase{
 		
 		logger.debug("-------------------------------------------------------------------------------> start");
 		
-		String password = "호호호";
+		String password = "1111";
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(password);
 		logger.debug(hashedPassword);

@@ -12,8 +12,8 @@ public class PropertyEncryptTest {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	 private String USER = "aaa";
-	 private String PASSWORD = "aaa";
+	 private String USER = "shkr";
+	 private String PASSWORD = "Wkwkdaus";
 	
 	@Test
 	public void encryptTest() {
