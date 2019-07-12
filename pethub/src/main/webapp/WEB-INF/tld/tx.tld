@@ -11,7 +11,7 @@
 	<tag>
 		<description>페이징처리</description>
 		<name>nav</name>
-		<tag-class>com.stockholic.core.web.tld.Paging</tag-class>
+		<tag-class>kr.pethub.core.web.tld.Paging</tag-class>
 		<body-content>empty</body-content>
 		 <attribute>
 		     <name>totalPage</name>
@@ -33,7 +33,7 @@
    	<tag>
    		<description>콤보박스 Array</description>
    		 <name>selectArray</name>
-		<tag-class>com.stockholic.core.web.tld.SelectArray</tag-class>
+		<tag-class>kr.pethub.core.web.tld.SelectArray</tag-class>
 		<body-content>empty</body-content>
 		  <attribute>
 		     <name>id</name>
@@ -90,7 +90,7 @@
 	<tag>
    		<description>콤보박스 코드</description>
    		 <name>selectCodeList</name>
-		<tag-class>com.stockholic.core.web.tld.SelectCodeList</tag-class>
+		<tag-class>kr.pethub.core.web.tld.SelectCodeList</tag-class>
 		<body-content>empty</body-content>
 		  <attribute>
 		     <name>id</name>
@@ -132,7 +132,7 @@
 	<tag>
    		<description>코드 명</description>
    		 <name>selectCode</name>
-		<tag-class>com.stockholic.core.web.tld.SelectCode</tag-class>
+		<tag-class>kr.pethub.core.web.tld.SelectCode</tag-class>
 		<body-content>empty</body-content>
 		  <attribute>
 		     <name>grpCd</name>
@@ -149,7 +149,7 @@
     <tag>
    		<description>Radio 코드 목록</description>
    		 <name>radioCodeList</name>
-		<tag-class>com.stockholic.core.web.tld.RadioCodeList</tag-class>
+		<tag-class>kr.pethub.core.web.tld.RadioCodeList</tag-class>
 		<body-content>empty</body-content>
 		  <attribute>
 		     <name>name</name>
@@ -176,7 +176,7 @@
    	<tag>
 		<description>권한별 메뉴목록</description>
 		<name>selectMenuList</name>
-		<tag-class>com.stockholic.core.web.tld.SelectMenuList</tag-class>
+		<tag-class>kr.pethub.core.web.tld.SelectMenuList</tag-class>
 		<body-content>empty</body-content>
 		 <attribute>
 		     <name>roleCd</name>
@@ -188,7 +188,7 @@
    		<tag>
 		<description>파일사이즈</description>
 		<name>fileSize</name>
-		<tag-class>com.stockholic.core.web.tld.FileSize</tag-class>
+		<tag-class>kr.pethub.core.web.tld.FileSize</tag-class>
 		<body-content>empty</body-content>
 		 <attribute>
 		     <name>fileSize</name>

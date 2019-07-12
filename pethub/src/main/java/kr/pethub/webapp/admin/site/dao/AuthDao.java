@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.pethub.core.module.dao.MultiSqlSessionDaoSupport;
 
+
 @Repository
 public class AuthDao extends MultiSqlSessionDaoSupport {
 //	@Override

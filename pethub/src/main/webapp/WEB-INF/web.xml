@@ -10,7 +10,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   </session-config>
   <jsp-config>
     <taglib>
-      <taglib-uri>http://www.stockholic.com/tags</taglib-uri>
+      <taglib-uri>http://www.pethub.kr/tags</taglib-uri>
       <taglib-location>/WEB-INF/tld/tx.tld</taglib-location>
     </taglib>
   </jsp-config>

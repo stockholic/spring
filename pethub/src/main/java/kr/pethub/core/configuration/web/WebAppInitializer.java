@@ -34,7 +34,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		 addListener();
 		 setServletDispatcher();
 		 addServletFilter();
-		 //addSecurityFilter();
+		 addSecurityFilter();
     }
     
     /**

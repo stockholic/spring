@@ -1,6 +1,7 @@
 package kr.pethub.core.configuration.web;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
@@ -39,12 +40,11 @@ import kr.pethub.core.authority.UserHandlerMethodArgumentResolver;
 																			@ComponentScan.Filter(ControllerAdvice.class)
 													}
 													, useDefaultFilters = false)
-public class SpringMvcConfiguration extends WebMvcConfigurationSupport  {
+public class SpringMvcConfiguration  implements WebMvcConfigurer  {
 
     /**
      * User argumentResolvers
      */
-    @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(userHandlerMethodArgumentResolver());
     }
@@ -52,7 +52,6 @@ public class SpringMvcConfiguration extends WebMvcConfigurationSupport  {
     /**
      * static resources
      */
-    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/static/favicon.ico");

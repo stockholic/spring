@@ -23,7 +23,7 @@
 		<mybatis-spring.version>2.0.1</mybatis-spring.version>
 		<aspectj.version>1.8.4</aspectj.version>
 		<jackson.version>2.9.9</jackson.version>
-		<ehcache.version>3.7.1</ehcache.version>
+		<ehcache.version>2.10.6</ehcache.version>
 		<maven.encoding>UTF-8</maven.encoding>
 	</properties> 
 	
@@ -216,26 +216,6 @@
 		    <version>3.6</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-collections4</artifactId>
-		    <version>4.3</version>
-		</dependency>
-
-		<dependency>
-		    <groupId>commons-logging</groupId>
-		    <artifactId>commons-logging</artifactId>
-		    <version>1.2</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-configuration2</artifactId>
-		    <version>2.3</version>
-		</dependency>
-
-
-
-		<dependency>
 	        <groupId>commons-fileupload</groupId>
 	        <artifactId>commons-fileupload</artifactId>
 	        <version>1.4</version>
@@ -300,9 +280,9 @@
 		
 		<!-- ehcache -->
 		<dependency>
-		    <groupId>org.ehcache</groupId>
-    		<artifactId>ehcache</artifactId>
-		    <version>${ehcache.version}</version>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache</artifactId>
+		     <version>${ehcache.version}</version>
 		</dependency>
 		
 		<!-- Servlet -->
@@ -368,20 +348,6 @@
 			<version>3.1</version>
 		</dependency>
 		
-		<dependency>
-		    <groupId>com.jcraft</groupId>
-		    <artifactId>jsch</artifactId>
-		    <version>0.1.53</version>
-		</dependency>
-		
-	    
-	    <!--  System Info -->
-		<dependency>
-		    <groupId>com.github.dblock</groupId>
-		    <artifactId>oshi-core</artifactId>
-		    <version>3.4.0</version>
-		</dependency>
-		
 	</dependencies>
   
 	<build>
@@ -423,7 +389,7 @@
 				<version>2.4</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<warName>StockHolic</warName>
+					<warName>pethub</warName>
 				</configuration>
 			</plugin> 
 			
