@@ -189,31 +189,39 @@
 	</insert> 
 	
 	<delete id="deleteMenu">
+	/** deleteMenu **/
 	DELETE  FROM auth_menu  WHERE menu_srl = #{menuSrl}
 	</delete>
 	
 	<delete id="deleteMenu2">
+	/** deleteMenu2 **/
 	DELETE  FROM auth_menu WHERE menu_srl IN ( 
-		SELECT 
-			t2.menu_srl
-		FROM auth_menu AS t1,  auth_menu AS t2
-		WHERE t2.parent_srl = t1.menu_srl
-		AND t1.menu_srl = #{menuSrl}
+		SELECT T.menu_srl FROM(
+			SELECT 
+				t2.menu_srl
+			FROM auth_menu AS t1,  auth_menu AS t2
+			WHERE t2.parent_srl = t1.menu_srl
+			AND t1.menu_srl = #{menuSrl}
+		) T
 	)
 	</delete>	
 		
 	<delete id="deleteMenu3">
+	/** deleteMenu3 **/
 	DELETE  FROM auth_menu WHERE menu_srl IN (
-		SELECT 
-			t3.menu_srl
-		FROM auth_menu AS t1,  auth_menu AS t2,  auth_menu AS t3
-		WHERE t2.parent_srl = t1.menu_srl AND t3.parent_srl = t2.menu_srl
-		<if test="menuNm == 'menu1'  and menuNm !='' ">
-		AND t1.menu_srl = #{menuSrl}
-		</if>
-		<if test="menuNm == 'menu2'  and menuNm !='' ">
-		AND t2.menu_srl = #{menuSrl}
-		</if>
+		SELECT T.menu_srl FROM(
+			SELECT 
+				t3.menu_srl
+			FROM auth_menu AS t1,  auth_menu AS t2,  auth_menu AS t3
+			WHERE t2.parent_srl = t1.menu_srl AND t3.parent_srl = t2.menu_srl
+			<if test="menuNm == 'menu1'  and menuNm !='' ">
+			AND t1.menu_srl = #{menuSrl}
+			</if>
+			<if test="menuNm == 'menu2'  and menuNm !='' ">
+			AND t2.menu_srl = #{menuSrl}
+			</if>
+		) T
+		
 	)
 	</delete>	
 	
