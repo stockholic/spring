@@ -62,7 +62,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.authorizeRequests()
 		 	.antMatchers( "/login**" ).permitAll()
-		 	.antMatchers("/**").hasAnyRole("ADM","USR")
+		 	.antMatchers( "/search/**" ).permitAll()
+		 	
 			.antMatchers("/adm/**").hasAnyRole("ADM")
 			.and()
 		.formLogin()
@@ -71,7 +72,6 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 	        .defaultSuccessUrl( "/" )
 	        .usernameParameter( "userNm" )
 	        .passwordParameter( "password" )
-	        //TODO
 	        .successHandler(new LoginSuccessHandler(authService))
 	        .failureHandler(new LoginFailureHandler("/login?err=1", authService))
 	        .and()
