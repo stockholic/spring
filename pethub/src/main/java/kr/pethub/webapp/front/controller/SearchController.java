@@ -26,11 +26,11 @@ public class SearchController{
 	@Autowired
 	private PetService petService;
 	
-	@RequestMapping(value= {"list", "list/{page}"})
-	public String list(@ModelAttribute SiteLinkData siteLinkData, @PathVariable String page, Model model) {
+	@RequestMapping(value= {"list", "list/{p}"})
+	public String list(@ModelAttribute SiteLinkData siteLinkData, @PathVariable(value="p",required = false) String p, Model model) {
 		
-		if( StringUtil.isNumber(page) ) {
-			siteLinkData.setPage(Integer.parseInt(page));
+		if( StringUtil.isNumber(p) ) {
+			siteLinkData.setPage(Integer.parseInt(p));
 		}else {
 			siteLinkData.setPage(1);
 		}

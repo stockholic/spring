@@ -32,12 +32,20 @@
 	font-size: 15px;
 	font-weight: bold;
 }
+.media .media-body .site-name{
+	color: #4782c1;
+}
 
 .media .media-body .reg-date{ 
 	font-size: 11px;
 	color: #b9b9b9;
 	font-style:italic;
 	float: right;
+}
+
+.pagination {
+	margin-top:40px;
+	margin-bottom:40px;
 }
 
 .pagination>li>a, .pagination>li>span { 

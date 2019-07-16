@@ -21,6 +21,7 @@
 			, sld.reg_dt
 		FROM site_info si,  site_link_data sld
 	    WHERE si.site_srl = sld.site_srl
+	    ORDER BY data_srl DESC
 		LIMIT 0,10
 	</select>
 
