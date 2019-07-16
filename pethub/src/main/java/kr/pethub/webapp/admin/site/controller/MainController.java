@@ -14,7 +14,7 @@ import kr.pethub.core.authority.Auth;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/adm")
 public class MainController{
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -23,7 +23,7 @@ public class MainController{
 	 * 로그인 폼
 	 * @return
 	 */
-	@RequestMapping(value="login")
+	@RequestMapping(value="/login")
 	public String login() {
 		
 		 return "none:admin/site/user/login";

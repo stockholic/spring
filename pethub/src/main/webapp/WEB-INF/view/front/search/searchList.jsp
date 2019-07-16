@@ -27,38 +27,58 @@
 </div>
 
 
-<div class="list_wrap">
+<div  id="list_wrap">
 	<ul class="list-unstyled">
 	  
-	  <li class="media my-5">
-	    <img class="mr-3" src="https://image-notepet.akamaized.net/resize/620x-/seimage/20190222%2F88df4645d7d2a4d2ed42628d30cd83d0.jpg" style="max-width: 80px; min-width: 80px">
+	  <c:forEach var="lst" items="${list }" varStatus="status">
+	  <li class="media my-4" v-for="lst in dataList">
+	  	<c:if test="${!empty lst.dataImg}">
+	    <img class="mr-3" src="${lst.dataImg }" style="max-width: 90px; min-width: 90px">
+	    </c:if>
+	    
 	    <div class="media-body">
 	      <h5 class="mt-0 mb-1">
-	      	<a href="" class="text-info"><span>[도그짱]</span> List-based media object</a>
+	      	<a href="${lst.dataLink}" class="text-info" target="_blank"><span>[${lst.siteNm}]</span>${lst.dataTitle}</a>
+		    <span class='reg-date'><fmt:formatDate value="${lst.regDt}" pattern="yyyy.MM.dd" /></span>
 	      </h5>
-	      가나다라 마마사가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사  
+	      ${lst.dataContent}  
 	    </div>
 	  </li>
-	  
-	  <li class="media my-5">
-	    <img class="mr-3" src="https://image-notepet.akamaized.net/resize/620x-/seimage/20190222%2F88df4645d7d2a4d2ed42628d30cd83d0.jpg" style="max-width: 80px; min-width: 80px">
-	    <div class="media-body">
-	      <h5 class="mt-0 mb-1">List-based media object</h5>
-	      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-	    </div>
-	  </li> 
-	  
+	  <hr/>
+	  </c:forEach>
+
 	</ul>
 </div>
 
 
+==> count ${dataCount }
 
 <ul class="pagination justify-content-center">
-  <li class="page-item disabled"><a class="page-link " href="#"><span class="fa fa-arrow-left"></span></a></li>
-  <li class="page-item"><a class="page-link " href="#">1</a></li>
-  <li class="page-item active"><a class="page-link " href="#">2</a></li>
-  <li class="page-item"><a class="page-link " href="#">3</a></li>
-  <li class="page-item"><a class="page-link " href="#"><span class="fa fa-arrow-right"></span></a></li>
+<tx:nav totalPage="${dataCount }" page="1"/>
 </ul>
- 
+
+<script>
+
+/*
+var view;
+
+$(document).ready(function() {
+	
+	view = new Vue({
+		el: '#list_wrap',
+		data: model
+	});
+	
+});
+
+var model = {
+	dataList : [ 
+		 { siteName : "도그짱 1", dataTitle : "가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 1", dataContent : "" }	
+		,{ siteName : "도그짱 2", dataTitle : "가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 2", dataContent : "" }	
+		,{ siteName : "도그짱 3", dataTitle : "가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 3", dataContent : "" }	
+	]
+}; 
+*/
+
+</script>
 

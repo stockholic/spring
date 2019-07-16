@@ -42,27 +42,13 @@ public class Paging extends TagSupport{
 		
 		if(e > totalPage) e = totalPage;		// 루프의 마지막이 총페이지를 넘는지 체크
 	
-		if(p != 1 ){									//이전
-			int step1 = p - 1;
-			dataList.append("<li><a href=\"javascript:goPage(" + step1 + ")\"  aria-label=\"Previous\"><span aria-hidden=\"true\">《 </span></a></li>");
-		}else{
-			dataList.append("<li><span aria-hidden=\"true\">《 </span></li>");
-		}
+		dataList.append("<li class=\"page-item " + (p != 1 ? "":"disabled")  + "\"><a class=\"page-link \" href=\"/search/list/" + (p-1) + "\"><span class=\"fa fa-arrow-left\"></span></a></li>");
 	
 		for(int i = s; i <= e ;i++){
-			 if(i == p){
-				 dataList.append("<li class=\"active\"><span>" + i + "<span class=\"sr-only\">(current)</span></span></li>");
-			 } else{ 	
-				 dataList.append(" <li><a href=\"javascript:goPage(" + i + ")\">"+ i +"</a></li>");
-			 } 	
+			 dataList.append("<li class=\"page-item "  + (i == p ? "active":"") + "\"><a class=\"page-link \" href=\"/search/list/" + i + "\">" + i + "</a></li>");
 		}
 	
-		if(p != totalPage){					//다음
-			int step2 = p + 1;
-			dataList.append("<li><a href=\"javascript:goPage(" + step2 + ")\"  aria-label=\"Next\"><span aria-hidden=\"true\"> 》</span></a></li>");
-		}else{
-			dataList.append("<li><span aria-hidden=\"true\"> 》</span></li>");
-		}
+		dataList.append("<li class=\"page-item " + (p != totalPage ? "":"disabled") + "\"><a class=\"page-link \" href=\"/search/list/" + (p+1) + "\"><span class=\"fa fa-arrow-right\"></span></a></li>");
 		
 		try {
 			out.println(dataList);

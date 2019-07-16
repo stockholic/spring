@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.pethub.webapp.api.dao.PetDao">
+
+	<select id="selectPetCount" resultType="int">
+		SELECT 
+		     count(1)
+		FROM site_link_data
+
+	</select>
+
+	<select id="selectPetList" resultType="kr.pethub.webapp.api.model.SiteLinkData">
+		SELECT 
+       		si.site_nm
+			, sld.data_title
+			, sld.data_link
+			, sld.data_img
+			, sld.data_content
+			, sld.reg_dt
+		FROM site_info si,  site_link_data sld
+	    WHERE si.site_srl = sld.site_srl
+		LIMIT 0,10
+	</select>
+
+</mapper>  
