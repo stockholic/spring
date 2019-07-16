@@ -38,7 +38,7 @@
 	    
 	    <div class="media-body">
 	      <h5 class="mt-0 mb-1">
-	      	<a href="${lst.dataLink}" class="text-info" target="_blank"><span class="site-name">[${lst.siteNm}]</span> ${lst.dataTitle}</a>
+	      	<a href="${lst.dataLink}" target="_blank"><span class="site-name">[${lst.siteNm}]</span> ${lst.dataTitle}</a>
 		    <span class='reg-date'><fmt:formatDate value="${lst.regDt}" pattern="yyyy.M.dd" /></span>
 	      </h5>
 	      ${lst.dataContent}  
