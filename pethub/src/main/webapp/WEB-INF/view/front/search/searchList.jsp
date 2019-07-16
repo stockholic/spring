@@ -27,10 +27,10 @@
 </div>
 
 
-<div class="list_wrap">
+<div  id="list_wrap">
 	<ul class="list-unstyled">
 	  
-	  <li class="media my-5">
+	  <li class="media my-4">
 	    <img class="mr-3" src="https://image-notepet.akamaized.net/resize/620x-/seimage/20190222%2F88df4645d7d2a4d2ed42628d30cd83d0.jpg" style="max-width: 80px; min-width: 80px">
 	    <div class="media-body">
 	      <h5 class="mt-0 mb-1">
@@ -39,18 +39,29 @@
 	      가나다라 마마사가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사  
 	    </div>
 	  </li>
+	  <hr />
 	  
-	  <li class="media my-5">
-	    <img class="mr-3" src="https://image-notepet.akamaized.net/resize/620x-/seimage/20190222%2F88df4645d7d2a4d2ed42628d30cd83d0.jpg" style="max-width: 80px; min-width: 80px">
+	  <li class="media my-4">
 	    <div class="media-body">
 	      <h5 class="mt-0 mb-1">List-based media object</h5>
 	      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
 	    </div>
 	  </li> 
+	  <hr />
+	  
+	    <li class="media my-4">
+	    <img class="mr-3" src="https://image-notepet.akamaized.net/resize/620x-/seimage/20190222%2F88df4645d7d2a4d2ed42628d30cd83d0.jpg" style="max-width: 80px; min-width: 80px">
+	    <div class="media-body">
+	      <h5 class="mt-0 mb-1">
+	      	<a href="" class="text-info"><span>[도그짱]</span> List-based media object</a>
+	      </h5>
+	      가나다라 마마사가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사  
+	    </div>
+	  </li>
+	  <hr />
 	  
 	</ul>
 </div>
-
 
 
 <ul class="pagination justify-content-center">
@@ -61,4 +72,14 @@
   <li class="page-item"><a class="page-link " href="#"><span class="fa fa-arrow-right"></span></a></li>
 </ul>
  
+
+<script>
+
+
+$(document).ready(function() {
+	
+
+});
+
+</script>
 

@@ -31,3 +31,9 @@
 	margin: 0 5px;
 }
 
+.page-item.active .page-link {
+    z-index: 1;
+    color: #007bff;
+    background-color: #dedede;
+     border-color: #dedede;
+}
