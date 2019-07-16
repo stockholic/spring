@@ -21,16 +21,18 @@
 <body>
 
 <div class="container ">
-
     
-    
-   <div >
+   <div>
      <tiles:insertAttribute name="body" />
    </div>
     
-    
-  
 </div>
+
+ <hr />
+    
+  <div class="footer">
+ 	 <tiles:insertAttribute name="footer" />
+  </div>
 
 
 </body>

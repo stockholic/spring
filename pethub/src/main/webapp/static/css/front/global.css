@@ -1,15 +1,25 @@
 
-.search_wrap {
-    width: 50%;
+.search-wrap {
     margin: 50px auto;
 }
 
+.search-wrap .logo{ 
+	font-size: 17px;
+	color: #848484;
+	font-style:italic;
+	font-weight: bold;
+}
+.search-wrap .last-update{ 
+	font-size: 11px;
+	color: #848484;
+	font-style:italic;
+}
 
-.search_wrap .has-search .form-control {
+.search-input .has-search .form-control {
     padding-left: 2.375rem;
 }
 
-.search_wrap .has-search .form-control-feedback {
+.search-input .has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
     display: block;
@@ -20,6 +30,8 @@
     pointer-events: none;
     color: #aaa;
 }
+
+
 
 .media .mr-3 { 
 	border-radius: 8% !important;
@@ -59,3 +71,13 @@
     background-color: #dedede;
      border-color: #dedede;
 }
+
+
+.footer{
+	text-align: center;
+	font-size: 12px;
+	color: #848484;
+	font-style:italic;
+	margin: 20px;
+}
+

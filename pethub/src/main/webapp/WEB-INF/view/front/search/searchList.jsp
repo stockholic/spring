@@ -4,28 +4,25 @@
 <%@ taglib prefix="tx" uri="http://www.pethub.kr/tags"%>
 
 
-<div class="search_wrap">
-  
-  <!-- Actual search box -->
-  <div class="form-group has-search">
-    <span class="fa fa-search form-control-feedback"></span>
-    <input type="text" class="form-control" placeholder="Search">
-  </div>
-  
-  <!-- Another variation with a button -->
- <!--  
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Search this blog">
-    <div class="input-group-append">
-      <button class="btn btn-secondary" type="button">
-        <i class="fa fa-search"></i>
-      </button>
-    </div>
-  </div>
-   -->
-   
+<div class="row search-wrap">
+	<div class="col-3 logo">
+		PetHub.kr
+	</div>
+	
+  	<div class="col-6 text-center">
+  	<div class="search-input">
+		<div class="form-group has-search">
+		<span class="fa fa-search form-control-feedback"></span>
+    	<input type="text" class="form-control" placeholder="Search">
+  		</div>
+  	</div>
+  	</div>
+  	
+	<div class="col-3 text-right last-update">
+		<div>last update</div>
+		<div>2019.7.24 12h</div>
+	</div>
 </div>
-
 
 <div  id="list_wrap">
 	<ul class="list-unstyled">
