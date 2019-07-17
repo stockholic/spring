@@ -3,10 +3,10 @@
 <tiles-definitions>
 	<!-- title -->
 	<definition name=".adminTitle">
-        <put-attribute name="title" value="Pethub" />
+        <put-attribute name="title" value="PetHub" />
     </definition>
 	<definition name=".frontTitle">
-        <put-attribute name="title" value="Pethub" />
+        <put-attribute name="title" value="PetHub" />
     </definition>
 	
 	<!-- none -->

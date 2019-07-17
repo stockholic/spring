@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.pethub.core.utils.StringUtil;
 import kr.pethub.webapp.api.model.SiteLinkData;
@@ -25,8 +26,8 @@ public class SearchController{
 	@Autowired
 	private PetService petService;
 	
-	@RequestMapping(value= {"list", "list/{p}"})
-	public String list(@ModelAttribute SiteLinkData siteLinkData, @PathVariable(value="p",required = false) String p, Model model) {
+	@RequestMapping(value= {"list", "list/{p}"}, method = RequestMethod.GET)
+	public String list( @ModelAttribute SiteLinkData siteLinkData, @PathVariable(value="p",required = false) String p, Model model) {
 		
 		if( StringUtil.isRegex("^[0-9]{1,4}$",p) ) {
 			siteLinkData.setPage(Integer.parseInt(p));
