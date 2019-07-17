@@ -23,9 +23,8 @@ public class PetService {
 	public List<SiteLinkData> selectPetList(SiteLinkData siteLinkData) {
 		
 		siteLinkData.setTotalRow(selectPetCount(""));
-		
 
-		List<SiteLinkData> list =  petDao.selectPetList("");
+		List<SiteLinkData> list =  petDao.selectPetList(siteLinkData);
 		
 		for( SiteLinkData sd : list) {
 			
@@ -37,5 +36,4 @@ public class PetService {
 		return list;
 	}
 
-	
 }

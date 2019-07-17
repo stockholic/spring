@@ -16,8 +16,8 @@ public class PetDao extends MultiSqlSessionDaoSupport{
 		return  getInt("selectPetCount",searchString);
 	}
 
-	public List<SiteLinkData> selectPetList(String searchString){
-		return  selectList("selectPetList",searchString);
+	public List<SiteLinkData> selectPetList(SiteLinkData siteLinkData){
+		return  selectList("selectPetList",siteLinkData);
 	}
 
 }

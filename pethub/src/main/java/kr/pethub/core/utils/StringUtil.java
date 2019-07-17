@@ -23,6 +23,7 @@ public class StringUtil {
 	 * @return
 	 */
 	public static boolean isRegex(String pattern, String str) {
+		if(str == null) return false;
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(str);
 		return m.find();
