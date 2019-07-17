@@ -34,10 +34,10 @@ public class PetController{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 				
-		int dataCount  = petService.selectPetCount("");
+//		int dataCount  = petService.selectPetCount("");
 //		List<SiteLinkData> list = petService.selectPetList("");
 
-		 map.put("dataCount", dataCount);
+//		 map.put("dataCount", dataCount);
 //		 map.put("dataList", list);
 		 
 		 return map;
