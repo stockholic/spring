@@ -6,22 +6,37 @@
 
 	<select id="selectPetCount" resultType="int">
 		SELECT 
-		     count(1)
-		FROM site_link_data
+     		count(1)
+		FROM site_info si,  site_link sl, site_link_data sld
+	    WHERE si.site_srl = sl.site_srl
+      	AND sl.link_srl = sld.link_srl
+      	AND sl.use_yn = 'Y'
+
+      	<if test="dataTitle != '' and dataTitle != null">
+		AND sld.data_title like CONCAT('%', #{dataTitle} ,'%')
+		</if>
 
 	</select>
 
 	<select id="selectPetList" resultType="kr.pethub.webapp.api.model.SiteLinkData">
 		SELECT 
-       		si.site_nm
+     		si.site_nm
 			, sld.data_title
 			, sld.data_link
 			, sld.data_img
 			, sld.data_content
 			, sld.reg_dt
-		FROM site_info si,  site_link_data sld
-	    WHERE si.site_srl = sld.site_srl
+		FROM site_info si,  site_link sl, site_link_data sld
+	    WHERE si.site_srl = sl.site_srl
+      	AND sl.link_srl = sld.link_srl
+      	AND sl.use_yn = 'Y'
+      	
+      	<if test="dataTitle != '' and dataTitle != null">
+		AND sld.data_title like CONCAT('%', #{dataTitle} ,'%')
+		</if>
+      	
 	    ORDER BY data_srl DESC
+		
 		LIMIT #{rowStart}, #{rowSize}
 	</select>
 
