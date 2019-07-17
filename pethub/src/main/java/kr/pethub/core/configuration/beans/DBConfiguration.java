@@ -57,11 +57,11 @@ public class DBConfiguration{
         dataSource.setMinIdle(minIdle);
         dataSource.setMaxTotal(maxActive);
         dataSource.setMaxIdle(maxIdle);
+        dataSource.setMaxWaitMillis(maxWait);
         
-//   	dataSource.setMaxWait(maxWait);
-        dataSource.setValidationQuery(validationQuery);
-        dataSource.setTestWhileIdle(testWhileIdle);
-        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+        //dataSource.setValidationQuery(validationQuery);
+        //dataSource.setTestWhileIdle(testWhileIdle);
+        //dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
         
         return dataSource;
     }
