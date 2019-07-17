@@ -50,7 +50,7 @@
 
 <c:if test="${siteLinkData.totalRow > 0}">
 <ul class="pagination justify-content-center">
-<tx:nav totalPage="${siteLinkData.totalRow }" page="${siteLinkData.page}" pageCount="5"/>
+<tx:nav totalPage="${siteLinkData.totalPage }" page="${siteLinkData.page}" pageCount="5"/>
 </ul>
 </c:if>
 
