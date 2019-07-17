@@ -12,12 +12,12 @@ import kr.pethub.webapp.api.model.SiteLinkData;
 @Repository
 public class PetDao extends MultiSqlSessionDaoSupport{	
 	
-	public int selectPetCount(String searchString){
-		return  getInt("selectPetCount",searchString);
+	public int selectPetCount(SiteLinkData siteLinkData){
+		return  getInt("selectPetCount",siteLinkData);
 	}
 
-	public List<SiteLinkData> selectPetList(String searchString){
-		return  selectList("selectPetList",searchString);
+	public List<SiteLinkData> selectPetList(SiteLinkData siteLinkData){
+		return  selectList("selectPetList",siteLinkData);
 	}
 
 }

@@ -1,7 +1,6 @@
 package kr.pethub.webapp.front.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,7 @@ public class SearchController{
 	@RequestMapping(value= {"list", "list/{p}"})
 	public String list(@ModelAttribute SiteLinkData siteLinkData, @PathVariable(value="p",required = false) String p, Model model) {
 		
-		if( StringUtil.isNumber(p) ) {
+		if( StringUtil.isRegex("^[0-9]{1,4}$",p) ) {
 			siteLinkData.setPage(Integer.parseInt(p));
 		}else {
 			siteLinkData.setPage(1);

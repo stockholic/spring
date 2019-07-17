@@ -16,16 +16,15 @@ public class PetService {
 	private PetDao petDao;
 
 
-	public int selectPetCount(String searchString) {
-		return petDao.selectPetCount(searchString);
+	public int selectPetCount(SiteLinkData siteLinkData) {
+		return petDao.selectPetCount(siteLinkData);
 	}
 
 	public List<SiteLinkData> selectPetList(SiteLinkData siteLinkData) {
 		
-		siteLinkData.setTotalRow(selectPetCount(""));
-		
+		siteLinkData.setTotalRow(selectPetCount(siteLinkData));
 
-		List<SiteLinkData> list =  petDao.selectPetList("");
+		List<SiteLinkData> list =  petDao.selectPetList(siteLinkData);
 		
 		for( SiteLinkData sd : list) {
 			
@@ -37,5 +36,4 @@ public class PetService {
 		return list;
 	}
 
-	
 }
