@@ -1,6 +1,7 @@
 package kr.pethub.webapp.api.model;
 
 import java.util.Date;
+import java.util.List;
 
 import kr.pethub.core.module.model.Pagination;
 
@@ -17,6 +18,7 @@ public class SiteLinkData extends Pagination{
 	private Date regDt;					// 등록일
 
 	private String siteNm;				//사인트 명
+	private List<String> searchString;		//검색어
 	
 	public String getDataSrl() {
 		return dataSrl;
@@ -77,6 +79,12 @@ public class SiteLinkData extends Pagination{
 	}
 	public void setSiteNm(String siteNm) {
 		this.siteNm = siteNm;
+	}
+	public List<String> getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(List<String> searchString) {
+		this.searchString = searchString;
 	}
 	
 

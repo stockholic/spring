@@ -39,8 +39,10 @@ public class PetService {
 		for( SiteLinkData sd : list) {
 			
 			//검색어 하이라이팅
-			if( StringUtils.isNotEmpty(siteLinkData.getDataTitle()) ) {
-				sd.setDataTitle( sd.getDataTitle().replaceAll(siteLinkData.getDataTitle(),"<em>" + siteLinkData.getDataTitle() + "</em>") );
+			if( siteLinkData.getSearchString() != null && siteLinkData.getSearchString().size() > 0) {
+				for( String item : siteLinkData.getSearchString() ) {
+					sd.setDataTitle( sd.getDataTitle().replaceAll(item, "<em>" + item + "</em>") );
+				}
 			}
 			
 			//내용 말줄임

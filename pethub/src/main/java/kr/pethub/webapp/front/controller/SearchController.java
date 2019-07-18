@@ -1,5 +1,6 @@
 package kr.pethub.webapp.front.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -41,14 +42,25 @@ public class SearchController{
 							, @PathVariable(value="s", required = false) String s
 						 ) 
 	{
+		
+		String searchString = "";
+
+		//검색어 분리
+		if( StringUtils.isNotEmpty( s ) ) {
+			//여러공백 하나의 공잭처리
+			searchString = StringUtils.isNotEmpty( s ) ?  s.trim().replaceAll(" +", " ") : "";
+			siteLinkData.setSearchString( Arrays.asList(searchString.split(" ")) );
+		}
+		
 		//페이지 번호 validation
 		if( StringUtil.isRegex("^[0-9]{1,4}$",p) ) {
 			siteLinkData.setPage(Integer.parseInt( p ));
-			siteLinkData.setDataTitle( s );
+			siteLinkData.setDataTitle( searchString );
 		}else {
 			siteLinkData.setPage( 1 );
 			siteLinkData.setDataTitle("");
 		}
+		
 		
 		List<SiteLinkData> list = petService.selectPetList(siteLinkData);
 		

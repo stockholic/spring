@@ -12,9 +12,11 @@
       	AND sl.link_srl = sld.link_srl
       	AND sl.use_yn = 'Y'
 
-      	<if test="dataTitle != '' and dataTitle != null">
-		AND sld.data_title like CONCAT('%', #{dataTitle} ,'%')
-		</if>
+     <if test="searchString != null  and !searchString.isEmpty()">
+		<foreach collection="searchString" item="item">
+         AND sld.data_title like CONCAT('%', #{item} ,'%') 
+       	</foreach>
+	</if>
 
 	</select>
 
@@ -31,9 +33,11 @@
       	AND sl.link_srl = sld.link_srl
       	AND sl.use_yn = 'Y'
       	
-      	<if test="dataTitle != '' and dataTitle != null">
-		AND sld.data_title like CONCAT('%', #{dataTitle} ,'%')
-		</if>
+   	<if test="searchString != null  and !searchString.isEmpty()">
+		<foreach collection="searchString" item="item">
+         AND sld.data_title like CONCAT('%', #{item} ,'%') 
+       	</foreach>
+	</if>
       	
 	    ORDER BY data_srl DESC
 		

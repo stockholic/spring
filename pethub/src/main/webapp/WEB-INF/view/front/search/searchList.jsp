@@ -13,7 +13,7 @@
   	<div class="search-input">
 		<div class="form-group has-search">
 		<span class="fa fa-search form-control-feedback"></span>
-    	<input type="text" id="searchString" value="${siteLinkData.dataTitle }" class="form-control" placeholder="Search">
+    	<input type="text" id="searchString" value="${siteLinkData.dataTitle }" maxlength="20" class="form-control" placeholder="Search">
   		</div>
   	</div>
   	</div>
