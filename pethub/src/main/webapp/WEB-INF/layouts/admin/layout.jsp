@@ -30,10 +30,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <header class="main-header">
 
     <!-- Logo start -->
-    <a href="/" class="logo">
+    <a href="/adm/main" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SH</b></span>
-      <span class="logo-lg"><b>pethub</b></span>
+      <span class="logo-mini"><b>PH</b></span>
+      <span class="logo-lg"><b>PetHub</b></span>
     </a>
      <!-- Logo end-->
 
@@ -138,7 +138,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED JS SCRIPTS -->
 <tiles:insertDefinition name="adminScript"/>
-
 
 <script>
 

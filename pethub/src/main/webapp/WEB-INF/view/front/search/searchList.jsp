@@ -25,6 +25,11 @@
 </div>
 
 <div id="list_wrap">
+
+	<c:if test="${siteLinkData.totalRow > 0}">
+	<div class="row-count">${siteLinkData.totalRow } [ <fmt:formatNumber value="${siteLinkData.page }" pattern="#,###" /> / ${siteLinkData.totalPage } ]</div>
+	</c:if>
+
 	<ul class="list-unstyled">
 	  
 	  <c:forEach var="lst" items="${list }" varStatus="status">
@@ -43,18 +48,27 @@
 	  </li>
 	  <hr/>
 	  </c:forEach>
+	  
+	  <c:if test="${siteLinkData.totalRow == 0}">
+	   <div class="media-body">
+		   <div class="no-data"> 
+		    <span>"${siteLinkData.dataTitle }"</span> 에 대한 검색결과가 없습니다.
+		     </div>
+	    </div>
+	  </c:if>
 
 	</ul>
 	
+	<c:if test="${siteLinkData.totalRow > 0}">
 	<div class="row-count">${siteLinkData.totalRow } [ <fmt:formatNumber value="${siteLinkData.page }" pattern="#,###" /> / ${siteLinkData.totalPage } ]</div>
+	</c:if>
+	
 </div>
-
-
 
 
 <c:if test="${siteLinkData.totalRow > 0}">
 <ul class="pagination justify-content-center">
-<tx:nav totalPage="${siteLinkData.totalPage }" page="${siteLinkData.page}" pageCount="5" searchString="${siteLinkData.dataTitle }"/>
+<tx:nav totalPage="${siteLinkData.totalPage }" page="${siteLinkData.page}" pageCount="10" searchString="${siteLinkData.dataTitle }"/>
 </ul>
 </c:if>
 

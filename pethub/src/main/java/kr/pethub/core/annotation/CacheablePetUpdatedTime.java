@@ -15,5 +15,5 @@ import org.springframework.cache.annotation.Cacheable;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@CacheEvict(value = "petUpdatedTimeCache",  key = "#root.caches[0].name")
+@Cacheable(value = "petUpdatedTimeCache",  key = "#root.caches[0].name")
 public @interface CacheablePetUpdatedTime {}
