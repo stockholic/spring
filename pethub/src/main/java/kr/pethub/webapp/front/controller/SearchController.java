@@ -43,6 +43,7 @@ public class SearchController{
 						 ) 
 	{
 		
+		
 		String searchString = "";
 
 		//검색어 분리
@@ -65,6 +66,7 @@ public class SearchController{
 		List<SiteLinkData> list = petService.selectPetList(siteLinkData);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("updatedTime", petService.selectPetUpdatedTime()	);
 		
 		 return "front:search/searchList";
 	} 

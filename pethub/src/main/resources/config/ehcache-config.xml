@@ -11,17 +11,17 @@
 		timeToLiveSeconds="3600" 
 		memoryStoreEvictionPolicy="LFU"
 	/>
-
-<!-- 
+	
+	<!-- 펫 업데이트 시간 캐쉬 -->
 	<cache
-		name="stockCodeCache" 
+		name="petUpdatedTimeCache" 
 		maxEntriesLocalHeap="10000" 
 	    eternal = "false"
 	    overflowToDisk = "false"
-		timeToLiveSeconds="86400" 
+		timeToLiveSeconds="1800" 
 		memoryStoreEvictionPolicy="LFU"
 	/>
-	 -->
+
  
 </ehcache>
 

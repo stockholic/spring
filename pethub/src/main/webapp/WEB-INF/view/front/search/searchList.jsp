@@ -19,8 +19,8 @@
   	</div>
   	
 	<div class="col-3 text-right last-update">
-		<div>last update</div>
-		<div>2019.7.24 12h</div>
+		<div>last updated</div>
+		<div>${updatedTime }</div>
 	</div>
 </div>
 

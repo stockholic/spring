@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.pethub.core.annotation.CacheablePetUpdatedTime;
 import kr.pethub.webapp.api.dao.PetDao;
 import kr.pethub.webapp.api.model.SiteLinkData;
 
@@ -15,6 +16,15 @@ public class PetService {
 	@Autowired
 	private PetDao petDao;
 
+
+	/**
+	 * 업데이트 시간
+	 * @return
+	 */
+	@CacheablePetUpdatedTime
+	public String selectPetUpdatedTime() {
+		return petDao.selectPetUpdatedTime();
+	}
 
 	/**
 	 * 검색 수	

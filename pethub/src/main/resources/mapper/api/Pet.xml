@@ -4,6 +4,12 @@
 
 <mapper namespace="kr.pethub.webapp.api.dao.PetDao">
 
+	<select id="selectPetUpdatedTime" resultType="String">
+		SELECT 
+		  ifnull(date_format(max(exc_dt), '%Y.%c.%e %kh'), date_format(sysdate(), '%Y.%c.%e %kh') ) 
+		FROM site_link
+	</select>
+
 	<select id="selectPetCount" resultType="int">
 		SELECT 
      		count(1)
