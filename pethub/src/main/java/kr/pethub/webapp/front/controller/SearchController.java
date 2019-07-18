@@ -2,6 +2,7 @@ package kr.pethub.webapp.front.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,27 @@ public class SearchController{
 	@Autowired
 	private PetService petService;
 	
-	@RequestMapping(value= {"list", "list/{p}"}, method = RequestMethod.GET)
-	public String list( @ModelAttribute SiteLinkData siteLinkData, @PathVariable(value="p",required = false) String p, Model model) {
-		
+	/**
+	 * 펫 검색
+	 * @param siteLinkData
+	 * @param model
+	 * @param p
+	 * @param s
+	 * @return
+	 */
+	@RequestMapping(value= {"list", "list/{p}", "list/{p}/{s}"}, method = RequestMethod.GET)
+	public String list( @ModelAttribute SiteLinkData siteLinkData,  Model model
+							, @PathVariable(value="p", required = false) String p
+							, @PathVariable(value="s", required = false) String s
+						 ) 
+	{
+		//페이지 번호 validation
 		if( StringUtil.isRegex("^[0-9]{1,4}$",p) ) {
-			siteLinkData.setPage(Integer.parseInt(p));
+			siteLinkData.setPage(Integer.parseInt( p ));
+			siteLinkData.setDataTitle( s );
 		}else {
-			siteLinkData.setPage(1);
+			siteLinkData.setPage( 1 );
+			siteLinkData.setDataTitle("");
 		}
 		
 		List<SiteLinkData> list = petService.selectPetList(siteLinkData);

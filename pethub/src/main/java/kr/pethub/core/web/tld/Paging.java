@@ -5,12 +5,15 @@ import java.io.IOException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.commons.lang3.StringUtils;
+
 @SuppressWarnings("serial")
 public class Paging extends TagSupport{
 
 	private int page;						//현재페이지
 	private int totalPage;					//총 페이지 수
 	private int pageCount = 0;			// 표시할 페이지 개수
+	private String searchString;		// 검색어
 
 	public int doStartTag(){
 		
@@ -41,24 +44,27 @@ public class Paging extends TagSupport{
 			//System.out.println( "endPage 2 : " + endPage );
 		}
 		
+		/*
 		for(int i = startPage; i < endPage; i++) {
-			//System.out.println( i + ", " );
+			System.out.println( i + ", " );
 		}
+		*/
 		
 		StringBuffer dataList = new StringBuffer();
 		
+		String searchString = StringUtils.isNotEmpty(this.searchString) ? "/" + this.searchString : ""; 
 		
 		// 이전 pageCount 만큼 이동
 		int prev = (page - pageCount  > 0) ? page - pageCount : page;
-		dataList.append("<li class=\"page-item " + (prev == page ? "disabled" : "")  + "\"><a class=\"page-link \" href=\"/search/list/" + prev + "\"><span class=\"fa fa-arrow-left\"></span></a></li>");
+		dataList.append("<li class=\"page-item " + (prev == page ? "disabled" : "")  + "\"><a class=\"page-link \" href=\"/search/list/" + prev + searchString +"\" title='이전 " + pageCount + "페이지 이등'><span class=\"fa fa-arrow-left\"></span></a></li>");
 	
 		for(int i = startPage; i < endPage ;i++){
-			 dataList.append("<li class=\"page-item "  + (i == page ? "active":"") + "\"><a class=\"page-link \" href=\"/search/list/" + i + "\">" + i + "</a></li>");
+			 dataList.append("<li class=\"page-item "  + (i == page ? "active":"") + "\"><a class=\"page-link \" href=\"/search/list/" + i + searchString + "\">" + i + "</a></li>");
 		}
 		
 		// 다음 pageCount 만큼 이동
 		int next = (page + pageCount <= totalPage) ? page + pageCount  : totalPage;
-		dataList.append("<li class=\"page-item " + (endPage >= totalPage ? "disabled":"") + "\"><a class=\"page-link \" href=\"/search/list/" + next + "\"><span class=\"fa fa-arrow-right\"></span></a></li>");
+		dataList.append("<li class=\"page-item " + (endPage >= totalPage ? "disabled":"") + "\"><a class=\"page-link \" href=\"/search/list/" + next + searchString + "\" title='다음 " + pageCount + "페이지 이동'><span class=\"fa fa-arrow-right\"></span></a></li>");
 		
 		try {
 			out.println(dataList);
@@ -77,5 +83,8 @@ public class Paging extends TagSupport{
 	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
-		 
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
+	
 }

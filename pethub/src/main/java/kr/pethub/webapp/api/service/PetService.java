@@ -16,10 +16,20 @@ public class PetService {
 	private PetDao petDao;
 
 
+	/**
+	 * 검색 수	
+	 * @param siteLinkData
+	 * @return
+	 */
 	public int selectPetCount(SiteLinkData siteLinkData) {
 		return petDao.selectPetCount(siteLinkData);
 	}
 
+	/**
+	 * 검색 목록
+	 * @param siteLinkData
+	 * @return
+	 */
 	public List<SiteLinkData> selectPetList(SiteLinkData siteLinkData) {
 		
 		siteLinkData.setTotalRow(selectPetCount(siteLinkData));
@@ -28,6 +38,12 @@ public class PetService {
 		
 		for( SiteLinkData sd : list) {
 			
+			//검색어 하이라이팅
+			if( StringUtils.isNotEmpty(siteLinkData.getDataTitle()) ) {
+				sd.setDataTitle( sd.getDataTitle().replaceAll(siteLinkData.getDataTitle(),"<em>" + siteLinkData.getDataTitle() + "</em>") );
+			}
+			
+			//내용 말줄임
 			if( StringUtils.length( sd.getDataContent() )> 120) {
 				sd.setDataContent( StringUtils.left(sd.getDataContent(), 120) + " ..." );
 			}

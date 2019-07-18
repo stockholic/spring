@@ -6,14 +6,14 @@
 
 <div class="row search-wrap">
 	<div class="col-3 logo">
-		PetHub.kr
+		<a href= "/">PetHub.kr</a>
 	</div>
 	
   	<div class="col-6 text-center">
   	<div class="search-input">
 		<div class="form-group has-search">
 		<span class="fa fa-search form-control-feedback"></span>
-    	<input type="text" class="form-control" placeholder="Search">
+    	<input type="text" id="searchString" value="${siteLinkData.dataTitle }" class="form-control" placeholder="Search">
   		</div>
   	</div>
   	</div>
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-<div  id="list_wrap">
+<div id="list_wrap">
 	<ul class="list-unstyled">
 	  
 	  <c:forEach var="lst" items="${list }" varStatus="status">
@@ -45,17 +45,38 @@
 	  </c:forEach>
 
 	</ul>
+	
+	<div class="row-count">${siteLinkData.totalRow } [ <fmt:formatNumber value="${siteLinkData.page }" pattern="#,###" /> / ${siteLinkData.totalPage } ]</div>
 </div>
+
+
 
 
 <c:if test="${siteLinkData.totalRow > 0}">
 <ul class="pagination justify-content-center">
-<tx:nav totalPage="${siteLinkData.totalPage }" page="${siteLinkData.page}" pageCount="5"/>
+<tx:nav totalPage="${siteLinkData.totalPage }" page="${siteLinkData.page}" pageCount="5" searchString="${siteLinkData.dataTitle }"/>
 </ul>
 </c:if>
 
 
 <script>
+
+$(document).ready(function() {
+	
+	//검색
+	$("#searchString").keyup(function(event) {
+		if (event.keyCode == 13) {
+	    	if( $(this).val().trim().length  == 0){
+	    		document.location.href = "/search/list"
+	    	}else if( $(this).val().trim().length  > 1){
+	         document.location.href = "/search/list/1/" + $(this).val();
+	    	}
+	    }
+	});
+
+	
+});
+
 
 /*
 var view;

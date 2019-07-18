@@ -6,7 +6,7 @@
 
 	<description>TX Tag llibrary</description>
 	<tlib-version>1.1</tlib-version>
-	<short-name>saltlux</short-name>
+	<short-name>pethub</short-name>
 
 	<tag>
 		<description>페이징처리</description>
@@ -23,8 +23,13 @@
 		     <required>true</required>
 		     <rtexprvalue>true</rtexprvalue>
    		 </attribute>
-   		    <attribute>
+   		  <attribute>
 		     <name>pageCount</name>
+		     <required>false</required>
+		     <rtexprvalue>true</rtexprvalue>
+   		 </attribute>
+   		  <attribute>
+		     <name>searchString</name>
 		     <required>false</required>
 		     <rtexprvalue>true</rtexprvalue>
    		 </attribute>
