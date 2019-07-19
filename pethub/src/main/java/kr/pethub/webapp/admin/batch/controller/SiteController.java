@@ -39,7 +39,7 @@ public class SiteController{
 			List<SiteInfo> list = new ArrayList<SiteInfo>();
 			SiteInfo siteInfo = new SiteInfo();
 			
-			for ( int  i =0; i < 10; i++ ) {
+			for ( int  i =0; i < 15; i++ ) {
 				siteInfo.setSiteNm("하하하하");
 				list.add(siteInfo);
 			}

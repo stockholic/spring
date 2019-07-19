@@ -41,7 +41,7 @@
 	    <table class="table table-hover table-top">
 		  <colgroup>
 		    <col style="width:60px">
-		     <col style="width:200px">
+		     <col style="width:250px">
 		     <col />
 		     <col style="width:80px">
 		  </colgroup>
