@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <section class="content-header">
   <h1>
     사이트 정보
@@ -36,7 +37,7 @@
 		  <input type="hidden" name="boardSrl" id="boardSrl" value="">
 		</form>
 	  	</div>
-		<div class="pull-right">Total : ${board.totalRow} [ ${board.page} / ${board.totalPage} ]</div> 
+		<div class="pull-right" v-cloak>Total : {{ objData.totalRow }} [ {{ objData.page }} / {{ objData.totalPage }} ]</div> 
     
 	    <table class="table table-hover table-top">
 		  <colgroup>
@@ -55,7 +56,7 @@
 		</thead>
 		<tbody>
 		
-		<tr v-for="lst in objData.list">
+		<tr v-for="lst in objData.list" v-cloak>
 			<td></td>
 			<td>
 				<a href="#">{{ lst.siteNm }}</a>
