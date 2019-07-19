@@ -4,7 +4,6 @@ var com = {
 	 * 숫자 체크
 	 */
 	isNumber : function(str){
-		//	var reg = /^[-0-9]/g ;
 		var reg =  /^[0-9]+$/ ;
 		return reg.test(str);
 	},

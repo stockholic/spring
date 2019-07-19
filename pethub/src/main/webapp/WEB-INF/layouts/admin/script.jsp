@@ -1,6 +1,7 @@
 <!-- Custom JS -->
 <script src="/static/js/common.js"></script>
 
+<script src="/static/js/vue.min.2.6.10.js"></script>
 
 <!-- Bootstrap 3.3.7 -->
 <script src="/static/assets/bootstrap/dist/js/bootstrap.min.js"></script>
