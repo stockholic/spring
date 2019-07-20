@@ -109,6 +109,7 @@ function getVdata(params){
 	
 	console.log(obj)
 	
+	//페이징 표시
 	if( vObj == null && obj.dataInfo.totalRow > 0 ){
 		com.initPaging({
 			selector : "#paging",
