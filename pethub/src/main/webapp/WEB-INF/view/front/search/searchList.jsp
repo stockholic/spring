@@ -35,7 +35,7 @@
 	  <c:forEach var="lst" items="${list }" varStatus="status">
 	  <li class="media my-4" v-for="lst in dataList">
 	  	<c:if test="${!empty lst.dataImg}">
-	    <img class="mr-3" src="${lst.dataImg }" style="max-width: 90px; min-width: 90px">
+	    <img class="mr-3" src="${lst.dataImg }" style="max-width: 90px; min-width: 90px" onerror="$(this).hide()">
 	    </c:if>
 	    
 	    <div class="media-body">
@@ -90,28 +90,6 @@ $(document).ready(function() {
 
 	
 });
-
-
-/*
-var view;
-
-$(document).ready(function() {
-	
-	view = new Vue({
-		el: '#list_wrap',
-		data: model
-	});
-	
-});
-
-var model = {
-	dataList : [ 
-		 { siteName : "도그짱 1", dataTitle : "가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 1", dataContent : "" }	
-		,{ siteName : "도그짱 2", dataTitle : "가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 2", dataContent : "" }	
-		,{ siteName : "도그짱 3", dataTitle : "가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 가나다라 마마사 3", dataContent : "" }	
-	]
-}; 
-*/
 
 </script>
 
