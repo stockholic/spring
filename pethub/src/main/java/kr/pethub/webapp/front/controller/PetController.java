@@ -68,7 +68,7 @@ public class PetController{
 		model.addAttribute("list", list);
 		model.addAttribute("updatedTime", petService.selectPetUpdatedTime()	);
 		
-		 return "front:search/searchList";
+		 return "front:pet/petList";
 	} 
 
 }
