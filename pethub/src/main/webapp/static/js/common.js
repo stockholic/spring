@@ -36,29 +36,36 @@ var com = {
 	/**
 	 * Ajax 데이터 바인딩
 	 */
-	bindByUrl : function(obj){
-		
+	getAjaxData : function(obj){
+		var data = {};
 		var options = {
 				type : "GET", 
 				async : true, 
-				params : {},
-				data : "dataList"
-		};
+				params : {}
+			};
 		$.extend(options, obj);
 		
-		$.ajax({      
-			type : options.type,  
-	        url : options.url,
-	        async : options.async,
-	        data : options.params,      
-	        success:function(response){   
-	        	 jPut[obj.target].data = response[options.data];
-	        },   
-	        error : function(xhr, status, error) {
-                alert("에러 : " + xhr);
-	        }
-		});  
-
+		 $.ajax({      
+		    	type : options.type,  
+		    	async : options.async,
+		        url : options.url,
+		        data : options.params,
+		        beforeSend : function(xhr){
+					xhr.setRequestHeader("AJAX", "true");
+			    },
+		        success : function(response){   
+		        	data = response;
+		        },   
+		        error : function(xhr) {
+		        	if(xhr.status == "403"){
+		        		document.location.href = "/adm/login";
+		        	}else{
+		    	        alert("에러 : " + xhr.status);
+			       	}
+		        }
+		    });  
+		 
+		 return  data;
 	},
 	
 	/**
@@ -74,7 +81,7 @@ var com = {
 	popup : function(params){
 		
 		var options = {
-			title : "QA 관리도구",
+			title : "관리도구",
 			width : 600,
 			height : 400,
 			scrollbars : "no"
@@ -180,12 +187,101 @@ var com = {
 		});
 	 
 	 	$('#' + id).summernote('fontName', '맑은 고딕');
-	}
-
+	},
+	
+	/**
+		Vue 초기화
+		beforeCreate 	Called synchronously after the instance has just been initialized, before data observation and event/watcher setup.
+		created 			Called synchronously after the instance is created. At this stage, the instance has finished processing the options which means the following have been set up: 
+							data observation, computed properties, methods, watch/event callbacks. However, the mounting phase has not been started, and the $el property will not be available yet.
+		beforeMount 	Called right before the mounting begins: the render function is about to be called for the first time.
+		mounted 		Called after the instance has just been mounted where el is replaced by the newly created vm.$el.
+		beforeUpdate 	Called when the data changes, before the virtual DOM is re-rendered and patched.
+		updated 		Called after a data change causes the virtual DOM to be re-rendered and patched.
+	*/
+	initVue : function( selector ){
+		var vObj = new Vue({
+				el: selector,
+				data : {
+					vData : {}
+				},
+				methods : {
+					setVdata : function(params) {
+						this.vData = getVdata(params);
+						//console.log(this.objData.list)
+					}
+				},
+				created: function () {
+					this.setVdata({})
+				}
+			});
+		
+		return vObj;
+	},
+	
+	
+	/**
+	 * 페이징 초기화
+	 *  http://flaviusmatis.github.io/simplePagination.js/
+	 */
+	initPaging : function( obj ){
+		
+		var options = {
+				selector : "#paging",
+				items : 0,						// 전체 레코드 수
+				itemsOnPage : 10,			// 목록에 보여줄 페이지 수
+				currentPage : 1				// 현재페이지
+			};
+	
+		$.extend( options, obj );
+		
+		$(options.selector).pagination({
+			items: options.items,
+		 	itemsOnPage: options.itemsOnPage,
+			currentPage : options.currentPage,
+			prevText : "〈 이전",
+			nextText : "다음 〉",
+			onPageClick : function(pageNumber,event){
+				goPage(pageNumber)
+			}
+		});
+	},
+	/**
+	 * 페이지 선택
+	 */
+	selectPage  : function( selector, pageNumber ){
+		$(selector).pagination('selectPage', pageNumber);
+	},
+	/**
+	 * 전체 페이지 수
+	 */
+	getPagesCount  : function( selector ){
+		return $(selector).pagination('getPagesCount');
+	},
+	/**
+	 * 현재 페이지
+	 */
+	getCurrentPage   : function( selector ){
+		return $(selector).pagination('getCurrentPage');
+	},
+	/**
+	 * 전체 레코드 수 변경
+	 */
+	updatePageItems  : function( selector, items ){
+		$(selector).pagination('updateItems', items);
+	},
+	/**
+	 * 목록에 보여줄 페이지 수 변경
+	 */
+	updatePageItemsOnPage   : function( selector, itemsOnPage ){
+		$(selector).pagination('updateItemsOnPage', itemsOnPage);
+	},
+	
 
 };
 
-	$.fn.clickToggle = function(func1, func2) {
+//--------------------------------------------------------------------  Jquery plugin
+$.fn.clickToggle = function(func1, func2) {
     var funcs = [func1, func2];
     this.data('toggleclicked', 0);
     this.click(function() {
@@ -196,5 +292,12 @@ var com = {
     });
     return this;
 };
+
+
+//--------------------------------------------------------------------  Vue Filter
+// 천단위 콤마
+Vue.filter('addComma', function (num) {
+	return com.formatNumber(num)
+});
 
 

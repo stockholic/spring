@@ -1,3 +1,5 @@
+<script src="/static/assets/jquery/jquery.min.js"></script>
+
 <!-- Custom JS -->
 <script src="/static/js/common.js"></script>
 

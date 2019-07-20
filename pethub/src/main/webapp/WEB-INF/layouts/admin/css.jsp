@@ -16,8 +16,10 @@
 <![endif]-->
 
 
-<!-- Custom CSS -->
 <link type="text/css" rel="stylesheet" href="/static/css/admin/global.css">
 
 <!-- DatePicker -->
 <link href="/static/assets/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+<!-- Pagination -->
+<link type="text/css" rel="stylesheet" href="/static/css/admin/simplePagination.css">

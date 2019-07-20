@@ -12,8 +12,6 @@
   	<link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
   	
 	<tiles:insertDefinition name="frontCss" />
-	
-	<script src="/static/assets/jquery/jquery.min.js"></script>
 	<tiles:insertDefinition name="frontScript"/>
 	
 </head>

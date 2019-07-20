@@ -20,7 +20,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   	<link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
   	
 	<tiles:insertDefinition name="adminCss" />
-	<script src="/static/assets/jquery/jquery.min.js"></script>
+	<tiles:insertDefinition name="adminScript"/>
+	
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini fixed">
@@ -137,7 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 <!-- REQUIRED JS SCRIPTS -->
-<tiles:insertDefinition name="adminScript"/>
+
 
 <script>
 

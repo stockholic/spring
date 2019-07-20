@@ -21,7 +21,7 @@ import kr.pethub.webapp.api.service.PetService;
 
 @Controller
 @RequestMapping("/search")
-public class SearchController{
+public class PetController{
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	

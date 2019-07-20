@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+<style>
+</style>
+
 <section class="content-header">
   <h1>
     사이트 정보
@@ -25,7 +28,7 @@
 		  <div class="form-group-sm">
 			
 			<div class="input-group input-group-sm" style="width: 200px;">
-	             <input type="text" name="searchValue" id="searchValue" value="${board.searchValue }" class="form-control pull-right" placeholder="Search">
+	             <input type="text" name="searchValue" id="searchValue" value="" class="form-control pull-right" placeholder="Search">
 	             <div class="input-group-btn">
 	               <button type="button" onClick="search()" class="btn btn-default"><i class="fa fa-search"></i></button>
 	             </div>
@@ -33,11 +36,10 @@
 			
 		  </div>
 		  
-		  <input type="hidden" name="page" id="page" value="${board.page }">
-		  <input type="hidden" name="boardSrl" id="boardSrl" value="">
 		</form>
 	  	</div>
-		<div class="pull-right" v-cloak>Total : {{ objData.totalRow }} [ {{ objData.page }} / {{ objData.totalPage }} ]</div> 
+	  	
+		<div class="pull-right" v-cloak>Total : {{ vData.dataInfo.totalRow | addComma }} [ {{ vData.dataInfo.page }} / {{ vData.dataInfo.totalPage }} ]</div> 
     
 	    <table class="table table-hover table-top">
 		  <colgroup>
@@ -56,10 +58,10 @@
 		</thead>
 		<tbody>
 		
-		<tr v-for="lst in objData.list" v-cloak>
+		<tr v-for="lst in vData.dataList" v-cloak>
 			<td></td>
 			<td>
-				<a href="#">{{ lst.siteNm }}</a>
+				<a href="#">{{ lst.siteNm | addComma }}</a>
 			</td>
 			<td>{{ lst.siteNm }}</td>
 			<td>{{   }}</td>
@@ -69,7 +71,9 @@
 		</table> 
 		
 	</div>
-		
+	
+	<div id="paging"></div>
+	
 	<div class="box-footer">
 		<button type="button" class="btn btn-primary btn-xm" onClick="save()">등록</button>
 	</div>
@@ -81,73 +85,50 @@
 
 <script>
 
-/**
- 
-beforeCreate 	Called synchronously after the instance has just been initialized, before data observation and event/watcher setup.
-created 			Called synchronously after the instance is created. At this stage, the instance has finished processing the options which means the following have been set up: 
-					data observation, computed properties, methods, watch/event callbacks. However, the mounting phase has not been started, and the $el property will not be available yet.
-beforeMount 	Called right before the mounting begins: the render function is about to be called for the first time.
-mounted 		Called after the instance has just been mounted where el is replaced by the newly created vm.$el.
-beforeUpdate 	Called when the data changes, before the virtual DOM is re-rendered and patched.
-updated 		Called after a data change causes the virtual DOM to be re-rendered and patched.
- 
- */
- 
-
-
 var vObj = null;
 $(document).ready(function() {
-	
-	vObj = new Vue({
-		el: '#dataWrap',
-		data : {
-			objData : {}
-		},
-		methods : {
-			setObjData : function() {
-				this.objData = getObjData();
-				console.log(this.objData.list)
-			}
-		},
-		created: function () {
-			this.setObjData()
-		}
-	});
+
+	vObj = com.initVue("#dataWrap");
 	
 });
 
-// 목록 데이터
-function getObjData(){	
+
+// Ajax 데이터 추출,  Vue  함수명 고정 getVdata
+function getVdata(params){	
 	
-	var obj = {};
+ 	var obj = com.getAjaxData({
+		type: "POST",
+		async : false, 
+		url : "/adm/batch/siteListJson",
+		params : params,
+	});
 	
-	 $.ajax({      
-	    	type : "POST",  
-	    	async : false, 
-	        url : "/adm/batch/siteListJson",
-	        data : {},
-	        beforeSend : function(xhr){
-				xhr.setRequestHeader("AJAX", "true");
-		    },
-	        success : function(response){   
-	        	console.log( response )
-	        	obj = response;
-	        	console.log( obj )
-	        },   
-	        error : function(xhr) {
-	        	if(xhr.status == "403"){
-	        		document.location.href = "/adm/login";
-	        	}else{
-	    	        alert("에러 : " + xhr.status);
-		       	}
-	        }
-	    });  
+	console.log(obj)
 	
-	 return  obj;
-	 
+	if( vObj == null && obj.dataInfo.totalRow > 0 ){
+		com.initPaging({
+			selector : "#paging",
+			items : obj.dataInfo.totalRow
+		});
+	}
+	return obj;
 }
  	
 
+//페이지 이동, 함수명 고정
+function goPage(pageNumber){
+	
+	var params = {
+		page : pageNumber,
+		rowSize : 15
+	}
+	
+	//데이터 업데이트
+	vObj.setVdata(params);
+	
+	//로우 개수 변화, 페이징 업데이트
+	com.updatePageItems("#paging", vObj.dataInfo.totalRow)
+}
 
 
 </script>

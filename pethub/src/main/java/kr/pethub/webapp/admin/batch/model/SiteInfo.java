@@ -1,6 +1,8 @@
 package kr.pethub.webapp.admin.batch.model;
 
-public class SiteInfo {
+import kr.pethub.core.module.model.Pagination;
+
+public class SiteInfo extends Pagination{
 	
 	private String siteSrl;					// 사이트 일련번호
 	private String siteNm;				// 사이트명 
@@ -18,4 +20,4 @@ public class SiteInfo {
 		this.siteNm = siteNm;
 	}
 	
-}
+} 

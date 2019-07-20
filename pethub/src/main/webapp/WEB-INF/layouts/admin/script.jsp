@@ -1,7 +1,8 @@
-<!-- Custom JS -->
-<script src="/static/js/common.js"></script>
 
+<script src="/static/assets/jquery/jquery.min.js"></script>
 <script src="/static/js/vue.min.2.6.10.js"></script>
+
+<script src="/static/js/common.js"></script>
 
 <!-- Bootstrap 3.3.7 -->
 <script src="/static/assets/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -16,4 +17,7 @@
  <!-- DatePicker -->
  <script src="/static/assets/datepicker/js/bootstrap-datepicker.min.js"></script>
  <script src="/static/assets/datepicker/locales/bootstrap-datepicker.kr.min.js"></script>
+
+<!-- Pagination -->
+<script src="/static/js/jquery.simplePagination.js"></script>
 
