@@ -28,12 +28,23 @@ public class SiteInfoController{
 	@Autowired
 	private SiteInfoService siteInfoService;
 	
+	/**
+	 * 사이트 정보 화면
+	 * @param user
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/batch/siteList")
 	public String siteList(@ModelAttribute User user, Model model) {
 		
 		 return "admin:batch/siteList";
 	} 
 
+	/**
+	 * 사이트 정보 데이터
+	 * @param siteInfo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/batch/siteListJson", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object>  siteListJson(@ModelAttribute SiteInfo siteInfo) {

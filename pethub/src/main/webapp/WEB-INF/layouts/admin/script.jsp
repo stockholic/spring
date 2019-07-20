@@ -1,5 +1,10 @@
 
-<script src="/static/assets/jquery/jquery.min.js"></script>
+<script src="/static/assets/jquery/jquery-3.4.1.min.js"></script>
+<script src="/static/assets/jquery/jquery-migrate-3.1.0.min.js"></script>
+
+<!-- <script src="/static/assets/jquery-2.2.4.min.js"></script> -->
+
+
 <script src="/static/js/vue.min.2.6.10.js"></script>
 
 <script src="/static/js/common.js"></script>
@@ -20,4 +25,7 @@
 
 <!-- Pagination -->
 <script src="/static/js/jquery.simplePagination.js"></script>
+
+<!-- message box -->
+<script src="/static/assets/msgbox/jquery.msgbox.js"></script>
 

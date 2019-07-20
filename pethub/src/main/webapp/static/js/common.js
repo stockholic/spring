@@ -278,6 +278,28 @@ var com = {
 		$(selector).pagination('updateItemsOnPage', itemsOnPage);
 	},
 	
+	/* alert
+	 * https://www.jqueryscript.net/lightbox/Draggable-Skinnable-jQuery-Popup-Windows-Plugin-Msgbox.html
+	 */
+	alert : function( msg ){
+		$.msgbox({
+			type: 'alert',
+			content: msg,
+			title: 'Alert',
+			resize: false,
+			width: 300,
+			height: 200,
+			initialWidth: 300,
+			initialHeight: 200,
+			buttons: ['닫기'],
+			buttonEvents: {
+				'닫기': function() {
+					this.close()
+				}
+			}
+		});
+	}
+	
 
 };
 

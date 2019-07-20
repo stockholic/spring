@@ -73,7 +73,7 @@
 	<div id="paging"></div>
 	
 	<div class="box-footer">
-		<button type="button" class="btn btn-primary btn-xm" onClick="save()">등록</button>
+		<button type="button" class="btn btn-primary btn-xm" onClick="com.alert('등록되었습니다.')">등록</button>
 	</div>
 		
 	
