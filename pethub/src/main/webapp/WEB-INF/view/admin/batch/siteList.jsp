@@ -73,10 +73,11 @@
 	<div id="paging"></div>
 	
 	<div class="box-footer">
-		<button type="button" class="btn btn-primary btn-xm" onClick="com.alert('등록되었습니다.')">등록</button>
+		<button type="button" class="btn btn-primary btn-xm" onClick="com.alertMsg('이름을 입력하세요.')">등록</button>
+		<button type="button" class="btn btn-primary btn-xm" onClick="com.infoMsg('등록 되었습니다.')">정보</button>
 	</div>
+
 		
-	
 </div>	
 
 </section>
@@ -89,6 +90,9 @@ var rowSize = 15;	//페이지당 보여줄 로우 수
 $(document).ready(function() {
 
 	vObj = com.initVue("#dataWrap");
+	
+	com.initAlertMsg( function(){ alert() } );
+	com.initInfoMsg();
 	
 });
 
@@ -130,6 +134,7 @@ function goPage(pageNumber){
 	//로우 개수 변화, 페이징 업데이트
 	com.updatePageItems("#paging", vObj.dataInfo.totalRow)
 }
+
 
 
 </script>

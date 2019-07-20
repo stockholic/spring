@@ -278,14 +278,15 @@ var com = {
 		$(selector).pagination('updateItemsOnPage', itemsOnPage);
 	},
 	
-	/* alert
+	/* msg
 	 * https://www.jqueryscript.net/lightbox/Draggable-Skinnable-jQuery-Popup-Windows-Plugin-Msgbox.html
 	 */
-	alert : function( msg ){
-		$.msgbox({
+	
+	initAlertMsg : function(fnc){
+		$(".msgbox.alert").msgbox({
 			type: 'alert',
-			content: msg,
-			title: 'Alert',
+			content: ' ',
+			title: '알림',
 			resize: false,
 			width: 300,
 			height: 200,
@@ -296,10 +297,38 @@ var com = {
 				'닫기': function() {
 					this.close()
 				}
-			}
+			},
+			onClose: fnc == undefined ? false : fnc
 		});
-	}
+	},
+	initInfoMsg : function(fnc){
+		$(".msgbox.info").msgbox({
+			type: 'info',
+			content: ' ',
+			title: '정보',
+			resize: false,
+			width: 300,
+			height: 200,
+			initialWidth: 300,
+			initialHeight: 200,
+			buttons: ['닫기'],
+			buttonEvents: {
+				'닫기': function() {
+					this.close()
+				}
+			},
+			onClose: fnc == undefined ? false : fnc
+		});
+	},
 	
+	alertMsg : function(msg){
+		$(".msgbox.alert").msgbox().content(msg);
+		$(".msgbox.alert").trigger("click");
+	},
+	infoMsg : function(msg){
+		$(".msgbox.info").msgbox().content(msg);
+		$(".msgbox.info").trigger("click");
+	},
 
 };
 
