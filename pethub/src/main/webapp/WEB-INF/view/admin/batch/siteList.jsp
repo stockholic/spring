@@ -43,28 +43,26 @@
     
 	    <table class="table table-hover table-top">
 		  <colgroup>
-		    <col style="width:60px">
+		    <col style="width:80px">
 		     <col style="width:250px">
 		     <col />
 		     <col style="width:80px">
 		  </colgroup>
 		<thead>
 		<tr>
-			<th>번호</th>
+			<th class="text-center">번호</th>
 			<th>사이트 명</th>
 			<th>사이트 URL</th>
-			<th>등록일</th>
+			<th class="text-center">등록일</th>
 		</tr>
 		</thead>
 		<tbody>
 		
 		<tr v-for="lst in vData.dataList" v-cloak>
-			<td></td>
-			<td>
-				<a href="#">{{ lst.siteNm | addComma }}</a>
-			</td>
+			<td class="text-center">{{ lst.num | addComma }}</td>
 			<td>{{ lst.siteNm }}</td>
-			<td>{{   }}</td>
+			<td><a v-bind:href="lst.siteUrl" target="_blank">{{ lst.siteUrl }}</a></td>
+			<td class="text-center">{{ lst.regDt | timestampToDate }}</td>
 		</tr>
 		
 		</tbody>
@@ -85,7 +83,9 @@
 
 <script>
 
-var vObj = null;
+var vObj = null;		//Vue 객제
+var rowSize = 15;	//페이지당 보여줄 로우 수
+
 $(document).ready(function() {
 
 	vObj = com.initVue("#dataWrap");
@@ -108,7 +108,8 @@ function getVdata(params){
 	if( vObj == null && obj.dataInfo.totalRow > 0 ){
 		com.initPaging({
 			selector : "#paging",
-			items : obj.dataInfo.totalRow
+			items : obj.dataInfo.totalRow,
+			itemsOnPage : rowSize
 		});
 	}
 	return obj;
@@ -120,7 +121,7 @@ function goPage(pageNumber){
 	
 	var params = {
 		page : pageNumber,
-		rowSize : 15
+		rowSize : rowSize
 	}
 	
 	//데이터 업데이트

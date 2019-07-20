@@ -212,7 +212,8 @@ var com = {
 					}
 				},
 				created: function () {
-					this.setVdata({})
+					var _rowSize = (rowSize == undefined) ? 15 : rowSize;
+					this.setVdata({rowSize : rowSize})
 				}
 			});
 		
@@ -229,7 +230,7 @@ var com = {
 		var options = {
 				selector : "#paging",
 				items : 0,						// 전체 레코드 수
-				itemsOnPage : 10,			// 목록에 보여줄 페이지 수
+				itemsOnPage : 15,			// 페이지당 목록 수
 				currentPage : 1				// 현재페이지
 			};
 	
@@ -298,6 +299,18 @@ $.fn.clickToggle = function(func1, func2) {
 // 천단위 콤마
 Vue.filter('addComma', function (num) {
 	return com.formatNumber(num)
+});
+
+Vue.filter('timestampToDate', function (timestamp) {
+	var d = new Date(timestamp);
+    year = d.getFullYear(),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate();
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+	
+	return [year, month, day].join('.');
 });
 
 

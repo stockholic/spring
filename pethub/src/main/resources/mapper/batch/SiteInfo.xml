@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.pethub.webapp.admin.batch.dao.SiteInfoDao">
+
+	<select id="selectSiteInfoCount" resultType="int">
+		SELECT 
+     		count(1)
+		FROM site_info
+
+	</select>
+
+	<select id="selectSiteInfoList" resultType="kr.pethub.webapp.admin.batch.model.SiteInfo">
+		SELECT 
+     		site_srl
+			,site_nm								
+			,site_url								
+			,site_etc								
+			,reg_dt								
+		FROM site_info
+      	
+	    ORDER BY site_srl DESC
+		
+		LIMIT #{rowStart}, #{rowSize}
+	</select>
+
+</mapper>  
