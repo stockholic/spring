@@ -138,9 +138,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-<span class="msgbox alert"></span>
-<span class="msgbox info"></span>
-
 <script>
 
 //https://github.com/tefra/navgoco

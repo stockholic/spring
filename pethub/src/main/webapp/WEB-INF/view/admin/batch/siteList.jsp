@@ -73,11 +73,10 @@
 	<div id="paging"></div>
 	
 	<div class="box-footer">
-		<button type="button" class="btn btn-primary btn-xm" onClick="com.alertMsg('이름을 입력하세요.')">등록</button>
-		<button type="button" class="btn btn-primary btn-xm" onClick="com.infoMsg('등록 되었습니다.')">정보</button>
-	</div>
-
+		<button type="button" href="/adm/menu/form" class="btn btn-primary btn-xm msgbox popup">등록</button>
 		
+	</div>
+	
 </div>	
 
 </section>
@@ -91,8 +90,7 @@ $(document).ready(function() {
 
 	vObj = com.initVue("#dataWrap");
 	
-	com.initAlertMsg( function(){ alert() } );
-	com.initInfoMsg();
+	com.initPopup(600, 400);
 	
 });
 

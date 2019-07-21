@@ -381,7 +381,7 @@
 				padding: this.options.padding,
 				width: '100%',
 				height: '100%',
-				overflow: $.inArray(this.options.type, ['photo', 'image', 'album', 'gallery']) == -1 ? 'auto' : 'hidden'
+				overflow: $.inArray(this.options.type, ['photo', 'image', 'album', 'gallery','iframe']) == -1 ? 'auto' : 'hidden'
 			});
 			
 			this.$loading = createElement('div', this.options.prefix + '-loading', {
