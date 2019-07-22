@@ -76,6 +76,8 @@
 		<button type="button" href="/adm/batch/siteForm" class="btn btn-primary btn-xm msgbox popup">등록</button>
 	</div>
 	
+	<iframe src="/adm/menu/list"></iframe>
+	
 </div>	
 
 </section>

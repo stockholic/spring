@@ -19,6 +19,7 @@ import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import kr.pethub.core.authority.AuthService;
@@ -57,6 +58,10 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
  
 		http
+		.headers()
+			.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))		//X-Frame-Options 셋팅 , 크로스 사이트 스크립트 방지 해재 default DENY'' 
+			.and()
+		
 		.addFilterBefore(ssoAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)		//SSO 인증
 		.addFilterAfter(new AjaxSessionTimeoutFilter(), ExceptionTranslationFilter.class)		//Ajax Session time out 체크, redirect 되기전에 상태 코드를 전송하게함
 		.csrf().disable()
