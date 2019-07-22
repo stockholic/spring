@@ -316,6 +316,9 @@ var com = {
 };
 
 //--------------------------------------------------------------------  Jquery plugin
+/**
+ * 함수 토글
+ */
 $.fn.clickToggle = function(func1, func2) {
     var funcs = [func1, func2];
     this.data('toggleclicked', 0);
@@ -345,7 +348,6 @@ jQuery.fn.serializeObject = function() {
         }
     } catch (e) {
         alert(e.message);
-    } finally {
     }
  
     return obj;
