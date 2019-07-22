@@ -5,7 +5,7 @@
 
 label{
 	color:#4e4e4e;
-	font-size:13px;
+	font-size:14px;
 }
 
 a:hover{
@@ -22,18 +22,18 @@ a:hover{
 }
 
 .form-control {
-	font-size:13px;
+	font-size:14px;
     padding: 2px 4px;
-    height: 28px;
+    height: 32px;
 }
 
 .sidebar-menu>li{	
     border-bottom: 1px solid #484d56;
-	  font-size: 13px;
+	  font-size: 14px;
 }
 
  .treeview-menu>li>a{
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .content-header>h1 {
@@ -69,7 +69,7 @@ a:hover{
 
 .btn-xm{
 	padding: 4px 9px;
-	font-size: 13px;
+	font-size: 14px;
 }
 .pagination>li>a, .pagination>li>span {
 	padding: 2px 8px;

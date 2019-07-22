@@ -59,6 +59,20 @@ public class SiteInfoController{
 		
 	} 
 	
+	
+	/**
+	 * 사이트 정보 등록폼
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/batch/siteForm")
+	public String siteForm(@ModelAttribute User user, Model model) {
+		
+		 return "ajax:admin/batch/siteForm";
+	} 
+
+	
 		
 	
 }

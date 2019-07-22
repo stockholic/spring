@@ -34,9 +34,9 @@ var com = {
 	},
 	
 	/**
-	 * Ajax 데이터 바인딩
+	 * Ajax 요청
 	 */
-	getAjaxData : function(obj){
+	requestAjax : function(obj){
 		var data = {};
 		var options = {
 				type : "GET", 
@@ -281,26 +281,35 @@ var com = {
 	/* msgBox
 	 * https://www.jqueryscript.net/lightbox/Draggable-Skinnable-jQuery-Popup-Windows-Plugin-Msgbox.html
 	 */
-	initPopup : function(width,height){
+	initPopup : function(obj){
+		
+		var options = {
+				title : ' ',					// 제목
+				width : 600,			// 너비
+				height : 400,			// 높이
+				buttons : ['닫기'],				// 버튼
+				buttonEvents : {				// 버튼이벤트
+					'닫기': function() {
+						this.close()
+					}
+				}
+			};
+	
+		$.extend( options, obj );
+		
 		$(".msgbox.popup").msgbox({
+			title : options.title,
 			type: 'ajax',
 			resize: true,
 			overlay: false,
-			width: width,
-			height: height,
-			initialWidth: width,
-			initialHeight: height,
+			width: options.width,
+			height: options.height,
+			initialWidth: options.width,
+			initialHeight: options.height,
 			padding: 10,
 			icons: ['close'],
-			buttons: ['저장','닫기'],
-			buttonEvents: {
-				'저장': function() {
-					alert();
-				},
-				'닫기': function() {
-					this.close()
-				}
-			},
+			buttons: options.buttons,
+			buttonEvents: options.buttonEvents,
 		});
 	},
 	
@@ -318,6 +327,30 @@ $.fn.clickToggle = function(func1, func2) {
     });
     return this;
 };
+
+/**
+ * form data To Object
+ */
+jQuery.fn.serializeObject = function() {
+    var obj = null;
+    try {
+        if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+            var arr = this.serializeArray();
+            if (arr) {
+                obj = {};
+                jQuery.each(arr, function() {
+                    obj[this.name] = this.value;
+                });
+            }
+        }
+    } catch (e) {
+        alert(e.message);
+    } finally {
+    }
+ 
+    return obj;
+};
+
 
 
 //--------------------------------------------------------------------  Vue Filter

@@ -11,7 +11,7 @@
   	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   	
 	<tiles:insertDefinition name="adminCss" />
-	<script src="/static/assets/jquery/jquery.min.js"></script>
+	<script src="/static/assets/jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>

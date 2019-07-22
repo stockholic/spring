@@ -73,8 +73,7 @@
 	<div id="paging"></div>
 	
 	<div class="box-footer">
-		<button type="button" href="/adm/menu/form" class="btn btn-primary btn-xm msgbox popup">등록</button>
-		
+		<button type="button" href="/adm/batch/siteForm" class="btn btn-primary btn-xm msgbox popup">등록</button>
 	</div>
 	
 </div>	
@@ -90,7 +89,21 @@ $(document).ready(function() {
 
 	vObj = com.initVue("#dataWrap");
 	
-	com.initPopup(600, 400);
+	//동록 폼
+	com.initPopup({
+		title : '사이트 등록',
+		width : 600,
+		height : 250,
+		buttons : ['저장','닫기'],
+		buttonEvents : {
+			'저장': function() {
+				save();
+			},
+			'닫기': function() {
+				this.close();
+			}
+		}
+	});
 	
 });
 
@@ -98,7 +111,7 @@ $(document).ready(function() {
 // Ajax 데이터 추출,  Vue  함수명 고정 getVdata
 function getVdata(params){	
 	
- 	var obj = com.getAjaxData({
+ 	var obj = com.requestAjax({
 		type: "POST",
 		async : false, 
 		url : "/adm/batch/siteListJson",
