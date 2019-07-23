@@ -37,7 +37,7 @@ var com = {
 	 * Ajax 요청
 	 */
 	requestAjax : function(obj){
-		var data = {};
+		var data;
 		var options = {
 				type : "GET", 
 				async : true, 
@@ -48,7 +48,7 @@ var com = {
 		 $.ajax({      
 		    	type : options.type,  
 		    	async : options.async,
-		        url : options.url,
+		    	url : options.url,
 		        data : options.params,
 		        beforeSend : function(xhr){
 					xhr.setRequestHeader("AJAX", "true");
@@ -278,40 +278,31 @@ var com = {
 		$(selector).pagination('updateItemsOnPage', itemsOnPage);
 	},
 	
-	/* msgBox
-	 * https://www.jqueryscript.net/lightbox/Draggable-Skinnable-jQuery-Popup-Windows-Plugin-Msgbox.html
+	/**
+	 * https://stephanwagner.me/jBox
 	 */
 	initPopup : function(obj){
 		
 		var options = {
-				title : ' ',					// 제목
+				title : '&nbsp;',			// 제목
 				width : 600,			// 너비
 				height : 400,			// 높이
-				buttons : ['닫기'],				// 버튼
-				buttonEvents : {				// 버튼이벤트
-					'닫기': function() {
-						this.close()
-					}
-				}
 			};
-	
 		$.extend( options, obj );
-		
-		$(".msgbox.popup").msgbox({
-			title : options.title,
-			type: 'ajax',
-			resize: true,
-			overlay: false,
+	
+		return new jBox('Modal', {
+			draggable: 'title',
 			width: options.width,
 			height: options.height,
-			initialWidth: options.width,
-			initialHeight: options.height,
-			padding: 10,
-			icons: ['close'],
-			buttons: options.buttons,
-			buttonEvents: options.buttonEvents,
+			closeButton: 'title',
+			animation: false,
+			overlay : false,
+			title: options.title,
+			content : options.content
 		});
+		
 	},
+	
 	
 };
 

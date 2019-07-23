@@ -59,7 +59,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
  
 		http
 		.headers()
-			.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))		//X-Frame-Options 셋팅 , 크로스 사이트 스크립트 방지 해재 default DENY'' 
+			.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))		//X-Frame-Options 셋팅 , 크로스 사이트 스크립트 방지 해재 default 'DENY' 
 			.and()
 		
 		.addFilterBefore(ssoAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)		//SSO 인증

@@ -24,5 +24,5 @@
 <!-- Pagination -->
 <link type="text/css" rel="stylesheet" href="/static/css/admin/simplePagination.css">
 
-<!-- message box -->
-<link type="text/css" rel="stylesheet" href="/static/assets/msgbox/themes/metro/css/jquery.msgbox.css">
+<!-- jBox -->
+<link type="text/css" rel="stylesheet" href="/static/assets/jBox/jBox.all.min.css">

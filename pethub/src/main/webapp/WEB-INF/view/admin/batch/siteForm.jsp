@@ -19,6 +19,11 @@
 </table>
 </form> 
 
+<div style="text-align:center;padding:10px">
+	<button type="button" class="btn btn-default" onClick="save()">저장</button>&nbsp;
+	<button type="button" class="btn btn-default" onClick="regPopup.close()">닫기</button>
+</div> 
+
 
 <script>
 

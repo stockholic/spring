@@ -73,10 +73,8 @@
 	<div id="paging"></div>
 	
 	<div class="box-footer">
-		<button type="button" href="/adm/batch/siteForm" class="btn btn-primary btn-xm msgbox popup">등록</button>
+		<button type="button" onclick="openRegForm()" class="btn btn-primary btn-xm">등록</button>
 	</div>
-	
-	<iframe src="/adm/menu/list"></iframe>
 	
 </div>	
 
@@ -87,25 +85,22 @@
 var vObj = null;		//Vue 객제
 var rowSize = 15;	//페이지당 보여줄 로우 수
 
+var regPopup;			//등록팝엽
+
 $(document).ready(function() {
 
+	//Vue 초기화
 	vObj = com.initVue("#dataWrap");
 	
-	//동록 폼
-	com.initPopup({
+	//동록 폼 초기화
+	regPopup = com.initPopup({
 		title : '사이트 등록',
 		width : 600,
-		height : 250,
-		buttons : ['저장','닫기'],
-		buttonEvents : {
-			'저장': function() {
-				save();
-			},
-			'닫기': function() {
-				this.close();
-			}
-		}
+		height : 200
 	});
+	
+	//수정 폼 초기화
+	
 	
 });
 
@@ -147,6 +142,25 @@ function goPage(pageNumber){
 	
 	//로우 개수 변화, 페이징 업데이트
 	com.updatePageItems("#paging", vObj.dataInfo.totalRow)
+}
+
+
+//등록폼 호출
+function openRegForm(){
+	
+	var obj = com.requestAjax({
+		type: "POST",
+		async : false,
+		url : "/adm/batch/siteForm",
+	});
+
+	regPopup.setContent( obj);
+	regPopup.open();
+}
+
+//수정폼 호출
+function openUptForm(){
+	
 }
 
 
