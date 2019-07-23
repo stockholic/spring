@@ -25,4 +25,16 @@
 		LIMIT #{rowStart}, #{rowSize}
 	</select>
 
+	<select id="selectSiteInfo" resultType="kr.pethub.webapp.admin.batch.model.SiteInfo">
+		SELECT 
+     		site_srl
+			,site_nm								
+			,site_url								
+			,site_etc								
+			,reg_dt								
+		FROM site_info
+      	WHERE site_srl = #{siteSrl}
+		
+	</select>
+
 </mapper>  

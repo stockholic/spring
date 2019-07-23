@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.pethub.core.authority.Auth;
+import kr.pethub.core.authority.AuthUtil;
 import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.service.SiteInfoService;
 import kr.pethub.webapp.admin.site.model.User;
@@ -35,7 +39,7 @@ public class SiteInfoController{
 	 * @return
 	 */
 	@RequestMapping(value="/batch/siteList")
-	public String siteList(@ModelAttribute User user, Model model) {
+	public String siteList(Auth user, Model model) {
 		
 		 return "admin:batch/siteList";
 	} 
@@ -67,10 +71,15 @@ public class SiteInfoController{
 	 * @return
 	 */
 	@RequestMapping(value="/batch/siteForm")
-	public String siteForm(@ModelAttribute User user, Model model) {
+	public String siteForm(Auth user, @RequestParam(value="siteSrl", required=false) String siteSrl, Model model) {
+		
+		if( StringUtils.isNotEmpty(siteSrl) ) {
+			model.addAttribute("siteInfo", siteInfoService.selectSiteInfo(siteSrl));
+		}
 		
 		 return "ajax:admin/batch/siteForm";
 	} 
+	
 
 	
 		

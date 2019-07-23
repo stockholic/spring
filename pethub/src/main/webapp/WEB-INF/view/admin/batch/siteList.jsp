@@ -100,7 +100,11 @@ $(document).ready(function() {
 	});
 	
 	//수정 폼 초기화
-	
+	uptPopup = com.initPopup({
+		title : '사이트 수정',
+		width : 600,
+		height : 220
+	});
 	
 });
 

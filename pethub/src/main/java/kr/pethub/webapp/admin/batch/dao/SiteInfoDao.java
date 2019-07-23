@@ -20,4 +20,8 @@ public class SiteInfoDao extends MultiSqlSessionDaoSupport{
 		return  selectList("selectSiteInfoList",siteInfo);
 	}
 
+	public SiteInfo selectSiteInfo(String siteSrl){
+		return  selectOne("selectSiteInfo",siteSrl);
+	}
+
 }

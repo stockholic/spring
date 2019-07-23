@@ -42,5 +42,14 @@ public class SiteInfoService {
 		
 		return list;
 	}
+	
+	/**
+	 * 조회
+	 * @param siteInfo
+	 * @return
+	 */
+	public SiteInfo selectSiteInfo(String siteSrl) {
+		return  siteInfoDao.selectSiteInfo(siteSrl);
+	}
 
 }

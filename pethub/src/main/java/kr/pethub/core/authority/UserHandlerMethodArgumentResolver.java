@@ -20,7 +20,6 @@ public class UserHandlerMethodArgumentResolver  implements HandlerMethodArgument
 
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-
 		return AuthUtil.getUser();
 	}
 

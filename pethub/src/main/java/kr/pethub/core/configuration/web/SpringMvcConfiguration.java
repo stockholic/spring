@@ -45,13 +45,15 @@ public class SpringMvcConfiguration  implements WebMvcConfigurer  {
     /**
      * User argumentResolvers
      */
+	@Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(userHandlerMethodArgumentResolver());
+      argumentResolvers.add(new UserHandlerMethodArgumentResolver());
     }
 
     /**
      * static resources
      */
+	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/static/favicon.ico");
