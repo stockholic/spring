@@ -96,7 +96,7 @@ $(document).ready(function() {
 	regPopup = com.initPopup({
 		title : '사이트 등록',
 		width : 600,
-		height : 200
+		height : 220
 	});
 	
 	//수정 폼 초기화
