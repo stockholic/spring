@@ -78,7 +78,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 	        .usernameParameter( "userNm" )
 	        .passwordParameter( "password" )
 	        .successHandler(new LoginSuccessHandler(authService))
-	        .failureHandler(new LoginFailureHandler("/login?err=1", authService))
+	        .failureHandler(new LoginFailureHandler("/adm/login?err=1", authService))
 	        .and()
 		.logout()
 			.logoutRequestMatcher( new AntPathRequestMatcher( "/logout" ) )

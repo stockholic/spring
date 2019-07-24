@@ -273,57 +273,86 @@ var com = {
 	},
 	
 	/**
+	 * 레이어 팝업
 	 * https://stephanwagner.me/jBox
 	 */
-	popup : null,
-	initPopup : function(obj){
+	jboxPopup : null,
+	popup : function(obj){
 		
-		if( this.popup == null ){
+		if( this.jboxPopup != null ) this.jboxPopup.destroy();
 		
-			var options = {
-					title : '&nbsp;',			// 제목
-					width : 600,			// 너비
-					height : 400,			// 높이
-				};
-			$.extend( options, obj );
+		var options = {
+				title : '&nbsp;',			// 제목
+				width : 600,			// 너비
+				height : 400,			// 높이
+			};
 		
-			this.popup = new jBox('Modal', {
-				draggable: 'title',
-				width: options.width,
-				height: options.height,
-				closeButton: 'title',
-				animation: false,
-				title: options.title,
-				content : options.content
+		var content = "";
+		
+		$.extend( options, obj );
+	
+		this.jboxPopup = new jBox('Modal', {
+			draggable: 'title',
+			width: options.width,
+			height: options.height,
+			closeButton: 'title',
+			animation: false,
+			title: options.title
+		});
+		
+		if(obj.url != undefined){
+			content = this.requestAjax({
+				type : options.type,
+				async : options.async,
+				url : options.url,
+				params : options.params
 			});
+		}else{
+			content = obj.content;
 		}
-			
+		
+		this.jboxPopup.setContent(content);
+		this.jboxPopup.open();
 	},
+	popupClose : function(){
+		this.jboxPopup.close();
+	},
+	
+	
 	/**
 	 * 알림 레이어
 	 */
 	notice : function(msg){
 		new jBox('Notice', {
-	      content: msg,
-	      color: 'black'
-	    });
+			  content: msg,
+			  color: 'black',
+			  position: {
+			      x: 'center',
+			      y: 'top'
+			  },
+			  offset: {
+			      y: 20
+			  },
+		});
 	},
 	
 	/**
 	 * 확인 창 레이어
 	 */
 	jboxConfirm : null,
-	confirm : function(params) {
+	confirm : function(obj) {
 		
 		if(this.jboxConfirm != null) this.jboxConfirm.destroy();
 			
 		this.jboxConfirm = new jBox('Confirm', {
 			  confirmButton: '확인',
 			  cancelButton: '취소',
+			  content : obj.content,
+			  confirm : obj.confirm,
+			  cancel : obj.cancel,
 		});
 		
-		this.jboxConfirm.setContent(params.content);
-		this.jboxConfirm.open(params);
+		this.jboxConfirm.open();
 	}
 	
 };

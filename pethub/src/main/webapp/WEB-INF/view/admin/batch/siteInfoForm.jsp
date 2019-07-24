@@ -31,12 +31,12 @@
 <div style="text-align:center;">
 	<c:if test="${ empty siteInfo.siteSrl  }">
 		<button type="button" class="btn btn-default" onClick="save()">저장</button>&nbsp;
-		<button type="button" class="btn btn-default" onClick="com.popup.close()">닫기</button>
+		<button type="button" class="btn btn-default" onClick="com.popupClose()">닫기</button>
 	</c:if>
 	<c:if test="${ !empty siteInfo.siteSrl  }">
 		<button type="button" class="btn btn-default" onClick="update()">수정</button>&nbsp;
 		<button type="button" class="btn btn-default" onClick="remove()">삭제</button>&nbsp;
-		<button type="button" class="btn btn-default" onClick="com.popup.close()">닫기</button>
+		<button type="button" class="btn btn-default" onClick="com.popupClose()">닫기</button>
 	</c:if>
 </div> 
 
@@ -55,7 +55,7 @@ function save(){
 	
 	if (obj.result > 0){
 		com.notice("저장 되었습니다.")
-		com.popup.close();
+		com.popupClose();
 		goPage(1);
 	}
 
@@ -72,7 +72,7 @@ function update(){
 	
 	if (obj.result > 0){
 		com.notice("수정 되었습니다.")
-		com.popup.close();
+		com.popupClose();
 		goPage();
 	}
 }
@@ -83,20 +83,6 @@ function remove(){
 	com.confirm({
 		content : "삭제 하겠습니까 ?",
 		confirm : function(){
-			alert(1)
-		},
-		cancel : function(){
-			alert(2)
-		}
-	});
-	
-	return;
-	
-	com.confirm.setContent("삭제 하시겠습니까 ?")
-	com.confirm.open({
-		
-		confirm : function(){
-			
 			var obj = com.requestAjax({
 				type: "POST",
 				async : false, 
@@ -106,7 +92,7 @@ function remove(){
 			
 			if (obj.result > 0){
 				com.notice("삭제 되었습니다.")
-				com.popup.close();
+				com.popupClose();
 				goPage();
 			}
 		},

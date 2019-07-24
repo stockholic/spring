@@ -169,28 +169,27 @@ function goPage(pageNumber){
 
 //등록폼 호출
 function openRegForm(){
-	
-	var obj = com.requestAjax({
-		type: "POST",
+	com.popup({
+		title : "사이트 등록",
+		width : 600,
+		height : 250,
+		type : "POST",
 		async : false,
 		url : "/adm/batch/siteInfoForm"
-	});
-
-	com.popup.setContent(obj);
-	com.popup.open();
+	})
 }
 
 //수정폼 호출
 function openUptForm(siteSrl){
-	var obj = com.requestAjax({
-		type: "POST",
+	com.popup({
+		title : "사이트 수정",
+		width : 600,
+		height : 250,
+		type : "POST",
 		async : false,
 		url : "/adm/batch/siteInfoForm",
 		params : {siteSrl : siteSrl}
-	});
-	
-	com.popup.setContent(obj);
-	com.popup.open();
+	})
 }
 
 
