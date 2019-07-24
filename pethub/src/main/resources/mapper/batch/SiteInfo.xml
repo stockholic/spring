@@ -44,7 +44,7 @@
       	WHERE site_srl = #{siteSrl}
 	</select>
 
-	<insert id="insertSite">
+	<insert id="insertSiteInfo">
 		INSERT INTO site_info(
 			 site_nm								
 			, site_url								
@@ -60,7 +60,7 @@
 		)
 	</insert>
 	
-	<update id="updateSite">
+	<update id="updateSiteInfo">
 		UPDATE site_info SET
 			 site_nm =  #{siteNm}							
 			, site_url = 	#{siteUrl}							
@@ -69,7 +69,7 @@
 		WHERE site_srl = #{siteSrl}
 	</update>
 	
-	<delete id="deleteSite">
+	<delete id="deleteSiteInfo">
 		DELETE FROM site_info	WHERE site_srl = #{siteSrl}
 	</delete>
 	

@@ -57,8 +57,8 @@ public class SiteInfoService {
 	 * @param siteInfo
 	 * @return
 	 */
-	public int  insertSite(SiteInfo siteInfo) {
-		return  siteInfoDao.insertSite(siteInfo);
+	public int  insertSiteInfo(SiteInfo siteInfo) {
+		return  siteInfoDao.insertSiteInfo(siteInfo);
 	}
 	
 	/**
@@ -66,8 +66,8 @@ public class SiteInfoService {
 	 * @param siteInfo
 	 * @return
 	 */
-	public int  updateSite(SiteInfo siteInfo) {
-		return  siteInfoDao.updateSite(siteInfo);
+	public int  updateSiteInfo(SiteInfo siteInfo) {
+		return  siteInfoDao.updateSiteInfo(siteInfo);
 	}
 	
 	/**
@@ -75,9 +75,9 @@ public class SiteInfoService {
 	 * @param siteInfo
 	 * @return
 	 */
-	public int  deleteSite(SiteInfo siteInfo) {
+	public int  deleteSiteInfo(SiteInfo siteInfo) {
 		
-		siteInfoDao.deleteSite(siteInfo);
+		siteInfoDao.deleteSiteInfo(siteInfo);
 		
 		siteInfoDao.deleteSiteLink(siteInfo);
 		

@@ -24,16 +24,16 @@ public class SiteInfoDao extends MultiSqlSessionDaoSupport{
 		return  selectOne("selectSiteInfo",siteSrl);
 	}
 	
-	public int insertSite(SiteInfo siteInfo){
-		return insert("insertSite",siteInfo);
+	public int insertSiteInfo(SiteInfo siteInfo){
+		return insert("insertSiteInfo",siteInfo);
 	}
 	
-	public int updateSite(SiteInfo siteInfo){
-		return  update("updateSite",siteInfo);
+	public int updateSiteInfo(SiteInfo siteInfo){
+		return  update("updateSiteInfo",siteInfo);
 	}
 	
-	public int deleteSite(SiteInfo siteInfo){
-		return  delete("deleteSite",siteInfo);
+	public int deleteSiteInfo(SiteInfo siteInfo){
+		return  delete("deleteSiteInfo",siteInfo);
 	}
 
 	public int deleteSiteLink(SiteInfo siteInfo){

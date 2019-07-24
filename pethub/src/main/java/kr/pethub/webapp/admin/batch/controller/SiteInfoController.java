@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.pethub.core.authority.Auth;
-import kr.pethub.core.authority.AuthUtil;
 import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.service.SiteInfoService;
-import kr.pethub.webapp.admin.site.model.User;
 
 
 @Controller
@@ -38,10 +36,10 @@ public class SiteInfoController{
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/batch/siteList")
+	@RequestMapping(value="/batch/siteInfoList")
 	public String siteList(Auth user, Model model) {
 		
-		 return "admin:batch/siteList";
+		 return "admin:batch/siteInfoList";
 	} 
 
 	/**
@@ -50,7 +48,7 @@ public class SiteInfoController{
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/batch/siteListJson", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/batch/siteInfoJson", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object>  siteListJson(@ModelAttribute SiteInfo siteInfo) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -70,14 +68,14 @@ public class SiteInfoController{
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/batch/siteForm")
+	@RequestMapping(value="/batch/siteInfoForm")
 	public String siteForm(Auth user, @RequestParam(value="siteSrl", required=false) String siteSrl, Model model) {
 		
 		if( StringUtils.isNotEmpty(siteSrl) ) {
 			model.addAttribute("siteInfo", siteInfoService.selectSiteInfo(siteSrl));
 		}
 		
-		 return "ajax:admin/batch/siteForm";
+		 return "ajax:admin/batch/siteInfoForm";
 	} 
 	
 
@@ -88,10 +86,10 @@ public class SiteInfoController{
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/batch/insertSite", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> insertSite(SiteInfo siteInfo) {
+	@RequestMapping(value="/batch/insertSiteInfo", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> insertSiteInfo(SiteInfo siteInfo) {
 		
-		int result = siteInfoService.insertSite(siteInfo);
+		int result = siteInfoService.insertSiteInfo(siteInfo);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);
@@ -106,10 +104,10 @@ public class SiteInfoController{
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/batch/updateSite", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/batch/updateSiteInfo", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> updateSite(SiteInfo siteInfo) {
 		
-		int result = siteInfoService.updateSite(siteInfo);
+		int result = siteInfoService.updateSiteInfo(siteInfo);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);
@@ -124,10 +122,10 @@ public class SiteInfoController{
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/batch/deleteSite", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> updadeleteSiteteSite(SiteInfo siteInfo) {
+	@RequestMapping(value="/batch/deleteSiteInfo", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> deleteSiteInfo(SiteInfo siteInfo) {
 		
-		int result = siteInfoService.deleteSite(siteInfo);
+		int result = siteInfoService.deleteSiteInfo(siteInfo);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);

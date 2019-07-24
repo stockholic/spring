@@ -29,19 +29,15 @@
 </form> 
 
 <div style="text-align:center;">
-
-	
-<c:if test="${ empty siteInfo.siteSrl  }">
-	<button type="button" class="btn btn-default" onClick="save()">저장</button>&nbsp;
-	<button type="button" class="btn btn-default" onClick="com.popup.close()">닫기</button>
-</c:if>
-<c:if test="${ !empty siteInfo.siteSrl  }">
-	<button type="button" class="btn btn-default" onClick="update()">수정</button>&nbsp;
-	<button type="button" class="btn btn-default" onClick="remove()">삭제</button>&nbsp;
-	<button type="button" class="btn btn-default" onClick="com.popup.close()">닫기</button>
-</c:if>
-	
-	
+	<c:if test="${ empty siteInfo.siteSrl  }">
+		<button type="button" class="btn btn-default" onClick="save()">저장</button>&nbsp;
+		<button type="button" class="btn btn-default" onClick="com.popup.close()">닫기</button>
+	</c:if>
+	<c:if test="${ !empty siteInfo.siteSrl  }">
+		<button type="button" class="btn btn-default" onClick="update()">수정</button>&nbsp;
+		<button type="button" class="btn btn-default" onClick="remove()">삭제</button>&nbsp;
+		<button type="button" class="btn btn-default" onClick="com.popup.close()">닫기</button>
+	</c:if>
 </div> 
 
 
@@ -53,7 +49,7 @@ function save(){
 	var obj = com.requestAjax({
 		type: "POST",
 		async : false, 
-		url : "/adm/batch/insertSite",
+		url : "/adm/batch/insertSiteInfo",
 		params : $("#regFrm").serializeObject(),
 	});
 	
@@ -70,7 +66,7 @@ function update(){
 	var obj = com.requestAjax({
 		type: "POST",
 		async : false, 
-		url : "/adm/batch/updateSite",
+		url : "/adm/batch/updateSiteInfo",
 		params : $("#regFrm").serializeObject(),
 	});
 	
@@ -92,7 +88,7 @@ function remove(){
 			var obj = com.requestAjax({
 				type: "POST",
 				async : false, 
-				url : "/adm/batch/deleteSite",
+				url : "/adm/batch/deleteSiteInfo",
 				params : { siteSrl : $("#siteSrl").val() },
 			});
 			

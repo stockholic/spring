@@ -117,7 +117,7 @@ function getVdata(params){
  	com.requestAjax({
 		type: "POST",
 		async : false, 
-		url : "/adm/batch/siteListJson",
+		url : "/adm/batch/siteInfoJson",
 		params : params,
 		
 	//call back	
@@ -173,7 +173,7 @@ function openRegForm(){
 	var obj = com.requestAjax({
 		type: "POST",
 		async : false,
-		url : "/adm/batch/siteForm"
+		url : "/adm/batch/siteInfoForm"
 	});
 
 	com.popup.setContent(obj);
@@ -185,7 +185,7 @@ function openUptForm(siteSrl){
 	var obj = com.requestAjax({
 		type: "POST",
 		async : false,
-		url : "/adm/batch/siteForm",
+		url : "/adm/batch/siteInfoForm",
 		params : {siteSrl : siteSrl}
 	});
 	
