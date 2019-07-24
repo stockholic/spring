@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.pethub.core.authority.Auth;
-import kr.pethub.webapp.admin.batch.model.SiteInfo;
-import kr.pethub.webapp.admin.batch.service.SiteInfoService;
+import kr.pethub.webapp.admin.batch.model.SiteLink;
+import kr.pethub.webapp.admin.batch.service.SiteLinkService;
 
 
 @Controller
@@ -28,10 +28,10 @@ public class SiteLinkController{
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private SiteInfoService siteInfoService;
+	private SiteLinkService siteLinkService;
 	
 	/**
-	 * 사이트 정보 화면
+	 * 사이트 링크 화면
 	 * @param user
 	 * @param model
 	 * @return
@@ -43,18 +43,18 @@ public class SiteLinkController{
 	} 
 
 	/**
-	 * 사이트 정보 데이터
-	 * @param siteInfo
+	 * 사이트 링크 데이터
+	 * @param siteLink
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/batch/siteLinkJson", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object>  siteListJson(@ModelAttribute SiteInfo siteInfo) {
+	public Map<String, Object>  siteListJson(@ModelAttribute SiteLink siteLink) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<SiteInfo> list =  siteInfoService.selectSiteInfoList(siteInfo);
+		List<SiteLink> list =  siteLinkService.selectSiteLinkList(siteLink);
 		
-		map.put("dataInfo", siteInfo);
+		map.put("dataInfo", siteLink);
 		map.put("dataList", list);
 
 		return map;
@@ -63,7 +63,7 @@ public class SiteLinkController{
 	
 	
 	/**
-	 * 사이트 정보 등록폼
+	 * 사이트 링크 등록폼
 	 * @param user
 	 * @param model
 	 * @return
@@ -72,7 +72,7 @@ public class SiteLinkController{
 	public String siteForm(Auth user, @RequestParam(value="siteSrl", required=false) String siteSrl, Model model) {
 		
 		if( StringUtils.isNotEmpty(siteSrl) ) {
-			model.addAttribute("siteInfo", siteInfoService.selectSiteInfo(siteSrl));
+			model.addAttribute("siteLink", siteLinkService.selectSiteLink(siteSrl));
 		}
 		
 		 return "ajax:admin/batch/siteLinkForm";
@@ -80,16 +80,16 @@ public class SiteLinkController{
 	
 
 	/**
-	 * 사이트 정보 등록
+	 * 사이트 링크 등록
 	 * @param user
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/batch/insertSiteLink", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> insertSiteLink(SiteInfo siteInfo) {
+	public Map<String, Object> insertSiteLink(SiteLink siteLink) {
 		
-		int result = siteInfoService.insertSiteInfo(siteInfo);
+		int result = siteLinkService.insertSiteLink(siteLink);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);
@@ -98,16 +98,16 @@ public class SiteLinkController{
 	} 
 
 	/**
-	 * 사이트 정보 수정
+	 * 사이트 링크 수정
 	 * @param user
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/batch/updateSiteLink", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> updateSite(SiteInfo siteInfo) {
+	public Map<String, Object> updateSite(SiteLink siteLink) {
 		
-		int result = siteInfoService.updateSiteInfo(siteInfo);
+		int result = siteLinkService.updateSiteLink(siteLink);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);
@@ -116,16 +116,16 @@ public class SiteLinkController{
 	} 
 	
 	/**
-	 * 사이트 정보 삭제
+	 * 사이트 링크 삭제
 	 * @param user
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/batch/deleteSiteLink", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> deleteSiteLink(SiteInfo siteInfo) {
+	public Map<String, Object> deleteSiteLink(SiteLink siteLink) {
 		
-		int result = siteInfoService.deleteSiteInfo(siteInfo);
+		int result = siteLinkService.deleteSiteLink(siteLink);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);
