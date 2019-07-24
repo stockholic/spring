@@ -271,6 +271,18 @@ var com = {
 	updatePageItemsOnPage   : function( selector, itemsOnPage ){
 		$(selector).pagination('updateItemsOnPage', itemsOnPage);
 	},
+	/**
+	 * 페이징 redraw
+	 */
+	pageRedraw   : function( selector ){
+		 $(selector).pagination('redraw');
+	},
+	/**
+	 * 페이징 destroy
+	 */
+	pageDestroy   : function( selector ){
+		$(selector).pagination('destroy');
+	},
 	
 	/**
 	 * 레이어 팝업

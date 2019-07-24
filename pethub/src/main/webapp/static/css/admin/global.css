@@ -111,6 +111,11 @@ a:hover{
   display: none;
 }
 
+
+#searchString {
+	font-size: 14px;
+}
+
 #paging{
 	height:60px;
 }

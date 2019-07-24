@@ -80,25 +80,15 @@
 <script>
 
 
-var vObj = null;		//Vue 객제
-var paging = null;	//페이징 객체
-var rowSize = 15;	//페이지당 보여줄 로우 수
-var page = 1;			//현재페이지
+var vObj = null;			//Vue 객제
+var isPaging = false	;	//페이징 객체
+var rowSize = 2;			//페이지당 보여줄 로우 수
+var page = 1;				//현재페이지
 
 $(document).ready(function() {
 
 	//Vue 초기화
 	vObj = com.initVue("#dataWrap");
-	
-	//폼 초기화
-	com.initPopup({
-		title : '사이트 등록',
-		width : 600,
-		height : 250
-	});
-	
-	//확인 창 초기화
-	//com.initConfirm();
 	
 	//검색
 	$("#searchString").keyup(function(event) {
@@ -117,7 +107,7 @@ function getVdata(params){
  	com.requestAjax({
 		type: "POST",
 		async : false, 
-		url : "/adm/batch/siteInfoJson",
+		url : "/adm/batch/siteInfoJson", 
 		params : params,
 		
 	//call back	
@@ -126,15 +116,15 @@ function getVdata(params){
 		console.log(obj);
 		
 		//페이징 표시
-		if( paging == null && data.dataInfo.totalRow > 0 ){
-			paging = com.initPaging({
+		if( isPaging == false && data.dataInfo.totalRow > 0 ){
+			com.initPaging({
 				selector : "#paging",
 				items : obj.dataInfo.totalRow,
 				itemsOnPage : rowSize
 			});
-		}else if( paging != null ){
+			isPaging= true;
+		}else if( isPaging == true ){
 			com.updatePageItems("#paging", obj.dataInfo.totalRow)
-			com.selectPage("#paging", obj.dataInfo.page);
 		}
 	});
 	
@@ -145,10 +135,11 @@ function getVdata(params){
 function search(){
 	
 	vObj.setVdata({
-		page : 1,
 		rowSize : rowSize,
 		searchString : $("#searchString").val().trim().length  > 1 ? $("#searchString").val() : ""
 	});
+	
+	com.pageRedraw("#paging");
 	
 }
 
@@ -162,7 +153,8 @@ function goPage(pageNumber){
 	//데이터 업데이트
 	vObj.setVdata({
 		page : page,
-		rowSize : rowSize
+		rowSize : rowSize,
+		searchString : $("#searchString").val().trim().length  > 1 ? $("#searchString").val() : ""
 	});
 	
 }
