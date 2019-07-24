@@ -98,7 +98,7 @@ $(document).ready(function() {
 	});
 	
 	//확인 창 초기화
-	com.initConfirm();
+	//com.initConfirm();
 	
 	//검색
 	$("#searchString").keyup(function(event) {

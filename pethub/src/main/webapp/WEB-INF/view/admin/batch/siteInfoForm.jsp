@@ -80,6 +80,17 @@ function update(){
 // 삭제
 function remove(){
 	
+	com.confirm({
+		confirm : function(){
+			alert(1)
+		},
+		cancel : function(){
+			alert(2)
+		}
+	});
+	
+	return;
+	
 	com.confirm.setContent("삭제 하시겠습니까 ?")
 	com.confirm.open({
 		
