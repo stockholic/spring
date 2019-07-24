@@ -1,4 +1,4 @@
-<script src="/static/assets/jquery/jquery.min.js"></script>
+<script src="/static/assets/jquery/jquery-3.4.1.min.js"></script>
 
 <!-- Custom JS -->
 <script src="/static/js/common.js"></script>
