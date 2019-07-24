@@ -275,10 +275,10 @@ var com = {
 	/**
 	 * https://stephanwagner.me/jBox
 	 */
-	jboxPopup : null,
+	popup : null,
 	initPopup : function(obj){
 		
-		if( this.jboxPopup == null ){
+		if( this.popup == null ){
 		
 			var options = {
 					title : '&nbsp;',			// 제목
@@ -287,7 +287,7 @@ var com = {
 				};
 			$.extend( options, obj );
 		
-			this.jboxPopup = new jBox('Modal', {
+			this.popup = new jBox('Modal', {
 				draggable: 'title',
 				width: options.width,
 				height: options.height,
@@ -322,8 +322,8 @@ var com = {
 			  cancelButton: '취소',
 		});
 		
+		this.jboxConfirm.setContent(params.content);
 		this.jboxConfirm.open(params);
-		
 	}
 	
 };

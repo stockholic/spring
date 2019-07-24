@@ -81,6 +81,7 @@ function update(){
 function remove(){
 	
 	com.confirm({
+		content : "삭제하겠습니까 ?",
 		confirm : function(){
 			alert(1)
 		},
