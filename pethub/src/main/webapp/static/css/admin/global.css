@@ -115,6 +115,19 @@ a:hover{
 	height:60px;
 }
 
+.jBox-overlay{
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.jBox-Confirm-button-submit {
+	background: #3c8dbc;		
+}
+
+.jBox-Confirm-button-submit:active, .jBox-Confirm-button-submit:hover {
+    background: #3c8dbc;
+}
+
+
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-selected { background: #F0F0F0; }

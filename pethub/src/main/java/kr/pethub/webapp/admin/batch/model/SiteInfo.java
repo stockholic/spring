@@ -11,8 +11,9 @@ public class SiteInfo extends Pagination{
 	private String siteNm;				// 사이트명 
 	private String siteUrl;				// 사이트 URL					
 	private String siteEtc;				// 기타	
-
 	private Date regDt;					// 등록일	
+
+	private String searchString;			// 검색어	
 	
 	public Integer getNum() {
 		return num;
@@ -49,6 +50,12 @@ public class SiteInfo extends Pagination{
 	}
 	public void setRegDt(Date regDt) {
 		this.regDt = regDt;
+	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
 	}
 	
 } 

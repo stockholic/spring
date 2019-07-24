@@ -36,7 +36,7 @@ var com = {
 	/**
 	 * Ajax 요청
 	 */
-	requestAjax : function(obj){
+	requestAjax : function(obj, callbackFnc){
 		var data;
 		var options = {
 				type : "GET", 
@@ -55,6 +55,7 @@ var com = {
 			    },
 		        success : function(response){   
 		        	data = response;
+		        	if( typeof callbackFnc ===  "function") callbackFnc(data);
 		        },   
 		        error : function(xhr) {
 		        	if(xhr.status == "403"){
@@ -66,13 +67,6 @@ var com = {
 		    });  
 		 
 		 return  data;
-	},
-	
-	/**
-	 * Json 데이터 바인딩
-	 */
-	bindByJson : function(obj){
-		 jPut[obj.target].data = obj.data;
 	},
 	
 	/**
@@ -281,28 +275,55 @@ var com = {
 	/**
 	 * https://stephanwagner.me/jBox
 	 */
+	popup : null,
 	initPopup : function(obj){
 		
-		var options = {
-				title : '&nbsp;',			// 제목
-				width : 600,			// 너비
-				height : 400,			// 높이
-			};
-		$.extend( options, obj );
-	
-		return new jBox('Modal', {
-			draggable: 'title',
-			width: options.width,
-			height: options.height,
-			closeButton: 'title',
-			animation: false,
-			overlay : false,
-			title: options.title,
-			content : options.content
-		});
+		if( this.popup == null ){
 		
+			var options = {
+					title : '&nbsp;',			// 제목
+					width : 600,			// 너비
+					height : 400,			// 높이
+				};
+			$.extend( options, obj );
+		
+			this.popup = new jBox('Modal', {
+				draggable: 'title',
+				width: options.width,
+				height: options.height,
+				closeButton: 'title',
+				animation: false,
+				title: options.title,
+				content : options.content
+			});
+		}
+			
+	},
+	/**
+	 * 알림 레이어
+	 */
+	notice : function(msg){
+		new jBox('Notice', {
+	      content: msg,
+	      color: 'black'
+	    });
 	},
 	
+	/**
+	 * 확인 창 레이어
+	 */
+	confirm : null,
+	initConfirm : function(params) {
+		
+		if(this.confirm == null){
+			this.confirm = new jBox('Confirm', {
+				  confirmButton: '확인',
+				  cancelButton: '취소',
+				  overlayClass : "jbox-overlay",
+				  color : "black"
+			});
+		}
+	}
 	
 };
 

@@ -52,4 +52,36 @@ public class SiteInfoService {
 		return  siteInfoDao.selectSiteInfo(siteSrl);
 	}
 
+	/**
+	 * 등록
+	 * @param siteInfo
+	 * @return
+	 */
+	public int  insertSite(SiteInfo siteInfo) {
+		return  siteInfoDao.insertSite(siteInfo);
+	}
+	
+	/**
+	 * 수정
+	 * @param siteInfo
+	 * @return
+	 */
+	public int  updateSite(SiteInfo siteInfo) {
+		return  siteInfoDao.updateSite(siteInfo);
+	}
+	
+	/**
+	 * 삭제
+	 * @param siteInfo
+	 * @return
+	 */
+	public int  deleteSite(SiteInfo siteInfo) {
+		
+		siteInfoDao.deleteSite(siteInfo);
+		
+		siteInfoDao.deleteSiteLink(siteInfo);
+		
+		return 1;
+	}
+
 }

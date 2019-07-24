@@ -81,7 +81,59 @@ public class SiteInfoController{
 	} 
 	
 
-	
+	/**
+	 * 사이트 정보 등록
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/batch/insertSite", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> insertSite(SiteInfo siteInfo) {
 		
+		int result = siteInfoService.insertSite(siteInfo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
+		
+		return map;
+	} 
+
+	/**
+	 * 사이트 정보 수정
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/batch/updateSite", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> updateSite(SiteInfo siteInfo) {
+		
+		int result = siteInfoService.updateSite(siteInfo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
+		
+		return map;
+	} 
+	
+	/**
+	 * 사이트 정보 삭제
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/batch/deleteSite", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> updadeleteSiteteSite(SiteInfo siteInfo) {
+		
+		int result = siteInfoService.deleteSite(siteInfo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
+		
+		return map;
+	} 
+	
 	
 }

@@ -16,8 +16,6 @@
 <![endif]-->
 
 
-<link type="text/css" rel="stylesheet" href="/static/css/admin/global.css">
-
 <!-- DatePicker -->
 <link href="/static/assets/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
@@ -26,3 +24,5 @@
 
 <!-- jBox -->
 <link type="text/css" rel="stylesheet" href="/static/assets/jBox/jBox.all.min.css">
+
+<link type="text/css" rel="stylesheet" href="/static/css/admin/global.css">
