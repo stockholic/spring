@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.pethub.core.authority.Auth;
+import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.model.SiteLink;
 import kr.pethub.webapp.admin.batch.service.SiteLinkService;
 
@@ -69,11 +70,16 @@ public class SiteLinkController{
 	 * @return
 	 */
 	@RequestMapping(value="/batch/siteLinkForm")
-	public String siteForm(Auth user, @RequestParam(value="siteSrl", required=false) String siteSrl, Model model) {
+	public String siteForm(Auth user, @RequestParam(value="linkSrl", required=false) String linkSrl, Model model) {
 		
-		if( StringUtils.isNotEmpty(siteSrl) ) {
-			model.addAttribute("siteLink", siteLinkService.selectSiteLink(siteSrl));
+		//사이트 목록
+		List<SiteInfo> siteInfoLIst =  siteLinkService.selectSiteInfoList();
+		
+		if( StringUtils.isNotEmpty(linkSrl) ) {
+			model.addAttribute("siteLink", siteLinkService.selectSiteLink(linkSrl));
 		}
+		
+		model.addAttribute("siteInfoLIst", siteInfoLIst);
 		
 		 return "ajax:admin/batch/siteLinkForm";
 	} 

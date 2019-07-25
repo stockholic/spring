@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pethub.webapp.admin.batch.dao.SiteLinkDao;
+import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.model.SiteLink;
 
 @Service
@@ -13,7 +14,15 @@ public class SiteLinkService {
 
 	@Autowired
 	private SiteLinkDao siteLinkDao;
-
+	
+	/**
+	 * 사이트 목록
+	 * @return
+	 */
+	public List<SiteInfo> selectSiteInfoList(){
+		return siteLinkDao.selectSiteInfoList();
+	}
+	
 	/**
 	 * 목록 수	
 	 * @param siteLink

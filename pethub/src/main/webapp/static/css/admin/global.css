@@ -65,7 +65,10 @@ a:hover{
 
 .table-top {
 	margin-top:40px;
+	table-layout:fixed;
 }
+
+
 
 .btn-xm{
 	padding: 4px 9px;
@@ -104,7 +107,7 @@ a:hover{
 }
 
 #dataWrap{
-	height: 600px;
+	height: 650px;
 }
 
 [v-cloak] {
@@ -130,6 +133,18 @@ a:hover{
 
 .jBox-Confirm-button-submit:active, .jBox-Confirm-button-submit:hover {
     background: #3c8dbc;
+}
+
+.truncate-ellipsis {
+	display: block;
+	text-overflow:ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+ 
+.required:after{
+    color: red;
+    content: " *";
 }
 
 

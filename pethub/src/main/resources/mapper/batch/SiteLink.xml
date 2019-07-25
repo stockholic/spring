@@ -4,73 +4,119 @@
 
 <mapper namespace="kr.pethub.webapp.admin.batch.dao.SiteLinkDao">
 
+	<select id="selectSiteInfoList" resultType="kr.pethub.webapp.admin.batch.model.SiteInfo">
+		SELECT 
+     		site_srl
+			,site_nm								
+		FROM site_info
+		ORDER BY site_nm
+	</select>
+
+
 	<select id="selectSiteLinkCount" resultType="int">
 		SELECT 
-     		count(1)
-		FROM site_link
-		WHERE 1=1
+			count(1)
+		FROM site_info si, site_link sl
+    	WHERE si.site_srl = sl.site_srl
 		<if test="searchString != null  and searchString != ''">
-		AND site_nm like '%' #{searchString} '%'
+		AND si.site_nm like '%' #{searchString} '%'
 		</if>
 	</select>
 
 	<select id="selectSiteLinkList" resultType="kr.pethub.webapp.admin.batch.model.SiteLink">
 		SELECT 
-     		site_srl
-			,site_nm								
-			,site_url								
-			,site_etc								
-			,reg_dt								
-		FROM site_link
-		WHERE 1=1
+			 sl.link_srl
+			, sl.site_srl
+			, si.site_nm
+			, sl.link_cd
+			, sl.link_nm
+			, sl.link_url
+			, sl.link_cls
+			, sl.link_mtd_lst
+			, sl.link_mtd_cts
+			, sl.link_cnt
+			, sl.batch_itv
+			, sl.use_yn
+			, sl.reg_dt
+			, sl.exc_dt			
+		FROM site_info si, site_link sl
+    	WHERE si.site_srl = sl.site_srl
 		<if test="searchString != null  and searchString != ''">
-		AND site_nm like '%' #{searchString} '%'
+		AND si.site_nm like '%' #{searchString} '%'
 		</if>
       	
-	    ORDER BY site_srl DESC
+	    ORDER BY link_srl DESC
 		
 		LIMIT #{rowStart}, #{rowSize}
 	</select>
 
 	<select id="selectSiteLink" resultType="kr.pethub.webapp.admin.batch.model.SiteLink">
 		SELECT 
-     		site_srl
-			, site_nm								
-			, site_url								
-			, site_etc								
-			, reg_dt
-			, upt_dt								
-		FROM site_link
-      	WHERE site_srl = #{siteSrl}
+     		 sl.link_srl
+			, sl.site_srl
+			, si.site_nm
+			, sl.link_cd
+			, sl.link_nm
+			, sl.link_url
+			, sl.link_cls
+			, sl.link_mtd_lst
+			, sl.link_mtd_cts
+			, sl.link_cnt
+			, sl.batch_itv
+			, sl.use_yn
+			, sl.reg_dt
+			, sl.upt_dt
+			, sl.exc_dt								
+		FROM site_info si, site_link sl
+      	WHERE si.site_srl = sl.site_srl
+      	AND sl.link_srl = #{linkSrl}
 	</select>
 
 	<insert id="insertSiteLink">
 		INSERT INTO site_link(
-			 site_nm								
-			, site_url								
-			, site_etc								
-			, reg_dt	
-			, upt_dt	
+			  site_srl
+			, link_cd
+			, link_nm
+			, link_url
+			, link_cls
+			, link_mtd_lst
+			, link_mtd_cts
+			, batch_itv
+			, use_yn
+			, reg_dt
+			, upt_dt
 		)VALUES(
-			 #{siteNm}								
-			, #{siteUrl}								
-			, #{siteEtc}
+			  #{siteSrl}
+			, #{linkCd}
+			, #{linkNm}
+			, #{linkUrl}
+			, #{linkCls}
+			, #{linkMtdLst}
+			, #{linkMtdCts}
+			, #{batchItv}
+			, #{useYn}
 			, SYSDATE()
-			, SYSDATE()								
+			, SYSDATE()
 		)
 	</insert>
 	
 	<update id="updateSiteLink">
 		UPDATE site_link SET
-			 site_nm =  #{siteNm}							
-			, site_url = 	#{siteUrl}							
-			, site_etc = 	#{siteEtc}							
+			 link_cd = #{linkCd}
+			, site_srl = #{siteSrl}
+			, link_nm = #{linkNm}
+			, link_url = #{linkUrl}
+			, link_cls = #{linkCls}
+			, link_mtd_lst = #{linkMtdLst}
+			, link_mtd_cts = #{linkMtdCts}
+			, batch_itv = #{batchItv}
+			, use_yn = #{useYn}		
 			, upt_dt	= SYSDATE()
-		WHERE site_srl = #{siteSrl}
+		WHERE link_srl = #{linkSrl}
 	</update>
 	
 	<delete id="deleteSiteLink">
-		DELETE FROM site_link	WHERE site_srl = #{siteSrl}
+		DELETE FROM site_link	WHERE link_srl = #{linkSrl}
 	</delete>
 	
 </mapper>  

@@ -338,6 +338,7 @@ var com = {
 		new jBox('Notice', {
 			  content: msg,
 			  color: 'black',
+			  autoClose: 2000,
 			  position: {
 			      x: 'center',
 			      y: 'top'
@@ -365,6 +366,67 @@ var com = {
 		});
 		
 		this.jboxConfirm.open();
+	},
+	
+	/**
+	 * 폼 Validation 체크
+	 */
+	validation : function(selector) {
+		var result = true;
+		
+		$(selector).find(".required").each(function(idx){
+			
+			var $this = $(this);
+			var $tdObj = $this.next();
+			var $obj = $tdObj.find('input, select, textarea');
+				
+			if($obj.length < 1) return result;
+			
+			if( $obj.attr("type") == "radio" ){
+				$obj = $tdObj.find( 'input[id=' + $obj.attr("id") + ']' );
+				for( var i = 0; i < $obj.length; i++){
+					if( $obj[i].checked ) value = "checked";				
+				}
+			}else{
+				if( typeof $obj[0].getValue == 'function' ){
+					value = $obj[0].getValue();
+				}else{
+					value = $obj.val();
+				}
+			}
+			
+			if( value == undefined || value == "" ){
+				com.notice($this.text() +  " 값은 필수입니다.");
+				$obj.focus();
+				result = false;
+				return false;
+			}
+			
+		});
+		
+		return result;
+	},
+	
+	/**
+	 * 숫자만 입력
+	 */
+	numberInput : function(evt){
+		
+	   if (window.event) {								// IE코드
+	        var code = window.event.keyCode;
+	   }else{ 													// 타브라우저
+	        var code = evt.which;
+	   }
+	 
+	    if ((code > 34 && code < 41) || (code > 47 && code < 58) || (code > 95 && code < 106) || code == 8 || code == 9 || code == 13 || code == 46){
+	        window.event.returnValue = true;
+	        return;
+	    }
+	    if (window.event){
+	        window.event.returnValue = false;
+	    }else{
+	    	evt.preventDefault();
+	    }
 	}
 	
 };

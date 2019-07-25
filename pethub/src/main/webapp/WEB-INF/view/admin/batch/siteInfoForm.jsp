@@ -8,12 +8,12 @@
 
 <table class="table">
   <colgroup>
-    <col width="25%">
-    <col width="75%">
+    <col width="20%">
+    <col width="80%">
   </colgroup>
 <tbody>
 <tr>
-	<th>사이트명</th>
+	<th class="required">사이트명</th>
 	<td><input type="text" class="form-control" name="siteNm" id="siteNm" value="${siteInfo.siteNm }" style="width:200px"></td>
 </tr>
 <tr>
@@ -46,6 +46,8 @@
 // 등록
 function save(){
 	
+	if( com.validation("#regFrm") == false ) return;
+	
 	var obj = com.requestAjax({
 		type: "POST",
 		async : false, 
@@ -63,6 +65,9 @@ function save(){
 
 // 수정
 function update(){
+	
+	if( com.validation("#regFrm") == false ) return;
+	
 	var obj = com.requestAjax({
 		type: "POST",
 		async : false, 

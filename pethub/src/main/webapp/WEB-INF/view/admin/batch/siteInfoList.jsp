@@ -62,6 +62,10 @@
 			<td class="text-center">{{ lst.regDt | timestampToDate }}</td>
 		</tr>
 		
+		<tr v-if="vData.dataInfo.totalPage == 0" v-cloak>
+			<td class="text-center" colspan="5" style="height:150px;vertical-align: middle;">자료가 없습니다.</td>
+		</tr>
+		
 		</tbody>
 		</table> 
 		
@@ -81,9 +85,7 @@
 
 
 var vObj = null;			//Vue 객제
-var isPaging = false	;	//페이징 객체
-var rowSize = 2;			//페이지당 보여줄 로우 수
-var page = 1;				//현재페이지
+var rowSize = 15;		//페이지당 보여줄 로우 수
 
 $(document).ready(function() {
 
@@ -116,14 +118,13 @@ function getVdata(params){
 		console.log(obj);
 		
 		//페이징 표시
-		if( isPaging == false && data.dataInfo.totalRow > 0 ){
+		if( $("#paging > ul").length == 0  && data.dataInfo.totalRow > 0 ){
 			com.initPaging({
 				selector : "#paging",
 				items : obj.dataInfo.totalRow,
 				itemsOnPage : rowSize
 			});
-			isPaging= true;
-		}else if( isPaging == true ){
+		}else if($("#paging > ul").length > 0 ){
 			com.updatePageItems("#paging", obj.dataInfo.totalRow)
 		}
 	});
@@ -134,19 +135,20 @@ function getVdata(params){
 // 검색
 function search(){
 	
+	//페이징 새로 그리기 위해 제거
+	com.pageDestroy("#paging");
+	
 	vObj.setVdata({
 		rowSize : rowSize,
 		searchString : $("#searchString").val().trim().length  > 1 ? $("#searchString").val() : ""
 	});
-	
-	com.pageRedraw("#paging");
 	
 }
 
 //페이지 이동, 함수명 고정
 function goPage(pageNumber){
 	
-	page = pageNumber;
+	var page = pageNumber;
 	
 	if(page == undefined ? 1 : page);
 	

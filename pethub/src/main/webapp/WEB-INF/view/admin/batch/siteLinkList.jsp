@@ -37,18 +37,26 @@
     
 	    <table class="table table-hover table-top">
 		  <colgroup>
-		    <col style="width:80px">
-		     <col style="width:250px">
-		     <col style="width:250px">
+		    <col style="width:60px">
+		     <col style="width:160px">
+		     <col style="width:80px">
 		     <col />
 		     <col style="width:80px">
+		     <col style="width:80px">
+		     <col style="width:80px">
+		     <col style="width:100px">
+		     <col style="width:100px">
 		  </colgroup>
 		<thead>
 		<tr>
 			<th class="text-center">번호</th>
 			<th>사이트 명</th>
-			<th>사이트 URL</th>
-			<th>기타</th>
+			<th>구분</th>
+			<th>링크</th>
+			<th class="text-center">링크수</th>
+			<th class="text-center">배치간격</th>
+			<th class="text-center">사용여부</th>
+			<th class="text-center">실행일</th>
 			<th class="text-center">등록일</th>
 		</tr>
 		</thead>
@@ -56,10 +64,18 @@
 		
 		<tr v-for="lst in vData.dataList" v-cloak>
 			<td class="text-center">{{ lst.num | addComma }}</td>
-			<td><a href="javascript:;" v-on:click="openUptForm(lst.siteSrl)">{{ lst.siteNm }}</a></td>
-			<td><a v-bind:href="lst.siteUrl" target="_blank">{{ lst.siteUrl }}</a></td>
-			<td>{{ lst.siteEtc }}</a></td>
+			<td>{{ lst.siteNm }}</td>
+			<td>{{ lst.linkCd  =='dog' ? '강아지' : '고양이' }}</td>
+			<td class="truncate-ellipsis"><a href="javascript:;" v-on:click="openUptForm(lst.linkSrl)">{{ lst.linkUrl }}</a></td>
+			<td class="text-center">{{ lst.linkCnt}}</td>
+			<td class="text-center">{{ lst.batchItv}}</td>
+			<td class="text-center" v-bind:style="{'color': ( lst.useYn == 'Y' ? 'blue' : 'orange' )}">{{ lst.useYn == 'Y' ? '사용' : '미사용' }}</td>
 			<td class="text-center">{{ lst.regDt | timestampToDate }}</td>
+			<td class="text-center">{{ lst.excDt | timestampToDate }}</td>
+		</tr>
+		
+		<tr v-if="vData.dataInfo.totalPage == 0" v-cloak>
+			<td class="text-center" colspan="5" style="height:150px;vertical-align: middle;">자료가 없습니다.</td>
 		</tr>
 		
 		</tbody>
@@ -80,25 +96,13 @@
 <script>
 
 
-var vObj = null;		//Vue 객제
-var paging = null;	//페이징 객체
-var rowSize = 15;	//페이지당 보여줄 로우 수
-var page = 1;			//현재페이지
+var vObj = null;			//Vue 객제
+var rowSize = 15;		//페이지당 보여줄 로우 수
 
 $(document).ready(function() {
 
 	//Vue 초기화
 	vObj = com.initVue("#dataWrap");
-	
-	//폼 초기화
-	com.initPopup({
-		title : '사이트 등록',
-		width : 600,
-		height : 250
-	});
-	
-	//확인 창 초기화
-	com.initConfirm();
 	
 	//검색
 	$("#searchString").keyup(function(event) {
@@ -117,7 +121,7 @@ function getVdata(params){
  	com.requestAjax({
 		type: "POST",
 		async : false, 
-		url : "/adm/batch/siteInfoJson",
+		url : "/adm/batch/siteLinkJson", 
 		params : params,
 		
 	//call back	
@@ -126,15 +130,14 @@ function getVdata(params){
 		console.log(obj);
 		
 		//페이징 표시
-		if( paging == null && data.dataInfo.totalRow > 0 ){
-			paging = com.initPaging({
+		if( $("#paging > ul").length == 0  && data.dataInfo.totalRow > 0 ){
+			com.initPaging({
 				selector : "#paging",
 				items : obj.dataInfo.totalRow,
 				itemsOnPage : rowSize
 			});
-		}else if( paging != null ){
+		}else if($("#paging > ul").length > 0 ){
 			com.updatePageItems("#paging", obj.dataInfo.totalRow)
-			com.selectPage("#paging", obj.dataInfo.page);
 		}
 	});
 	
@@ -144,8 +147,10 @@ function getVdata(params){
 // 검색
 function search(){
 	
+	//페이징 새로 그리기 위해 제거
+	com.pageDestroy("#paging");
+	
 	vObj.setVdata({
-		page : 1,
 		rowSize : rowSize,
 		searchString : $("#searchString").val().trim().length  > 1 ? $("#searchString").val() : ""
 	});
@@ -155,42 +160,42 @@ function search(){
 //페이지 이동, 함수명 고정
 function goPage(pageNumber){
 	
-	page = pageNumber;
+	var page = pageNumber;
 	
 	if(page == undefined ? 1 : page);
 	
 	//데이터 업데이트
 	vObj.setVdata({
 		page : page,
-		rowSize : rowSize
+		rowSize : rowSize,
+		searchString : $("#searchString").val().trim().length  > 1 ? $("#searchString").val() : ""
 	});
 	
 }
 
 //등록폼 호출
 function openRegForm(){
-	
-	var obj = com.requestAjax({
-		type: "POST",
+	com.popup({
+		title : "링크 등록",
+		width : 700,
+		height : 480,
+		type : "POST",
 		async : false,
-		url : "/adm/batch/siteInfoForm"
-	});
-
-	com.popup.setContent(obj);
-	com.popup.open();
+		url : "/adm/batch/siteLinkForm"
+	})
 }
 
 //수정폼 호출
-function openUptForm(siteSrl){
-	var obj = com.requestAjax({
-		type: "POST",
+function openUptForm(linkSrl){
+	com.popup({
+		title : "링크 수정",
+		width : 700,
+		height : 480,
+		type : "POST",
 		async : false,
-		url : "/adm/batch/siteInfoForm",
-		params : {siteSrl : siteSrl}
-	});
-	
-	com.popup.setContent(obj);
-	com.popup.open();
+		url : "/adm/batch/siteLinkForm",
+		params : {linkSrl : linkSrl}
+	})
 }
 
 
