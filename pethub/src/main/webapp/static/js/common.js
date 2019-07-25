@@ -308,8 +308,9 @@ var com = {
 			width: options.width,
 			height: options.height,
 			closeButton: 'title',
-			animation: false,
-			title: options.title
+			title: options.title,
+			
+			 closeOnClick: false,		//클릭시 안 닫힘
 		});
 		
 		if(obj.url != undefined){
@@ -427,6 +428,9 @@ var com = {
 	    }else{
 	    	evt.preventDefault();
 	    }
+	},
+	loading : function(top) {
+		return "<div style='text-align:center;margin-top:" + top + "px'><p><img src='/static/image/loading.gif'></p><p>loading ...<p></div>";
 	}
 	
 };

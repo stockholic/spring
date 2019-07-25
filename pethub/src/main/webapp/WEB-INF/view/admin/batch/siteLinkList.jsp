@@ -46,6 +46,7 @@
 		     <col style="width:80px">
 		     <col style="width:100px">
 		     <col style="width:100px">
+		     <col style="width:80px">
 		  </colgroup>
 		<thead>
 		<tr>
@@ -58,6 +59,7 @@
 			<th class="text-center">사용여부</th>
 			<th class="text-center">실행일</th>
 			<th class="text-center">등록일</th>
+			<th class="text-center"></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -72,6 +74,7 @@
 			<td class="text-center" v-bind:style="{'color': ( lst.useYn == 'Y' ? 'blue' : 'orange' )}">{{ lst.useYn == 'Y' ? '사용' : '미사용' }}</td>
 			<td class="text-center">{{ lst.regDt | timestampToDate }}</td>
 			<td class="text-center">{{ lst.excDt | timestampToDate }}</td>
+			<td class="text-center"><a href="javascript:;" v-on:click="openLinkTest()">테스트</a></td>
 		</tr>
 		
 		<tr v-if="vData.dataInfo.totalPage == 0" v-cloak>
@@ -196,6 +199,20 @@ function openUptForm(linkSrl){
 		url : "/adm/batch/siteLinkForm",
 		params : {linkSrl : linkSrl}
 	})
+}
+
+//테스트 호출
+function openLinkTest(){
+	com.popup({
+		title : "링크 작업중 ...",
+		width : 400,
+		height : 250,
+		content : com.loading(30)
+	});
+	
+	setTimeout(function() {
+		com.popupClose();
+	}, 5000);
 }
 
 
