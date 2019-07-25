@@ -430,7 +430,7 @@ var com = {
 	    }
 	},
 	loading : function(top) {
-		return "<div style='text-align:center;margin-top:" + top + "px'><p><img src='/static/image/loading.gif'></p><p>loading ...<p></div>";
+		return "<div style='text-align:center;margin-top:" + top + "px'><p><img src='/static/image/loading.svg' width='50' height='50'></p><p>loading ...<p></div>";
 	}
 	
 };
