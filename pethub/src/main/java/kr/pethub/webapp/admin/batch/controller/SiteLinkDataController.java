@@ -44,13 +44,16 @@ public class SiteLinkDataController{
 	 * 사이트 링크  데이터
 	 * @param siteLinkData
 	 * @return
+	 * @throws InterruptedException 	https://stackoverflow.com/questions/32413905/initializing-vue-data-with-ajax
 	 */
 	@ResponseBody
 	@RequestMapping(value="/batch/siteLinkDataJson", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object>  siteListJson(@ModelAttribute SiteLinkData siteLinkData) {
+	public Map<String, Object>  siteListJson(@ModelAttribute SiteLinkData siteLinkData) throws InterruptedException {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<SiteLinkData> list =  siteLinkDataService.selectSiteLinkDataList(siteLinkData);
+		
+		Thread.sleep(5000);
 		
 		map.put("dataInfo", siteLinkData);
 		map.put("dataList", list);
