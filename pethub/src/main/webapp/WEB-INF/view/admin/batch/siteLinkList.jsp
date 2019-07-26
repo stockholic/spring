@@ -23,7 +23,7 @@
     	<div class="form-group-sm pull-left">
 		  <div class="form-group-sm">
 			
-			<div class="input-group input-group-sm" style="width: 200px;">
+			<div class="input-group input-group-sm" style="width: 250px;">
 	             <input type="text" name="searchString" id="searchString" value="" class="form-control pull-right" placeholder="Search">
 	             <div class="input-group-btn">
 	               <button type="button" onClick="search()" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -159,6 +159,8 @@ function getVdata(params){
 
 // 검색
 function search(){
+	
+	if( $("#searchString").val().trim().length < 2 ) return;
 	
 	//페이징 새로 그리기 위해 제거
 	com.pageDestroy("#paging");

@@ -1,6 +1,7 @@
 package kr.pethub.webapp.admin.batch.model;
 
 import java.util.Date;
+import java.util.List;
 
 import kr.pethub.core.module.model.Pagination;
 
@@ -22,6 +23,7 @@ public class SiteLinkData extends Pagination{
 	private Date uptDt;					// 수정일
 	
 	private String searchString;			// 검색어
+	private List<String> searchStringList;			// 검색어 리스트
 	
 	public Integer getNum() {
 		return num;
@@ -106,6 +108,12 @@ public class SiteLinkData extends Pagination{
 	}
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
+	}
+	public List<String> getSearchStringList() {
+		return searchStringList;
+	}
+	public void setSearchStringList(List<String> searchStringList) {
+		this.searchStringList = searchStringList;
 	}
 	
 } 

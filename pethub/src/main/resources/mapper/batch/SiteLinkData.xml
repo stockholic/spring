@@ -12,8 +12,8 @@
       	AND sl.link_srl = sld.link_srl
       	AND sl.use_yn = 'Y'
 
-     <if test="searchString != null  and !searchString.isEmpty()">
-		<foreach collection="searchString" item="item">
+     <if test="searchStringList != null  and !searchStringList.isEmpty()">
+		<foreach collection="searchStringList" item="item">
          AND sld.data_title like CONCAT('%', #{item} ,'%') 
        	</foreach>
 	</if>
@@ -35,8 +35,8 @@
       	AND sl.link_srl = sld.link_srl
       	AND sl.use_yn = 'Y'
       	
-   	<if test="searchString != null  and !searchString.isEmpty()">
-		<foreach collection="searchString" item="item">
+   	<if test="searchStringList != null  and !searchStringList.isEmpty()">
+		<foreach collection="searchStringList" item="item">
          AND sld.data_title like CONCAT('%', #{item} ,'%') 
        	</foreach>
 	</if>

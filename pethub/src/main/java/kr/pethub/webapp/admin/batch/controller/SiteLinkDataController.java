@@ -1,9 +1,11 @@
 package kr.pethub.webapp.admin.batch.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,14 @@ public class SiteLinkDataController{
 	public Map<String, Object>  siteListJson(@ModelAttribute SiteLinkData siteLinkData) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//검색어 분리
+		if( StringUtils.isNotEmpty( siteLinkData.getSearchString() ) ) {
+			//여러공백 하나의 공잭처리
+			String searchString = StringUtils.isNotEmpty( siteLinkData.getSearchString() ) ?  siteLinkData.getSearchString().trim().replaceAll(" +", " ") : "";
+			siteLinkData.setSearchStringList( Arrays.asList(searchString.split(" ")) );
+		}
+		
 		List<SiteLinkData> list =  siteLinkDataService.selectSiteLinkDataList(siteLinkData);
 		
 		map.put("page", siteLinkData.getPage());
