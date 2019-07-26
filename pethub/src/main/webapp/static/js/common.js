@@ -194,20 +194,17 @@ var com = {
 		updated 		Called after a data change causes the virtual DOM to be re-rendered and patched.
 	*/
 	initVue : function( selector ){
+		
 		var vObj = new Vue({
 				el: selector,
 				data : {
 					vData : {}
 				},
 				methods : {
-					setVdata : function(params) {
-						this.vData = getVdata(params);
-						//console.log(this.objData.list)
-					}
 				},
-				created: function () {
+				mounted: function () {
 					var _rowSize = (rowSize == undefined) ? 15 : rowSize;
-					this.setVdata({rowSize : rowSize})
+					this.vData = getVdata({rowSize : rowSize});
 				}
 			});
 		
@@ -503,6 +500,7 @@ jQuery.fn.serializeObject = function() {
 //--------------------------------------------------------------------  Vue Filter
 // 천단위 콤마
 Vue.filter('addComma', function (num) {
+	if(num == undefined) return "";
 	return com.formatNumber(num)
 });
 

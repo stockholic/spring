@@ -33,7 +33,7 @@
 		  </div>
 	  	</div>
 	  	
-		<div class="pull-right" v-cloak>Total : {{ vData.dataInfo.totalRow | addComma }} [ {{ vData.dataInfo.page }} / {{ vData.dataInfo.totalPage }} ]</div> 
+		<div class="pull-right" v-cloak>Total : {{ vData.totalRow | addComma }} [ {{ vData.page }} / {{ vData.totalPage }} ]</div> 
     
 	    <table class="table table-hover table-top">
 		  <colgroup>
@@ -80,7 +80,7 @@
 			</td>
 		</tr>
 		
-		<tr v-if="vData.dataInfo.totalPage == 0" v-cloak>
+		<tr v-if="vData.totalPage == 0" v-cloak>
 			<td class="text-center" colspan="11" style="height:150px;vertical-align: middle;">자료가 없습니다.</td>
 		</tr>
 		
@@ -119,16 +119,15 @@ $(document).ready(function() {
 	
 });
 
-// Ajax 데이터 추출,  Vue 에 정의된 함수명, setVdata 에서 호출, 고정 
+// Ajax 데이터 추출,  Vue 에 정의된 함수명 
 function getVdata(params){	
 	
 	//loading open
-	com.loading(".content-wrapper");
+	//com.loading(".content-wrapper");
 	
 	var obj = {};
  	com.requestAjax({
 		type: "POST",
-		async : false, 
 		url : "/adm/batch/siteLinkJson", 
 		params : params,
 		
@@ -137,19 +136,21 @@ function getVdata(params){
 		obj = data;
 		//console.log(obj);
 		
+		vObj.vData = obj;
+		
 		//페이징 표시
-		if( $("#paging > ul").length == 0  && data.dataInfo.totalRow > 0 ){
+		if( $("#paging > ul").length == 0  && data.totalRow > 0 ){
 			com.initPaging({
 				selector : "#paging",
-				items : obj.dataInfo.totalRow,
+				items : obj.totalRow,
 				itemsOnPage : rowSize
 			});
 		}else if($("#paging > ul").length > 0 ){
-			com.updatePageItems("#paging", obj.dataInfo.totalRow)
+			com.updatePageItems("#paging", obj.totalRow)
 		}
 		
 		//loading close
-		com.loadingClose();
+		//com.loadingClose();
 		
 	});
 	
@@ -162,7 +163,7 @@ function search(){
 	//페이징 새로 그리기 위해 제거
 	com.pageDestroy("#paging");
 	
-	vObj.setVdata({
+	getVdata({
 		rowSize : rowSize,
 		searchString : $("#searchString").val().trim().length  > 1 ? $("#searchString").val() : ""
 	});
@@ -176,8 +177,7 @@ function goPage(pageNumber){
 	
 	if(page == undefined ? 1 : page);
 	
-	//데이터 업데이트
-	vObj.setVdata({
+	getVdata({
 		page : page,
 		rowSize : rowSize,
 		searchString : $("#searchString").val().trim().length  > 1 ? $("#searchString").val() : ""
@@ -213,14 +213,14 @@ function openUptForm(linkSrl){
 //테스트 호출
 function openLinkTest(){
 	
-	com.loading("#dataWrap");
+	com.loading(".content-wrapper");
 	
 	setTimeout(function() {
 		
 		com.loadingClose();
 		
 		com.popup({
-			title : "링크작업결과",
+			title : "링크 작업결과",
 			width : 1200,
 			height : 700,
 			content : 'abcd'

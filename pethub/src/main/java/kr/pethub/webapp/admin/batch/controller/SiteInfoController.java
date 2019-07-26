@@ -54,7 +54,9 @@ public class SiteInfoController{
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<SiteInfo> list =  siteInfoService.selectSiteInfoList(siteInfo);
 		
-		map.put("dataInfo", siteInfo);
+		map.put("page", siteInfo.getPage());
+		map.put("totalRow", siteInfo.getTotalRow());
+		map.put("totalPage", siteInfo.getTotalPage());
 		map.put("dataList", list);
 
 		return map;

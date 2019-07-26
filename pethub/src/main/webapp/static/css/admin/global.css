@@ -133,6 +133,11 @@ a:hover{
     background: #3c8dbc;
 }
 
+.jBox-Modal .jBox-title {
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
 .truncate-ellipsis {
 	display: block;
 	text-overflow:ellipsis;
@@ -159,7 +164,7 @@ a:hover{
 	margin: 0 auto;
 	padding-top:18px;
 	background-color:#fff;
-	width:120px;
+	width:140px;
 	height:100px;
 	text-align:center;
 	border:1px solid #c7c7c7;
