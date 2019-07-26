@@ -140,7 +140,10 @@ function getVdata(params){
 		}
 		
 		//loading close 
-		com.loadingClose(); 
+		setTimeout(function() {
+			com.loadingClose(); 
+		}, 200);
+
 		
 	});
 	
@@ -150,7 +153,7 @@ function getVdata(params){
 // 검색
 function search(){
 	
-	if( $("#searchString").val().trim().length < 2 ) return;
+	if( $("#searchString").val().trim().length  !=0 && $("#searchString").val().trim().length < 2 ) return;
 	
 	//페이징 새로 그리기 위해 제거
 	com.pageDestroy("#paging");
