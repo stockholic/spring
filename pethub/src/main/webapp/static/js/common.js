@@ -440,17 +440,16 @@ var com = {
 		var height = $(selector).height();
 		var width = $(selector).width();
 		var top = $(selector).offset().top;
-		var left = $(selector).offset().left;
 		
-		var html = "<div id='loading' style='position:absolute;width:" + width + "px;top:" + top + "px;left:" + left + "px;height:" + height + "px; display:table;background:#fff'>"
-					 + "	<div style='text-align:center;display:table-cell;vertical-align:middle;'>" 
-					 + " 	<p><img src='/static/image/loading.svg' width='30' height='30'></p>"
-					 + "	<p>loading ...<p>"
-					 + "	</div>"
-					 +"</div>"; 
+		var html = "<div id='loading' style='top:" + top + "px;height:" + height + "px;'>" 
+					+ "	<div class='loading-cell'>"
+					+ "	<div class='loading-box'>"
+					+	"		<p><img src='/static/image/loading.svg' width='30' height='30'></p><p>loading ...<p>"
+					+ "	</div>"
+					+ "	</div>"
+					+ "</div>"
 		
-		$("body").append(html);
-		
+		$("body").append(html); 
 	},
 	
 	

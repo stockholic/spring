@@ -113,13 +113,12 @@ a:hover{
   display: none;
 }
 
-
 #searchString {
 	font-size: 14px;
 }
 
 #paging{
-	height:60px;
+	margin-top: 40px;
 }
 
 .jBox-overlay{
@@ -127,7 +126,7 @@ a:hover{
 }
 
 .jBox-Confirm-button-submit {
-	background: #3c8dbc;		
+	background: #3c8dbc;
 }
 
 .jBox-Confirm-button-submit:active, .jBox-Confirm-button-submit:hover {
@@ -144,6 +143,28 @@ a:hover{
 .required:after{
     color: red;
     content: " *";
+}
+
+#loading{
+	display: table;
+	position: absolute;
+	width: 100%;
+}
+#loading .loading-cell{
+	display: table-cell;
+	vertical-align: middle;
+}
+#loading .loading-box{
+	display: block;
+	margin: 0 auto;
+	padding-top:18px;
+	background-color:#fff;
+	width:120px;
+	height:100px;
+	text-align:center;
+	border:1px solid #c7c7c7;
+	background:#fff;
+	border-radius: 4px;
 }
 
 
