@@ -59,7 +59,7 @@ var com = {
 		        },   
 		        error : function(xhr) {
 		        	if(xhr.status == "403"){
-		        		document.location.href = "/adm/login";
+		        		document.location.href = "/adm/main";
 		        	}else{
 		    	        alert("에러 : " + xhr.status);
 			       	}
@@ -307,6 +307,7 @@ var com = {
 			draggable: 'title',
 			width: options.width,
 			height: options.height,
+			animation: false,
 			closeButton: 'title',
 			title: options.title,
 			
@@ -377,6 +378,8 @@ var com = {
 		
 		$(selector).find(".required").each(function(idx){
 			
+			var value = "";
+			
 			var $this = $(this);
 			var $tdObj = $this.next();
 			var $obj = $tdObj.find('input, select, textarea');
@@ -429,8 +432,31 @@ var com = {
 	    	evt.preventDefault();
 	    }
 	},
-	loading : function(top) {
-		return "<div style='text-align:center;margin-top:" + top + "px'><p><img src='/static/image/loading.svg' width='50' height='50'></p><p>loading ...<p></div>";
+
+	loading : function(selector) {
+		
+		if( $("#loading").length > 0 ) this.loadingClose();
+		
+		var height = $(selector).height();
+		var width = $(selector).width();
+		var top = $(selector).offset().top;
+		var left = $(selector).offset().left;
+		
+		var html = "<div id='loading' style='position:absolute;width:" + width + "px;top:" + top + "px;left:" + left + "px;height:" + height + "px; display:table;background:#fff'>"
+					 + "	<div style='text-align:center;display:table-cell;vertical-align:middle;'>" 
+					 + " 	<p><img src='/static/image/loading.svg' width='30' height='30'></p>"
+					 + "	<p>loading ...<p>"
+					 + "	</div>"
+					 +"</div>"; 
+		
+		$("body").append(html);
+		
+	},
+	
+	
+	
+	loadingClose : function() {
+		$("#loading").remove();
 	}
 	
 };

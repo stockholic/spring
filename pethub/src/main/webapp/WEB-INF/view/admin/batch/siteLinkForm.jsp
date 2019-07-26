@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<form id="regFrm" id="regFrm">
+<form id="regFrm" id="regFrm" class="form-inline">
 
 <input type="hidden"name="linkSrl" id="linkSrl" value="${siteLink.linkSrl}">
 
@@ -50,7 +51,12 @@
 </tr>
 <tr>
 	<th class="required">배치간격</th>
-	<td><input type="text" class="form-control" name="batchItv" id="batchItv" value="${siteLink.batchItv}" style="width:150px" onKeydown="com.numberInput(event)" ></td>
+	<td>
+		<input type="text" class="form-control" name="batchItvTime" id="batchItvTime" maxlength="2" style="width:80px" value="${siteLink.batchItv.substring(0,fn:length(siteLink.batchItv)-1 ) }" style=":80px" onKeydown="com.numberInput(event)">
+		&nbsp;<input type="radio" name="batchItvType" id="batchItvType" value="H" ${empty siteLink.batchItv || siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'H' ? 'checked' : '' }>시
+		&nbsp;<input type="radio" name="batchItvType" id="batchItvType" value="M" ${siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'M' ? 'checked' : '' }>분
+		<input type="hidden" name="batchItv" id="batchItv" value="${siteLink.batchItv}">
+	</td>
 </tr>
 <tr>
 	<th>사용여부</th>
@@ -85,6 +91,8 @@ function save(){
 	
 	if( com.validation("#regFrm") == false ) return;
 	
+	$("#batchItv").val( $("#batchItvTime").val() + $("#batchItvType").val() );
+	
 	var obj = com.requestAjax({
 		type: "POST",
 		async : false, 
@@ -104,6 +112,8 @@ function save(){
 function update(){
 	
 	if( com.validation("#regFrm") == false ) return;
+	
+	$("#batchItv").val( $("#batchItvTime").val() + $("#batchItvType").val() );
 	
 	var obj = com.requestAjax({
 		type: "POST",

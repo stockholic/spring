@@ -46,7 +46,7 @@
 		     <col style="width:80px">
 		     <col style="width:100px">
 		     <col style="width:100px">
-		     <col style="width:80px">
+		     <col style="width:120px">
 		  </colgroup>
 		<thead>
 		<tr>
@@ -67,18 +67,21 @@
 		<tr v-for="lst in vData.dataList" v-cloak>
 			<td class="text-center">{{ lst.num | addComma }}</td>
 			<td>{{ lst.siteNm }}</td>
-			<td>{{ lst.linkCd  =='dog' ? '강아지' : '고양이' }}</td>
+			<td v-bind:style="{'color': ( lst.linkCd == 'dog' ? '' : 'blue' )}">{{ lst.linkCd  =='dog' ? '강아지' : '고양이' }}</td>
 			<td class="truncate-ellipsis"><a href="javascript:;" v-on:click="openUptForm(lst.linkSrl)">{{ lst.linkUrl }}</a></td>
 			<td class="text-center">{{ lst.linkCnt}}</td>
 			<td class="text-center">{{ lst.batchItv}}</td>
-			<td class="text-center" v-bind:style="{'color': ( lst.useYn == 'Y' ? 'blue' : 'orange' )}">{{ lst.useYn == 'Y' ? '사용' : '미사용' }}</td>
+			<td class="text-center" v-bind:style="{'text-decoration': ( lst.useYn == 'Y' ? 'none' : 'line-through' )}">{{ lst.useYn == 'Y' ? '사용' : '미사용' }}</td>
 			<td class="text-center">{{ lst.regDt | timestampToDate }}</td>
 			<td class="text-center">{{ lst.excDt | timestampToDate }}</td>
-			<td class="text-center"><a href="javascript:;" v-on:click="openLinkTest()">테스트</a></td>
+			<td class="text-center">
+				<a href="javascript:;" v-bind:href="lst.linkUrl" target="_blank">[보기]</a>&nbsp;&nbsp;
+				<a href="javascript:;" v-on:click="openLinkTest()">[테스트]</a>
+			</td>
 		</tr>
 		
 		<tr v-if="vData.dataInfo.totalPage == 0" v-cloak>
-			<td class="text-center" colspan="5" style="height:150px;vertical-align: middle;">자료가 없습니다.</td>
+			<td class="text-center" colspan="11" style="height:150px;vertical-align: middle;">자료가 없습니다.</td>
 		</tr>
 		
 		</tbody>
@@ -105,7 +108,7 @@ var rowSize = 15;		//페이지당 보여줄 로우 수
 $(document).ready(function() {
 
 	//Vue 초기화
-	vObj = com.initVue("#dataWrap");
+	vObj = com.initVue("#dataWrap .table-top");
 	
 	//검색
 	$("#searchString").keyup(function(event) {
@@ -120,6 +123,9 @@ $(document).ready(function() {
 // Ajax 데이터 추출,  Vue 에 정의된 함수명, setVdata 에서 호출, 고정 
 function getVdata(params){	
 	
+	//loading open
+	com.loading("#dataWrap");
+	
 	var obj = {};
  	com.requestAjax({
 		type: "POST",
@@ -130,7 +136,7 @@ function getVdata(params){
 	//call back	
 	},function(data){
 		obj = data;
-		console.log(obj);
+		//console.log(obj);
 		
 		//페이징 표시
 		if( $("#paging > ul").length == 0  && data.dataInfo.totalRow > 0 ){
@@ -142,6 +148,10 @@ function getVdata(params){
 		}else if($("#paging > ul").length > 0 ){
 			com.updatePageItems("#paging", obj.dataInfo.totalRow)
 		}
+		
+		//loading close
+		com.loadingClose();
+		
 	});
 	
 	return obj;
@@ -203,16 +213,22 @@ function openUptForm(linkSrl){
 
 //테스트 호출
 function openLinkTest(){
-	com.popup({
-		title : "링크 작업중 ...",
-		width : 400,
-		height : 250,
-		content : com.loading(30)
-	});
+	
+	com.loading("#dataWrap");
 	
 	setTimeout(function() {
-		com.popupClose();
-	}, 5000);
+		
+		com.loadingClose();
+		
+		com.popup({
+			title : "링크작업결과",
+			width : 1200,
+			height : 700,
+			content : 'abcd'
+		});
+		
+		
+	}, 2000);
 }
 
 
