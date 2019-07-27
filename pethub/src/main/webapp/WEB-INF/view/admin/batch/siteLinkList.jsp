@@ -76,7 +76,7 @@
 			<td class="text-center">{{ lst.excDt | timestampToDate }}</td>
 			<td class="text-center">
 				<a href="javascript:;" v-bind:href="lst.linkUrl" target="_blank">[보기]</a>&nbsp;&nbsp;
-				<a href="javascript:;" v-on:click="openLinkTest()">[테스트]</a>
+				<a href="javascript:;" v-on:click="siteLinkTest()">[테스트]</a>
 			</td>
 		</tr>
 		
@@ -95,15 +95,37 @@
 		<button type="button" onclick="openRegForm()" class="btn btn-primary btn-xm">등록</button>
 	</div>
 	
+	
 </div>	
 
 </section>
+
+
+<div id="siteLinkDataTest">
+<div id="siteLinkData">
+	<ul v-for="lst in siteData">
+		<li>
+			<div><b>{{ lst.num }}. [{{ lst.dataId }}]  {{ lst.dataTitle }}</b></div>
+			<div><a v-bind:href="lst.dataLink" target="_blank">{{ lst.dataLink }}</a></div>
+			<div><a v-bind:href="lst.dataImg" target="_blank">{{ lst.dataImg }}</a></div>
+			<div>{{ lst.dataContent }}</div>
+		</li>
+	</ul>
+</div>
+<div class="text-center">
+	<button type="button" onclick="" class="btn btn-xm">저장</button>&nbsp;&nbsp;&nbsp;
+	<button type="button" onclick="com.popupClose()" class="btn btn-xm">닫기</button>
+</div>
+</div>
+
 
 <script>
 
 
 var vObj = null;			//Vue 객제
 var rowSize = 15;		//페이지당 보여줄 로우 수
+
+var sObj = null;			//Site Test Vue
 
 $(document).ready(function() {
 
@@ -116,6 +138,21 @@ $(document).ready(function() {
 			search();
     	}
 	});
+	
+	
+	//Site Test Vue 초기화
+	sObj = new Vue({
+			el: "#siteLinkData",
+			data : {
+				siteData : []
+			},
+			updated : function(){
+				$(".jBox-content").scrollTop($(".jBox-content")[0].scrollHeight);
+			}
+		});
+		
+	//Site Test  WebSocket
+	wsConnect();
 	
 });
 
@@ -213,23 +250,37 @@ function openUptForm(linkSrl){
 }
 
 //테스트 호출
-function openLinkTest(){
+function siteLinkTest(){
 	
-	com.loading(".content-wrapper");
+	sObj.siteData = [];
+	
+	com.popup({
+		title : "링크 작업결과",
+		width : 1200,
+		height : 700,
+		content : $("#siteLinkDataTest")
+	});
 	
 	setTimeout(function() {
+		com.requestAjax({
+			url : "/adm/batch/siteLinkTest", 
+		})
 		
-		com.loadingClose();
-		
-		com.popup({
-			title : "링크 작업결과",
-			width : 1200,
-			height : 700,
-			content : 'abcd'
-		});
-		
-		
-	}, 2000);
+	}, 500);
+	
+}
+
+
+function wsConnect() {
+	
+ 	var host = "ws://"+window.location.hostname;
+	var port = window.location.port
+	ws = new WebSocket(host + ":" + port+ "/console"); 
+	
+	ws.onmessage = function(message){
+		console.log(JSON.parse(message.data));
+		sObj.siteData.push( JSON.parse(message.data) );
+	}
 }
 
 

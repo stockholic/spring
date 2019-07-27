@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.pethub.core.authority.Auth;
+import kr.pethub.core.module.service.ConsoleLog;
+import kr.pethub.site.AnimalOrKr;
+import kr.pethub.site.DogZzangCoKr;
 import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.model.SiteLink;
 import kr.pethub.webapp.admin.batch.service.SiteLinkService;
@@ -30,6 +33,9 @@ public class SiteLinkController{
 	
 	@Autowired
 	private SiteLinkService siteLinkService;
+	
+	@Autowired
+	private ConsoleLog consoleLog;
 	
 	/**
 	 * 사이트 링크 화면
@@ -139,6 +145,35 @@ public class SiteLinkController{
 		map.put("result", result);
 		
 		return map;
+	} 
+	
+	/**
+	 * 사이트 링크 테스트
+	 */
+	@ResponseBody
+	@RequestMapping(value="/batch/siteLinkTest")
+	public void siteLinkTest() {
+		
+		/*
+		AnimalOrKr obj = new AnimalOrKr();
+		String linkUrl = "http://www.animal.or.kr/bbs/board.php?bo_table=commu_08";
+		try {
+			if( consoleLog.getConsole() != null && consoleLog.getConsole().isOpen() == true) {
+				obj.getDogList(linkUrl, consoleLog);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		 */
+		DogZzangCoKr obj = new DogZzangCoKr();
+		String linkUrl = "http://www.dog-zzang.co.kr/dog_sale/safe_list.php";
+		try {
+			if( consoleLog.getConsole() != null && consoleLog.getConsole().isOpen() == true) {
+				obj.getDogList1(linkUrl, consoleLog);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	} 
 	
 	

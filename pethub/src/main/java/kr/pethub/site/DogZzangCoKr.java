@@ -85,8 +85,8 @@ public class DogZzangCoKr {
 
 				//--------------------------------------------------------------------------------------------------------------- End
 				
-				consoleLog.getConsole().send("---------------------------------------------------------------------------------------------" + (k++) );
 				ObjectMapper mapper = new ObjectMapper(); 
+				cli.setNum(k++);
 				getDogContent1(cli, consoleLog);
 				consoleLog.getConsole().send(mapper.writeValueAsString(cli) );
 				

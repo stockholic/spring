@@ -82,8 +82,8 @@ public class AnimalOrKr {
 
 			//--------------------------------------------------------------------------------------------------------------- End
 			
-			consoleLog.getConsole().send("---------------------------------------------------------------------------------------------" + (k++) );
 			ObjectMapper mapper = new ObjectMapper(); 
+			cli.setNum(k++);
 			getDogContent(cli, consoleLog);
 			consoleLog.getConsole().send(mapper.writeValueAsString(cli) );
 			

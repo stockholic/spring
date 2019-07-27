@@ -9,6 +9,7 @@ public class SiteLinkData {
 	private String dataLink;				// 데이터 링크
 	private String dataImg;				// 데이터 이미지
 	private String dataContent;		// 데이터  내용
+	private Integer num;			
 	
 	public String getDataSrl() {
 		return dataSrl;
@@ -57,6 +58,12 @@ public class SiteLinkData {
 	}
 	public void setDataContent(String dataContent) {
 		this.dataContent = dataContent;
+	}
+	public Integer getNum() {
+		return num;
+	}
+	public void setNum(Integer num) {
+		this.num = num;
 	}
 
 }
