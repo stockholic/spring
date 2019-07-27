@@ -1,6 +1,7 @@
-package kr.pethub.batch.site;
+package kr.pethub.site;
 
 import java.io.IOException;
+
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.pethub.batch.model.SiteLinkData;
+import kr.pethub.core.module.model.SiteLinkData;
 import kr.pethub.core.module.service.ConsoleLog;
 import kr.pethub.core.utils.JsoupUtil;
 

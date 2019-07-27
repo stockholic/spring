@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.pethub.batch.site.AnimalOrKr;
-import kr.pethub.batch.site.DogZzangCoKr;
+import kr.pethub.site.AnimalOrKr;
+import kr.pethub.site.DogZzangCoKr;
 import kr.pethub.core.authority.Auth;
 import kr.pethub.core.module.service.ConsoleLog;
 import kr.pethub.webapp.admin.batch.model.SiteLinkData;

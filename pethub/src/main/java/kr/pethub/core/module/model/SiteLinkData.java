@@ -1,4 +1,4 @@
-package kr.pethub.batch.model;
+package kr.pethub.core.module.model;
 public class SiteLinkData {
 	
 	private String dataSrl;				// 데이터 일련번호
