@@ -38,8 +38,8 @@
 	    <table class="table table-hover table-top">
 		  <colgroup>
 		    <col style="width:60px">
-		     <col style="width:120px">
 		     <col style="width:60px">
+		     <col style="width:120px">
 		     <col />
 		     <col style="width:80px">
 		     <col style="width:80px">
@@ -51,8 +51,8 @@
 		<thead>
 		<tr>
 			<th class="text-center">번호</th>
-			<th>사이트 명</th>
 			<th>구분</th>
+			<th>사이트 명</th>
 			<th>링크</th>
 			<th class="text-center">링크수</th>
 			<th class="text-center">배치간격</th>
@@ -66,8 +66,8 @@
 		
 		<tr v-for="lst in vData.dataList" v-cloak>
 			<td class="text-center">{{ lst.num | addComma }}</td>
-			<td>{{ lst.siteNm }}</td>
 			<td v-bind:style="{'color': ( lst.linkCd == 'dog' ? '' : 'blue' )}">{{ lst.linkCd  =='dog' ? '강아지' : '고양이' }}</td>
+			<td>{{ lst.siteNm }}</td>
 			<td class="truncate-ellipsis"><a href="javascript:;" v-on:click="openUptForm(lst.linkSrl)">{{ lst.linkUrl }}</a></td>
 			<td class="text-center">{{ lst.linkCnt}}</td>
 			<td class="text-center">{{ lst.batchItv}}</td>
