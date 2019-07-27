@@ -107,6 +107,8 @@ $(document).ready(function() {
     	}
 	});
 	
+	wsConnect();
+	
 });
 
 //Ajax 데이터 추출,  Vue 에 정의된 함수명  
@@ -182,6 +184,18 @@ function goPage(pageNumber){
 
 function checkAll(obj){
 	$("input[name=dataSrl]").prop("checked",  $(obj).is(":checked"));
+}
+
+
+function wsConnect() {
+	
+ 	var host = "ws://"+window.location.hostname;
+	var port = window.location.port
+	ws = new WebSocket(host + ":" + port+ "/console"); 
+	
+	ws.onmessage = function(message){
+		console.log(message.data)
+	}
 }
 
 
