@@ -61,7 +61,6 @@ public class SiteLinkDataController{
 	public Map<String, Object>  siteListJson(@ModelAttribute SiteLinkData siteLinkData) {
 		
 		
-		/*
 		AnimalOrKr obj = new AnimalOrKr();
 		String linkUrl = "http://www.animal.or.kr/bbs/board.php?bo_table=commu_08";
 		try {
@@ -71,7 +70,7 @@ public class SiteLinkDataController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		*/
+		/*
 		DogZzangCoKr obj = new DogZzangCoKr();
 		String linkUrl = "http://www.dog-zzang.co.kr/dog_sale/safe_list.php";
 		try {
@@ -81,6 +80,7 @@ public class SiteLinkDataController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		 */
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();

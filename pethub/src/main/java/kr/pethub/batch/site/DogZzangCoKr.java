@@ -11,6 +11,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.pethub.core.module.service.ConsoleLog;
 import kr.pethub.core.utils.JsoupUtil;
 import kr.pethub.batch.model.SiteLinkData;
@@ -83,10 +85,9 @@ public class DogZzangCoKr {
 				//--------------------------------------------------------------------------------------------------------------- End
 				
 				consoleLog.getConsole().send("---------------------------------------------------------------------------------------------" + (k++) );
-				consoleLog.getConsole().send("아이디 : " +  cli.getDataId() + "\t 제목 : " + cli.getDataTitle() );
-				consoleLog.getConsole().send("링크 : " +  cli.getDataLink());
-				consoleLog.getConsole().send("이미지 : " + cli.getDataImg() );
-				getDogContent1(cli, consoleLog);	
+				ObjectMapper mapper = new ObjectMapper(); 
+				getDogContent1(cli, consoleLog);
+				consoleLog.getConsole().send(mapper.writeValueAsString(cli) );
 				
 			}
 			
@@ -116,8 +117,6 @@ public class DogZzangCoKr {
 		String dataContent = JsoupUtil.specialCharacterRemove(str);		
 		siteLinkData.setDataContent(dataContent);
 		logger.debug( "CONTENTS : {}" , dataContent );
-		
-		consoleLog.getConsole().send(siteLinkData.getDataContent() );
 	}
 	
 	
