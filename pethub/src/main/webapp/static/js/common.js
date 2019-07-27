@@ -37,36 +37,35 @@ var com = {
 	 * Ajax 요청
 	 */
 	requestAjax : function(obj, callbackFnc){
-		var data;
+		
 		var options = {
 				type : "GET", 
 				async : true, 
 				params : {}
 			};
 		$.extend(options, obj);
-		
+			
 		 $.ajax({      
-		    	type : options.type,  
-		    	async : options.async,
-		    	url : options.url,
-		        data : options.params,
-		        beforeSend : function(xhr){
-					xhr.setRequestHeader("AJAX", "true");
-			    },
-		        success : function(response){   
-		        	data = response;
-		        	if( typeof callbackFnc ===  "function") callbackFnc(data);
-		        },   
-		        error : function(xhr) {
-		        	if(xhr.status == "403"){
-		        		document.location.href = "/adm/main";
-		        	}else{
-		    	        alert("에러 : " + xhr.status);
-			       	}
-		        }
-		    });  
-		 
-		 return  data;
+	    	type : options.type,  
+	    	async : options.async,
+	    	url : options.url,
+	        data : options.params,
+	        beforeSend : function(xhr){
+				xhr.setRequestHeader("AJAX", "true");
+		    },
+	        success : function(response){   
+	        	data = response;
+	        	if( typeof callbackFnc ===  "function") callbackFnc(data);
+	        },   
+	        error : function(xhr) {
+	        	if(xhr.status == "403"){
+	        		document.location.href = "/adm/main";
+	        	}else{
+	    	        alert("에러 : " + xhr.status);
+		       	}
+	        }
+	    });  
+	 
 	},
 	
 	/**
@@ -294,7 +293,7 @@ var com = {
 				title : '&nbsp;',			// 제목
 				width : 600,			// 너비
 				height : 400,			// 높이
-				zIndex : 'auto',			// 높이
+				zIndex : 9999,			
 			};
 		
 		var content = "";
@@ -310,15 +309,17 @@ var com = {
 			title: options.title,
 			zIndex : options.zIndex,
 			
-			 closeOnClick: false,		//클릭시 안 닫힘
+			closeOnClick: false,		//클릭시 안 닫힘
 		});
 		
 		if(obj.url != undefined){
-			content = this.requestAjax({
+			this.requestAjax({
 				type : options.type,
-				async : options.async,
 				url : options.url,
+				async : false,
 				params : options.params
+			},function(data){
+				content =data;
 			});
 		}else{
 			content = obj.content;

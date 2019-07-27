@@ -48,19 +48,18 @@ function save(){
 	
 	if( com.validation("#regFrm") == false ) return;
 	
-	var obj = com.requestAjax({
+	com.requestAjax({
 		type: "POST",
 		async : false, 
 		url : "/adm/batch/insertSiteInfo",
 		params : $("#regFrm").serializeObject(),
+	},function(data){
+		if (data.result > 0){
+			com.notice("저장 되었습니다.")
+			com.popupClose();
+			goPage(1);
+		}
 	});
-	
-	if (obj.result > 0){
-		com.notice("저장 되었습니다.")
-		com.popupClose();
-		goPage(1);
-	}
-
 }
 
 // 수정
@@ -68,18 +67,18 @@ function update(){
 	
 	if( com.validation("#regFrm") == false ) return;
 	
-	var obj = com.requestAjax({
+	com.requestAjax({
 		type: "POST",
 		async : false, 
 		url : "/adm/batch/updateSiteInfo",
 		params : $("#regFrm").serializeObject(),
+	},function(data){
+		if (data.result > 0){
+			com.notice("수정 되었습니다.")
+			com.popupClose();
+			goPage();
+		}
 	});
-	
-	if (obj.result > 0){
-		com.notice("수정 되었습니다.")
-		com.popupClose();
-		goPage();
-	}
 }
 
 // 삭제
@@ -93,13 +92,13 @@ function remove(){
 				async : false, 
 				url : "/adm/batch/deleteSiteInfo",
 				params : { siteSrl : $("#siteSrl").val() },
+			},function(data){
+				if (data.result > 0){
+					com.notice("삭제 되었습니다.")
+					com.popupClose();
+					goPage();
+				}
 			});
-			
-			if (obj.result > 0){
-				com.notice("삭제 되었습니다.")
-				com.popupClose();
-				goPage();
-			}
 		},
 		cancel : function(){
 		}

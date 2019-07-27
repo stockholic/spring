@@ -170,7 +170,6 @@ function openRegForm(){
 		width : 600,
 		height : 250,
 		type : "POST",
-		async : false,
 		url : "/adm/batch/siteInfoForm"
 	})
 }
@@ -182,7 +181,6 @@ function openUptForm(siteSrl){
 		width : 600,
 		height : 250,
 		type : "POST",
-		async : false,
 		url : "/adm/batch/siteInfoForm",
 		params : {siteSrl : siteSrl}
 	})

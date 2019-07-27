@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<form id="regFrm" id="regFrm" class="form-inline">
+<form id="regFrm" id="regFrm">
 
 <input type="hidden"name="linkSrl" id="linkSrl" value="${siteLink.linkSrl}">
 
@@ -34,7 +34,7 @@
 	</td>
 </tr>
 <tr>
-	<th class="required">링크</th>
+	<th>링크</th>
 	<td><input type="text" class="form-control" name="linkUrl" id="linkUrl" value="${siteLink.linkUrl}"></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<th class="required">배치간격</th>
-	<td>
+	<td class="form-inline">
 		<input type="text" class="form-control" name="batchItvTime" id="batchItvTime" maxlength="2" style="width:80px" value="${siteLink.batchItv.substring(0,fn:length(siteLink.batchItv)-1 ) }" style=":80px" onKeydown="com.numberInput(event)">
 		&nbsp;<input type="radio" name="batchItvType" value="H" ${empty siteLink.batchItv || siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'H' ? 'checked' : '' }>시
 		&nbsp;<input type="radio" name="batchItvType" value="M" ${siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'M' ? 'checked' : '' }>분
@@ -93,19 +93,17 @@ function save(){
 	
 	$("#batchItv").val( $("#batchItvTime").val() + $("input:radio[name=batchItvType]:checked").val());
 	
-	var obj = com.requestAjax({
+	com.requestAjax({
 		type: "POST",
-		async : false, 
 		url : "/adm/batch/insertSiteLink",
 		params : $("#regFrm").serializeObject(),
+	},function(data){
+		if (data.result > 0){
+			com.notice("저장 되었습니다.")
+			com.popupClose();
+			goPage(1);
+		}
 	});
-	
-	if (obj.result > 0){
-		com.notice("저장 되었습니다.")
-		com.popupClose();
-		goPage(1);
-	}
-
 }
 
 // 수정
@@ -117,16 +115,17 @@ function update(){
 	
 	var obj = com.requestAjax({
 		type: "POST",
-		async : false, 
 		url : "/adm/batch/updateSiteLink",
 		params : $("#regFrm").serializeObject(),
+	},function(data){
+		if (data.result > 0){
+			com.notice("수정 되었습니다.")
+			com.popupClose();
+			goPage();
+		}
 	});
 	
-	if (obj.result > 0){
-		com.notice("수정 되었습니다.")
-		com.popupClose();
-		goPage();
-	}
+	
 }
 
 
@@ -138,16 +137,15 @@ function remove(){
 		confirm : function(){
 			var obj = com.requestAjax({
 				type: "POST",
-				async : false, 
 				url : "/adm/batch/deleteSiteLink",
 				params : { linkSrl : $("#linkSrl").val() },
+			},function(data){
+				if (data.result > 0){
+					com.notice("삭제 되었습니다.")
+					com.popupClose();
+					goPage();
+				}
 			});
-			
-			if (obj.result > 0){
-				com.notice("삭제 되었습니다.")
-				com.popupClose();
-				goPage();
-			}
 		},
 		cancel : function(){
 		}
