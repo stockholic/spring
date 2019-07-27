@@ -17,8 +17,8 @@
 	<th>구분</th>
 	<td>
 	<select name="linkCd" id="linkCd" class="form-control" style="width:150px">
-		<option value="Y" ${siteLink.linkCd eq "dog" ? "selected" : "" }>강아지</option>
-		<option value="N" ${siteLink.linkCd eq "cat" ? "selected" : "" }>고양이</option>
+		<option value="dog" ${siteLink.linkCd eq "dog" ? "selected" : "" }>강아지</option>
+		<option value="cat" ${siteLink.linkCd eq "cat" ? "selected" : "" }>고양이</option>
 	</select>
 	</td>
 </tr>
@@ -53,8 +53,8 @@
 	<th class="required">배치간격</th>
 	<td>
 		<input type="text" class="form-control" name="batchItvTime" id="batchItvTime" maxlength="2" style="width:80px" value="${siteLink.batchItv.substring(0,fn:length(siteLink.batchItv)-1 ) }" style=":80px" onKeydown="com.numberInput(event)">
-		&nbsp;<input type="radio" name="batchItvType" id="batchItvType" value="H" ${empty siteLink.batchItv || siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'H' ? 'checked' : '' }>시
-		&nbsp;<input type="radio" name="batchItvType" id="batchItvType" value="M" ${siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'M' ? 'checked' : '' }>분
+		&nbsp;<input type="radio" name="batchItvType" value="H" ${empty siteLink.batchItv || siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'H' ? 'checked' : '' }>시
+		&nbsp;<input type="radio" name="batchItvType" value="M" ${siteLink.batchItv.substring(fn:length(siteLink.batchItv)-1) eq 'M' ? 'checked' : '' }>분
 		<input type="hidden" name="batchItv" id="batchItv" value="${siteLink.batchItv}">
 	</td>
 </tr>
@@ -91,7 +91,7 @@ function save(){
 	
 	if( com.validation("#regFrm") == false ) return;
 	
-	$("#batchItv").val( $("#batchItvTime").val() + $("#batchItvType").val() );
+	$("#batchItv").val( $("#batchItvTime").val() + $("input:radio[name=batchItvType]:checked").val());
 	
 	var obj = com.requestAjax({
 		type: "POST",
@@ -113,7 +113,7 @@ function update(){
 	
 	if( com.validation("#regFrm") == false ) return;
 	
-	$("#batchItv").val( $("#batchItvTime").val() + $("#batchItvType").val() );
+	$("#batchItv").val( $("#batchItvTime").val() + $("input:radio[name=batchItvType]:checked").val());
 	
 	var obj = com.requestAjax({
 		type: "POST",

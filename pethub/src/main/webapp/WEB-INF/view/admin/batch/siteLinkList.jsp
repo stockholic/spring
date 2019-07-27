@@ -101,19 +101,19 @@
 </section>
 
 
-<div id="siteLinkDataTest">
+<div id="siteLinkDataTest" style="display: none;">
 <div id="siteLinkData">
 	<ul v-for="lst in siteData">
 		<li>
 			<div><b>{{ lst.num }}. [{{ lst.dataId }}]  {{ lst.dataTitle }}</b></div>
-			<div><a v-bind:href="lst.dataLink" target="_blank">{{ lst.dataLink }}</a></div>
-			<div><a v-bind:href="lst.dataImg" target="_blank">{{ lst.dataImg }}</a></div>
+			<div><b>Link</b> <a v-bind:href="lst.dataLink" target="_blank">{{ lst.dataLink }}</a></div>
+			<div><b>Image</b> <a v-bind:href="lst.dataImg" target="_blank">{{ lst.dataImg }}</a></div>
 			<div>{{ lst.dataContent }}</div>
 		</li>
 	</ul>
 </div>
 <div class="text-center">
-	<button type="button" onclick="" class="btn btn-xm">저장</button>&nbsp;&nbsp;&nbsp;
+	<button type="button" onclick="" class="btn btn-xm">저장</button>&nbsp;&nbsp;
 	<button type="button" onclick="com.popupClose()" class="btn btn-xm">닫기</button>
 </div>
 </div>
@@ -252,21 +252,27 @@ function openUptForm(linkSrl){
 //테스트 호출
 function siteLinkTest(){
 	
+	//초기화
 	sObj.siteData = [];
 	
 	com.popup({
 		title : "링크 작업결과",
 		width : 1200,
 		height : 700,
+		zIndex : 9999,
 		content : $("#siteLinkDataTest")
 	});
 	
 	setTimeout(function() {
+		com.loading("body");
+		
 		com.requestAjax({
 			url : "/adm/batch/siteLinkTest", 
+		},function(){
+			com.loadingClose();
 		})
 		
-	}, 500);
+	}, 300);
 	
 }
 

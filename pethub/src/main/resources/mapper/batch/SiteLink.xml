@@ -45,7 +45,7 @@
 		AND si.site_nm like '%' #{searchString} '%'
 		</if>
       	
-	    ORDER BY link_srl DESC
+	    ORDER BY site_nm ASC, link_srl DESC
 		
 		LIMIT #{rowStart}, #{rowSize}
 	</select>

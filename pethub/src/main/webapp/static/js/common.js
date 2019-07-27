@@ -294,6 +294,7 @@ var com = {
 				title : '&nbsp;',			// 제목
 				width : 600,			// 너비
 				height : 400,			// 높이
+				zIndex : 'auto',			// 높이
 			};
 		
 		var content = "";
@@ -307,6 +308,7 @@ var com = {
 			animation: false,
 			closeButton: 'title',
 			title: options.title,
+			zIndex : options.zIndex,
 			
 			 closeOnClick: false,		//클릭시 안 닫힘
 		});
@@ -438,7 +440,7 @@ var com = {
 		var width = $(selector).width();
 		var top = $(selector).offset().top;
 		
-		var html = "<div id='loading' style='top:" + top + "px;height:" + height + "px;'>" 
+		var html = "<div id='loading' style='z-index:10000;top:" + top + "px;height:" + height + "px;'>" 
 					+ "	<div class='loading-cell'>"
 					+ "	<div class='loading-box'>"
 					+	"		<p><img src='/static/image/loading.svg' width='30' height='30'></p><p>loading ...<p>"
