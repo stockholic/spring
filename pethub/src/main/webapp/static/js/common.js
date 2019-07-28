@@ -69,9 +69,9 @@ var com = {
 	},
 	
 	/**
-	 * 팝업창
+	 * 윈도우 팝업창
 	 */
-	popup : function(params){
+	wPopup : function(params){
 		
 		var options = {
 			title : "관리도구",
@@ -294,9 +294,8 @@ var com = {
 				width : 600,			// 너비
 				height : 400,			// 높이
 				zIndex : 9999,			
+				content : "",
 			};
-		
-		var content = "";
 		
 		$.extend( options, obj );
 	
@@ -308,8 +307,7 @@ var com = {
 			closeButton: 'title',
 			title: options.title,
 			zIndex : options.zIndex,
-			
-			closeOnClick: false,		//클릭시 안 닫힘
+			closeOnClick: false,			//클릭시 안 닫힘
 		});
 		
 		if(obj.url != undefined){
@@ -319,13 +317,11 @@ var com = {
 				async : false,
 				params : options.params
 			},function(data){
-				content =data;
+				options.content =data;
 			});
-		}else{
-			content = obj.content;
 		}
 		
-		this.jboxPopup.setContent(content);
+		this.jboxPopup.setContent(options.content);
 		this.jboxPopup.open();
 	},
 	popupClose : function(){

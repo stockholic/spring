@@ -230,7 +230,6 @@ function openRegForm(){
 		title : "링크 등록",
 		width : 700,
 		height : 480,
-		type : "POST",
 		url : "/adm/batch/siteLinkForm"
 	})
 }
@@ -241,7 +240,6 @@ function openUptForm(linkSrl){
 		title : "링크 수정",
 		width : 700,
 		height : 480,
-		type : "POST",
 		url : "/adm/batch/siteLinkForm",
 		params : {linkSrl : linkSrl}
 	})

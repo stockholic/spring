@@ -169,7 +169,6 @@ function openRegForm(){
 		title : "사이트 등록",
 		width : 600,
 		height : 250,
-		type : "POST",
 		url : "/adm/batch/siteInfoForm"
 	})
 }
@@ -180,7 +179,6 @@ function openUptForm(siteSrl){
 		title : "사이트 수정",
 		width : 600,
 		height : 250,
-		type : "POST",
 		url : "/adm/batch/siteInfoForm",
 		params : {siteSrl : siteSrl}
 	})
