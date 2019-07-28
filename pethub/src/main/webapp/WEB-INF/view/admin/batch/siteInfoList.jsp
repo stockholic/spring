@@ -4,7 +4,7 @@
 
 <section class="content-header">
   <h1>
-    사이트 정보
+    사이트관리
     <small>목록</small>  
   </h1>
   <ol class="breadcrumb">

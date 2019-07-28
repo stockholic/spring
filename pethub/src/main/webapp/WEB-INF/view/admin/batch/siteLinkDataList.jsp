@@ -4,12 +4,12 @@
 
 <section class="content-header">
   <h1>
-    사이트 데이터 정보
+    사이트 데이터관리
     <small>목록</small>  
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"> 배치관리</a></li>
-    <li class="active">사이트데이터</li>
+    <li class="active">사이트 데이터관리</li>
   </ol>
 </section>
 

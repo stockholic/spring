@@ -13,7 +13,7 @@
 <body  class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="/"><b>pethub</b></a>
+    <a href="/adm/main"><b>PetHub</b></a>
   </div>
 
   <div class="login-box-body">

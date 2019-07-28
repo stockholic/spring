@@ -4,12 +4,12 @@
 
 <section class="content-header">
   <h1>
-    사이트 정보
+    사이트 링크관리
     <small>목록</small>  
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"> 배치관리</a></li>
-    <li class="active">사이트관리</li>
+    <li class="active">사이트 링크관리</li>
   </ol>
 </section>
 
@@ -106,8 +106,8 @@
 	<ul v-for="lst in siteData">
 		<li>
 			<div v-if="lst.dataTitle"><b>{{ lst.num }}. [{{ lst.dataId }}]  {{ lst.dataTitle }}</b></div>
-			<div v-if="lst.dataLink"><b>Link</b> <a v-bind:href="lst.dataLink" target="_blank">{{ lst.dataLink }}</a></div>
-			<div v-if="lst.dataImg"><b>Image</b> <a v-bind:href="lst.dataImg" target="_blank">{{ lst.dataImg }}</a></div>
+			<div v-if="lst.dataLink">Link : <a v-bind:href="lst.dataLink" target="_blank">{{ lst.dataLink }}</a></div>
+			<div v-if="lst.dataImg">Image : <a v-bind:href="lst.dataImg" target="_blank">{{ lst.dataImg }}</a></div>
 			<div v-if="lst.dataContent">{{ lst.dataContent }}</div>
 		</li>
 	</ul>
