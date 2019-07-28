@@ -1,5 +1,6 @@
 package kr.pethub.webapp.admin.batch.controller;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.pethub.core.authority.Auth;
+import kr.pethub.core.module.model.SiteLinkData;
 import kr.pethub.core.module.service.ConsoleLog;
-import kr.pethub.site.AnimalOrKr;
-import kr.pethub.site.DogZzangCoKr;
 import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.model.SiteLink;
 import kr.pethub.webapp.admin.batch.service.SiteLinkService;
@@ -151,29 +153,40 @@ public class SiteLinkController{
 	 * 사이트 링크 테스트
 	 */
 	@ResponseBody
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/batch/siteLinkTest")
-	public void siteLinkTest() {
+	public void siteLinkTest( SiteLink siteLink) {
 		
-		/*
-		AnimalOrKr obj = new AnimalOrKr();
-		String linkUrl = "http://www.animal.or.kr/bbs/board.php?bo_table=commu_08";
 		try {
+			
 			if( consoleLog.getConsole() != null && consoleLog.getConsole().isOpen() == true) {
-				obj.getDogList(linkUrl, consoleLog);
+				
+				//Class 생성
+				Class<?> clasz = Class.forName(siteLink.getLinkCls());
+				Object obj = clasz.newInstance();
+				
+				//Method 호출
+				Method getList = clasz.getMethod(siteLink.getLinkMtdLst(), String.class, ConsoleLog.class);
+				List<SiteLinkData> list =  (List<SiteLinkData>)getList.invoke(obj, siteLink.getLinkUrl(), consoleLog);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		 */
-		DogZzangCoKr obj = new DogZzangCoKr();
-		String linkUrl = "http://www.dog-zzang.co.kr/dog_sale/safe_list.php";
-		try {
-			if( consoleLog.getConsole() != null && consoleLog.getConsole().isOpen() == true) {
-				obj.getDogList1(linkUrl, consoleLog);
+			
+		}catch(Exception e) {
+			
+			SiteLinkData siteLinkData  = new SiteLinkData();
+			siteLinkData.setDataContent(e.toString());
+			
+			ObjectMapper mapper = new ObjectMapper(); 
+			
+			try {
+				consoleLog.getConsole().send(mapper.writeValueAsString(siteLinkData) );
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+
+			logger.error(e.toString());
+			e.getStackTrace();
 		}
+		
 	} 
 	
 	

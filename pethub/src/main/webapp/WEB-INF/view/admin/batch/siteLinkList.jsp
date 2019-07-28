@@ -76,8 +76,8 @@
 			<td class="text-center">{{ lst.excDt | timestampToDate }}</td>
 			<td class="text-center">
 				<a href="javascript:;" v-bind:href="lst.linkUrl" target="_blank">[보기]</a>&nbsp;&nbsp;
-				<a href="javascript:;" v-on:click="siteLinkTest()">[테스트]</a>
-			</td>
+				<a href="javascript:;" v-on:click="siteLinkTest(lst.linkUrl, lst.linkCls, lst.linkMtdLst)">[테스트]</a>
+			</td> 
 		</tr>
 		
 		<tr v-if="vData.totalPage == 0" v-cloak>
@@ -105,10 +105,10 @@
 <div id="siteLinkData">
 	<ul v-for="lst in siteData">
 		<li>
-			<div><b>{{ lst.num }}. [{{ lst.dataId }}]  {{ lst.dataTitle }}</b></div>
-			<div><b>Link</b> <a v-bind:href="lst.dataLink" target="_blank">{{ lst.dataLink }}</a></div>
-			<div><b>Image</b> <a v-bind:href="lst.dataImg" target="_blank">{{ lst.dataImg }}</a></div>
-			<div>{{ lst.dataContent }}</div>
+			<div v-if="lst.dataTitle"><b>{{ lst.num }}. [{{ lst.dataId }}]  {{ lst.dataTitle }}</b></div>
+			<div v-if="lst.dataLink"><b>Link</b> <a v-bind:href="lst.dataLink" target="_blank">{{ lst.dataLink }}</a></div>
+			<div v-if="lst.dataImg"><b>Image</b> <a v-bind:href="lst.dataImg" target="_blank">{{ lst.dataImg }}</a></div>
+			<div v-if="lst.dataContent">{{ lst.dataContent }}</div>
 		</li>
 	</ul>
 </div>
@@ -245,8 +245,8 @@ function openUptForm(linkSrl){
 	})
 }
 
-//테스트 호출
-function siteLinkTest(){
+//사이트 테스트 호출
+function siteLinkTest(linkUrl, linkCls, linkMtdLst){
 	
 	//초기화
 	sObj.siteData = [];
@@ -264,11 +264,16 @@ function siteLinkTest(){
 		
 		com.requestAjax({
 			url : "/adm/batch/siteLinkTest", 
+			params : {
+				linkUrl : linkUrl,
+				linkCls : linkCls,
+				linkMtdLst : linkMtdLst
+			}
 		},function(){
 			com.loadingClose();
 		})
 		
-	}, 300);
+	}, 500);
 	
 }
 
