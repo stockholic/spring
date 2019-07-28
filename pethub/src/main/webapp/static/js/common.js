@@ -452,6 +452,26 @@ var com = {
 	
 	loadingClose : function() {
 		$("#loading").remove();
+	},
+	
+	/**
+	 *  리스트 데이터 Object  MVC 에서 받을 수 있는 Object  로 변환
+	 *  dataList[0].dataTitle : 'abcd'
+	 *  dataList[1].dataTitle : 'efgh'
+	 *  ...
+	 */
+	converListToObject : function(name, objList){
+		
+		var obj = {};
+		$(objList).each(function(i,val){
+		    $.each(val,function(k,v){
+		        obj[name + "[" + i + "]." + k] = v;
+			});
+		    
+		});
+		//console.log( obj )
+		return obj
+		
 	}
 	
 };

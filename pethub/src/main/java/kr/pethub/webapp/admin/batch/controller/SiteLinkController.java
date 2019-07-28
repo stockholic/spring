@@ -24,6 +24,7 @@ import kr.pethub.core.module.model.SiteLinkData;
 import kr.pethub.core.module.service.ConsoleLog;
 import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.model.SiteLink;
+import kr.pethub.webapp.admin.batch.model.SiteLinkDataList;
 import kr.pethub.webapp.admin.batch.service.SiteLinkService;
 
 
@@ -189,5 +190,28 @@ public class SiteLinkController{
 		
 	} 
 	
+	/**
+	 * 사이트 데이터 등록
+	 * @param siteLinkDataList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/batch/insertSiteLinkData", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> insertSiteLinkData(SiteLinkDataList siteLinkDataList) {
+		
+		for  ( SiteLinkData vo :  siteLinkDataList.getDataList()  ) {
+			System.out.println(">>>>>> " +  vo.getDataId() +" : "+vo.getDataTitle());
+			
+		}
+		
+		
+		
+		int result = 1;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
+		
+		return map;
+	} 
 	
 }

@@ -113,7 +113,7 @@
 	</ul>
 </div>
 <div class="text-center">
-	<button type="button" onclick="" class="btn btn-xm">저장</button>&nbsp;&nbsp;
+	<button type="button" onclick="regSiteLinkData()" class="btn btn-xm">저장</button>&nbsp;&nbsp;
 	<button type="button" onclick="com.popupClose()" class="btn btn-xm">닫기</button>
 </div>
 </div>
@@ -278,8 +278,8 @@ function siteLinkTest(linkUrl, linkCls, linkMtdLst){
 }
 
 
+//사이트 테스트 WebSocket 연결
 function wsConnect() {
-	
  	var host = "ws://"+window.location.hostname;
 	var port = window.location.port
 	ws = new WebSocket(host + ":" + port+ "/console"); 
@@ -289,6 +289,36 @@ function wsConnect() {
 		sObj.siteData.push( JSON.parse(message.data) );
 	}
 }
+
+
+//사이트 데이터 등록
+function regSiteLinkData(){
+	
+	if( sObj.siteData.length < 2  ) return;
+	
+	com.confirm({
+		content : "등록 하겠습니까 ?",
+		confirm : function(){
+			
+			var obj = com.requestAjax({
+				type: "POST",
+				url : "/adm/batch/insertSiteLinkData",
+				params : com.converListToObject("dataList",sObj.siteData)
+				
+			},function(data){
+				if (data.result > 0){
+					com.notice("등록 되었습니다.")
+					com.popupClose();
+				}
+			});
+		},
+		cancel : function(){
+		}
+	});
+	
+
+}
+
 
 
 
