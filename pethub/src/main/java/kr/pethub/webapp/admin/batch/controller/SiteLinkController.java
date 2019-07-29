@@ -154,7 +154,6 @@ public class SiteLinkController{
 	 * 사이트 링크 테스트
 	 */
 	@ResponseBody
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/batch/siteLinkTest")
 	public void siteLinkTest( SiteLink siteLink) {
 		
@@ -168,7 +167,7 @@ public class SiteLinkController{
 				
 				//Method 호출
 				Method getList = clasz.getMethod(siteLink.getLinkMtdLst(), String.class, ConsoleLog.class);
-				List<SiteLinkData> list =  (List<SiteLinkData>)getList.invoke(obj, siteLink.getLinkUrl(), consoleLog);
+				getList.invoke(obj, siteLink.getLinkUrl(), consoleLog);
 			}
 			
 		}catch(Exception e) {
@@ -199,14 +198,7 @@ public class SiteLinkController{
 	@RequestMapping(value="/batch/insertSiteLinkData", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> insertSiteLinkData(SiteLinkDataList siteLinkDataList) {
 		
-		for  ( SiteLinkData vo :  siteLinkDataList.getDataList()  ) {
-			System.out.println(">>>>>> " +  vo.getDataId() +" : "+vo.getDataTitle());
-			
-		}
-		
-		
-		
-		int result = 1;
+		int result  = siteLinkService.insertSiteLinkData(siteLinkDataList);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);

@@ -119,4 +119,40 @@
 		DELETE FROM site_link	WHERE link_srl = #{linkSrl}
 	</delete>
 	
+	
+	<insert id="insertSiteLinkData">
+		INSERT INTO site_link_data(
+			  site_srl
+			, link_srl
+			, data_id
+			, data_title
+			, data_link
+			, data_img
+			, data_content
+		) VALUES (
+			  #{siteSrl}
+			, #{linkSrl}
+			, #{dataId}
+			, #{dataTitle}
+			, #{dataLink}
+			, #{dataImg}
+			, #{dataContent}
+		)
+	</insert>
+	
+	<update id="updateSiteLinkData">
+		UPDATE site_link_data SET
+			 data_title = #{dataTitle}
+			, data_link = #{dataLink}
+			
+			<if test="dataImg != '' and dataImg != null">
+			, data_img = #{dataImg}
+			</if>
+			
+			, upt_dt = SYSDATE()
+		WHERE 	site_srl = #{siteSrl}
+		AND link_srl = #{linkSrl}
+		AND data_id = #{dataId}
+	</update>
+	
 </mapper>  

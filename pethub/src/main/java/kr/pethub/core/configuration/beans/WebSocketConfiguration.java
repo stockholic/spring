@@ -1,5 +1,7 @@
 package kr.pethub.core.configuration.beans;
 
+import java.net.URISyntaxException;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -39,7 +41,11 @@ public class WebSocketConfiguration  implements WebSocketConfigurer {
     
     
     @PostConstruct
-    public void postConstruct() {
+    public void postConstruct() throws URISyntaxException {
+    	
+    	//웹소켓 생성 후 연결
+    	consoleLog().consoleConnect();
+    	
 		logger.info("WebSocket Created");
     }
     

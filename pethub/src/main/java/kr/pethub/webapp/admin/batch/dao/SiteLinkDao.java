@@ -3,9 +3,11 @@ package kr.pethub.webapp.admin.batch.dao;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Repository;
 
 import kr.pethub.core.module.dao.MultiSqlSessionDaoSupport;
+import kr.pethub.core.module.model.SiteLinkData;
 import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.model.SiteLink;
 
@@ -40,6 +42,14 @@ public class SiteLinkDao extends MultiSqlSessionDaoSupport{
 	
 	public int deleteSiteLink(SiteLink siteLink){
 		return  delete("deleteSiteLink",siteLink);
+	}
+	
+	public int updateSiteLinkData(SiteLinkData siteLinkData){
+		return insert("updateSiteLinkData",siteLinkData);
+	}
+
+	public int insertSiteLinkData(SiteLinkData siteLinkData){
+		return insert("insertSiteLinkData",siteLinkData);
 	}
 
 }

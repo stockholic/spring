@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.pethub.core.module.model.SiteLinkData;
 import kr.pethub.webapp.admin.batch.dao.SiteLinkDao;
 import kr.pethub.webapp.admin.batch.model.SiteInfo;
 import kr.pethub.webapp.admin.batch.model.SiteLink;
+import kr.pethub.webapp.admin.batch.model.SiteLinkDataList;
 
 @Service
 public class SiteLinkService {
@@ -90,5 +92,29 @@ public class SiteLinkService {
 		
 		return 1;
 	}
+
+	/**
+	 * 사이트 데이터 등록
+	 * @param siteLink
+	 * @return
+	 */
+	public int insertSiteLinkData(SiteLinkDataList siteLinkDataList) {
+		
+		for  ( SiteLinkData siteLinkData :  siteLinkDataList.getDataList()  ) {
+			
+			siteLinkData.setSiteSrl(siteLinkDataList.getSiteSrl());
+			siteLinkData.setLinkSrl(siteLinkDataList.getLinkSrl());
+			
+			if( siteLinkDao.updateSiteLinkData(siteLinkData) == 0 ) {
+				siteLinkDao.insertSiteLinkData(siteLinkData);
+			}
+			
+		}
+		
+		return  1;
+	}
+	
+	
+	
 
 }

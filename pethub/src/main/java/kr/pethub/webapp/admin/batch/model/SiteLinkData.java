@@ -9,7 +9,8 @@ public class SiteLinkData extends Pagination{
 	
 	
 	private Integer num;					// 번호
-	private String dataSrl;				// 데이터 일련번호
+	private String dataId;				// 데이터 아이디
+	private String dataSrl;				// 데이터 일련번호z
 	private String linkSrl;				// 일련번호
 	private String siteSrl;					// site_info 참조번호
 	private String siteNm;				// 사이트 명
@@ -27,6 +28,12 @@ public class SiteLinkData extends Pagination{
 	
 	public Integer getNum() {
 		return num;
+	}
+	public String getDataId() {
+		return dataId;
+	}
+	public void setDataId(String dataId) {
+		this.dataId = dataId;
 	}
 	public void setNum(Integer num) {
 		this.num = num;

@@ -76,7 +76,7 @@
 			<td class="text-center">{{ lst.excDt | timestampToDate }}</td>
 			<td class="text-center">
 				<a href="javascript:;" v-bind:href="lst.linkUrl" target="_blank">[보기]</a>&nbsp;&nbsp;
-				<a href="javascript:;" v-on:click="siteLinkTest(lst.linkUrl, lst.linkCls, lst.linkMtdLst)">[테스트]</a>
+				<a href="javascript:;" v-on:click="siteLinkTest(lst.siteSrl, lst.linkSrl, lst.linkUrl, lst.linkCls, lst.linkMtdLst)">[테스트]</a>
 			</td> 
 		</tr>
 		
@@ -246,10 +246,15 @@ function openUptForm(linkSrl){
 }
 
 //사이트 테스트 호출
-function siteLinkTest(linkUrl, linkCls, linkMtdLst){
+var _siteSrl = "";
+var _linkSrl = "";
+function siteLinkTest(siteSrl, linkSrl, linkUrl, linkCls, linkMtdLst){
 	
 	//초기화
 	sObj.siteData = [];
+	
+	_siteSrl = siteSrl;
+	_linkSrl = linkSrl;
 	
 	com.popup({
 		title : "링크 작업결과",
@@ -264,6 +269,7 @@ function siteLinkTest(linkUrl, linkCls, linkMtdLst){
 		
 		com.requestAjax({
 			url : "/adm/batch/siteLinkTest", 
+			type : "POST", 
 			params : {
 				linkUrl : linkUrl,
 				linkCls : linkCls,
@@ -296,6 +302,12 @@ function regSiteLinkData(){
 	
 	if( sObj.siteData.length < 2  ) return;
 	
+	var regParams = {}
+	
+	regParams = com.converListToObject("dataList",sObj.siteData);
+	regParams.siteSrl = _siteSrl;
+	regParams.linkSrl = _linkSrl;
+	
 	com.confirm({
 		content : "등록 하겠습니까 ?",
 		confirm : function(){
@@ -303,7 +315,7 @@ function regSiteLinkData(){
 			var obj = com.requestAjax({
 				type: "POST",
 				url : "/adm/batch/insertSiteLinkData",
-				params : com.converListToObject("dataList",sObj.siteData)
+				params : regParams
 				
 			},function(data){
 				if (data.result > 0){

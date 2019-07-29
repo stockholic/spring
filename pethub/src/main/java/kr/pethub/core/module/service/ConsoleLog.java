@@ -52,15 +52,20 @@ public class ConsoleLog {
 	
 	
 	/**
-	 * WebSocket 연결
+	 * WebSocket Get
 	 * @return
 	 * @throws URISyntaxException
 	 */
 	public WebSocketClient getConsole() throws URISyntaxException {
-		
-		if(webSocket == null) connect(websocketUrl);
-		 
 		return webSocket;
+	}
+	
+	/**
+	 * WebSocket 연결
+	 * @throws URISyntaxException
+	 */
+	public void consoleConnect() throws URISyntaxException {
+		connect(websocketUrl);
 	}
 
 }
