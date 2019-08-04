@@ -365,6 +365,9 @@ var com = {
 		
 		this.jboxConfirm.open();
 	},
+	confirmClose : function(){
+		this.jboxConfirm.destroy();
+	},
 	
 	/**
 	 * 폼 Validation 체크

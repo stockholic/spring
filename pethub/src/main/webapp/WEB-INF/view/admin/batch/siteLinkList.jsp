@@ -147,6 +147,7 @@ $(document).ready(function() {
 				siteData : []
 			},
 			updated : function(){
+				console.log($(".jBox-content")[0].scrollHeight)
 				$(".jBox-content").scrollTop($(".jBox-content")[0].scrollHeight);
 			}
 		});
@@ -322,9 +323,13 @@ function regSiteLinkData(){
 					com.notice("등록 되었습니다.")
 					com.popupClose();
 				}
+				com.confirmClose();
 			});
+			
+			
 		},
 		cancel : function(){
+			com.confirmClose();
 		}
 	});
 	
